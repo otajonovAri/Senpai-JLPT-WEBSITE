@@ -26,7 +26,7 @@ export default function Splash() {
           alt="SenpaiJLPT maskoti"
           style={styles.mascot}
         />
-        <div style={styles.logoJp} className="jp">先輩 JLPT</div>
+        <div style={styles.logoJp} className="jp">先輩JLPT</div>
         <div style={styles.logoEn}>
           Senpai<span style={{ color: 'var(--primary)' }}>JLPT</span>
         </div>

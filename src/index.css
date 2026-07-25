@@ -599,6 +599,14 @@ h1, h2, h3, h4 { font-weight: 800; color: var(--text); letter-spacing: -0.01em; 
 }
 .card-interactive:active { transform: translateY(0) scale(0.98); }
 
+/* Lesson cards stay still at rest — their icon, stars and play button
+   come alive only while the card is hovered. */
+.card-interactive:hover .lesson-icon { animation: navIconPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.card-interactive:hover .lesson-play { animation: pulse 0.7s ease-in-out; }
+.card-interactive:hover .lesson-star { animation: sparkle 0.7s ease-in-out; }
+.card-interactive:hover .lesson-star:nth-child(2) { animation-delay: 0.08s; }
+.card-interactive:hover .lesson-star:nth-child(3) { animation-delay: 0.16s; }
+
 /* ---- Badge bounce for notification dots ---- */
 @keyframes badgeBounce {
   0%, 100% { transform: scale(1); }

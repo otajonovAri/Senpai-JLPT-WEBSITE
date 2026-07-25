@@ -21,7 +21,7 @@ export default function ForDevelopers() {
       <PageHero
         icon="/mascot/icons/coding.png"
         badge="Dasturchilar uchun"
-        title="SenpaiAri kontentini o'z ilovangizda ishlating"
+        title="SenpaiJLPT kontentini o'z ilovangizda ishlating"
         subtitle="Yapon tili lug'ati, kanji va grammatika bazamizga REST API orqali ulaning — o'zbek tilidagi tarjimalar bilan."
       />
 

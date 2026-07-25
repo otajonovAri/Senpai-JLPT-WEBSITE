@@ -86,7 +86,7 @@ export default function LessonsList() {
                 className={isLocked ? '' : 'card-interactive'}
                 style={{ ...styles.lessonCard, ...(isLocked ? styles.locked : {}) }}>
                 <div style={styles.lessonLeft}>
-                  <div style={{
+                  <div className="lesson-icon" style={{
                     ...styles.lessonIcon,
                     background: lesson.category === 'Kanji' ? 'var(--secondary)' :
                       lesson.category === 'Grammar' ? 'var(--success)' : 'var(--primary)',
@@ -115,7 +115,7 @@ export default function LessonsList() {
                     <div style={styles.stars}>
                       {[1, 2, 3].map(s => (
                         <Star key={s} size={16}
-                          className={s <= lesson.progress.stars ? 'anim-sparkle' : ''}
+                          className={s <= lesson.progress.stars ? 'lesson-star' : ''}
                           fill={s <= lesson.progress.stars ? '#F5B50A' : 'none'}
                           color={s <= lesson.progress.stars ? '#F5B50A' : 'var(--border-dark)'} />
                       ))}
@@ -125,7 +125,7 @@ export default function LessonsList() {
                     <div style={styles.scoreCircle}><span>{lesson.progress.score}%</span></div>
                   )}
                   {lesson.progress.status === 'Available' && (
-                    <div style={styles.playBtn} className="anim-pulse"><Play size={18} fill="white" color="white" /></div>
+                    <div style={styles.playBtn} className="lesson-play"><Play size={18} fill="white" color="white" /></div>
                   )}
                   {!isLocked && <ChevronRight size={20} color="var(--text-light)" />}
                 </div>

@@ -81,7 +81,7 @@ export default function Layout() {
             {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           <div style={styles.logo}>
-            <span style={styles.logoJp} className="jp">先輩アリ</span>
+            <span style={styles.logoJp} className="jp">先輩JLPT</span>
             <span style={styles.logoEn}>SenpaiJLPT</span>
           </div>
           <div style={styles.headerRight}>
@@ -111,7 +111,7 @@ export default function Layout() {
           <img src="/mascot/logo.png" alt="SenpaiJLPT" style={styles.sidebarLogo} />
           <div>
             <div style={styles.sidebarBrandName}>Senpai<span style={{ color: 'var(--primary)' }}>JLPT</span></div>
-            <div style={styles.sidebarBrandJp} className="jp">先輩アリ</div>
+            <div style={styles.sidebarBrandJp} className="jp">先輩JLPT</div>
           </div>
         </div>
 

@@ -64,7 +64,7 @@ export default function Footer() {
             <p style={S.brandSub}>{t('footer.tagline')}</p>
 
             <div style={S.socialRow}>
-              {SOCIALS.map((s, i) => (
+              {SOCIALS.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
@@ -72,7 +72,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   aria-label={s.label}
                   className="footer-social-link"
-                  style={{ ...S.socialLink, animationDelay: `${i * 0.3}s` }}
+                  style={S.socialLink}
                 >
                   <img src={s.icon} alt="" style={S.socialImg} />
                 </a>
@@ -138,7 +138,7 @@ const S = {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     width: 58, height: 58, borderRadius: '50%', background: '#fff',
     boxShadow: '0 6px 0 #2D7A00, 0 10px 24px rgba(0,0,0,0.14)',
-    textDecoration: 'none', animation: 'floatIcon 3s ease-in-out infinite',
+    textDecoration: 'none',
   },
   socialImg: { width: 34, height: 34, objectFit: 'contain', display: 'block' },
   linkGrid: {

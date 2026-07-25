@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Button, Reveal, CountUp } from '../components/ui';
 import Footer from '../components/Footer';
 import LangSwitcher from '../components/LangSwitcher';
+import ThemeToggle from '../components/ThemeToggle';
 import { Check } from 'lucide-react';
 
 export default function Landing() {
@@ -32,7 +33,8 @@ export default function Landing() {
           <img src="/mascot/logo.png" alt="SenpaiJLPT" style={styles.navLogo} />
           <span style={styles.brandName}>SenpaiJLPT</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <ThemeToggle />
           <LangSwitcher />
           <Button as={Link} to="/login" variant="secondary" size="sm">{t('landing.loginBtn')}</Button>
         </div>

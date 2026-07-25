@@ -5,6 +5,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { sendPhoneOtpApi } from '../../api/auth';
 import GoogleButton from '../../components/GoogleButton';
 import LangSwitcher from '../../components/LangSwitcher';
+import ThemeToggle from '../../components/ThemeToggle';
 import { Button, Field } from '../../components/ui';
 import { Eye, EyeOff, Mail, Lock, Phone, KeyRound } from 'lucide-react';
 
@@ -74,7 +75,10 @@ export default function Login() {
   return (
     <div style={styles.page}>
       <div style={styles.topDecor} />
-      <LangSwitcher style={{ position: 'absolute', top: 16, right: 16, zIndex: 3 }} />
+      <div style={{ position: 'absolute', top: 16, right: 16, zIndex: 3, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <ThemeToggle />
+        <LangSwitcher />
+      </div>
 
       <div style={styles.wrapper}>
         <div style={styles.card} className="anim-pop">
@@ -83,7 +87,7 @@ export default function Login() {
               <span style={styles.speechText} className="jp">{t('auth.welcomeBack')}</span>
               <span style={styles.speechArrow} />
             </div>
-            <img src="/mascot/greeting.png" alt="SenpaiJLPT maskoti" style={styles.mascotImg} />
+            <img src="/mascot/3D_Dragon_Greeting_Icon-removebg-preview.png" alt="SenpaiJLPT maskoti" style={styles.mascotImg} />
           </div>
           <div style={styles.brand}>
             <h1 style={styles.brandName}>Senpai<span style={{ color: 'var(--primary)' }}>JLPT</span></h1>

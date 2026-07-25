@@ -187,7 +187,7 @@ export function AuthProvider({ children }) {
           <div className="jp anim-float" style={{
             fontSize: 48, fontFamily: 'var(--font-jp)', fontWeight: 700,
             color: 'var(--primary)', marginBottom: 16,
-          }}>先輩アリ</div>
+          }}>先輩JLPT</div>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
             {[0, 1, 2].map(i => (
               <span key={i} style={{
