@@ -5,6 +5,7 @@ import { getPodcastDetail, getEpisode } from '../../api/podcasts';
 import { useToast } from '../../context/ToastContext';
 import AdminTable from './AdminTable';
 import AdminModal, { FormField, inputStyle, selectStyle } from './AdminModal';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 const columns = [
   { key: 'title', label: 'Sarlavha' },
@@ -74,6 +75,7 @@ export default function AdminPodcasts() {
   const [epForm, setEpForm] = useState(emptyEpForm);
   const [selectedPodcastId, setSelectedPodcastId] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState(null);   // o'chirish tasdiqi kutilayotgan podcast
   // Epizodlar boshqaruvi modali
   const [epListPodcast, setEpListPodcast] = useState(null);
   const [episodes, setEpisodes] = useState(null);
@@ -151,8 +153,12 @@ export default function AdminPodcasts() {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!confirm("Podcastni barcha epizodlari bilan o'chirishni tasdiqlaysizmi?")) return;
+  // Native confirm() o'rniga themed ConfirmDialog — brauzer uni bloklay olmaydi
+  // (ketma-ket dialoglardan keyin native confirm jimgina false qaytishi mumkin).
+  const confirmDelete = async () => {
+    const id = pendingDelete;
+    if (!id) return;
+    setPendingDelete(null);
     try {
       await adminApi.deletePodcast(id);
       setData(prev => prev.filter(item => item.id !== id));
@@ -280,7 +286,7 @@ export default function AdminPodcasts() {
         onRetry={load}
         onCreate={openCreate}
         onEdit={openEdit}
-        onDelete={handleDelete}
+        onDelete={setPendingDelete}
       />
 
       <AdminModal
@@ -413,6 +419,16 @@ export default function AdminPodcasts() {
           </div>
         </>
       )}
+
+      <ConfirmDialog
+        open={!!pendingDelete}
+        danger
+        title="Podcastni o'chirasizmi?"
+        description="Podcast barcha epizodlari bilan birga o'chiriladi. Bu amalni qaytarib bo'lmaydi."
+        confirmLabel="Ha, o'chirish"
+        onCancel={() => setPendingDelete(null)}
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 }

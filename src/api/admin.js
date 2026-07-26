@@ -82,6 +82,7 @@ export const adminApi = {
   // Mock Tests (admin CRUD — savollar to'liq, §2.2: query'da level NOM)
   listMockTests: (level) => api(`/admin/mock-tests${level != null ? `?level=${level}` : ''}`),
   createMockTest: (data) => api('/admin/mock-tests', { method: 'POST', body: data }),
+  generateMockTest: (data) => api('/admin/mock-tests/generate', { method: 'POST', body: data }),
   updateMockTest: (id, data) => api(`/admin/mock-tests/${id}`, { method: 'PUT', body: data }),
   deleteMockTest: (id) => api(`/admin/mock-tests/${id}`, { method: 'DELETE' }),
 };

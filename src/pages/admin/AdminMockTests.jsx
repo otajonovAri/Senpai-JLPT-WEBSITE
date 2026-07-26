@@ -52,6 +52,12 @@ export default function AdminMockTests() {
   const [editItem, setEditItem] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [genOpen, setGenOpen] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [genForm, setGenForm] = useState({
+    level: 'N5', durationMinutes: '60',
+    vocabCount: '8', kanjiCount: '6', grammarCount: '8', readingCount: '4', listeningCount: '4',
+  });
 
   const load = useCallback(() => {
     setLoading(true);
@@ -147,6 +153,30 @@ export default function AdminMockTests() {
     }
   };
 
+  const setGen = (key, val) => setGenForm(prev => ({ ...prev, [key]: val }));
+
+  const handleGenerate = async () => {
+    setGenerating(true);
+    try {
+      await adminApi.generateMockTest({
+        level: JlptLevelToInt[genForm.level] ?? 5,
+        durationMinutes: parseInt(genForm.durationMinutes) || 60,
+        vocabCount: parseInt(genForm.vocabCount) || 0,
+        kanjiCount: parseInt(genForm.kanjiCount) || 0,
+        grammarCount: parseInt(genForm.grammarCount) || 0,
+        readingCount: parseInt(genForm.readingCount) || 0,
+        listeningCount: parseInt(genForm.listeningCount) || 0,
+      });
+      toast.success('Mock test generatsiya qilindi');
+      setGenOpen(false);
+      load();
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   const set = (key, val) => setForm(prev => ({ ...prev, [key]: val }));
 
   const setQuestion = (idx, key, val) => setForm(prev => ({
@@ -182,6 +212,9 @@ export default function AdminMockTests() {
             {l}
           </button>
         ))}
+        <button style={styles.genBtn} className="press" onClick={() => setGenOpen(true)}>
+          ⚡ Generatsiya
+        </button>
       </div>
 
       <AdminTable
@@ -264,6 +297,44 @@ export default function AdminMockTests() {
           + Savol qo'shish
         </button>
       </AdminModal>
+
+      <AdminModal
+        title="⚡ Mock testni generatsiya qilish"
+        open={genOpen}
+        onClose={() => setGenOpen(false)}
+        onSubmit={handleGenerate}
+        loading={generating}
+      >
+        <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 14, lineHeight: 1.5 }}>
+          Tanlangan daraja uchun mavjud <b>so'z, kanji va grammatika</b>dan avtomatik ko'p tanlovli
+          savollar (chalg'ituvchilari bilan) tuziladi va 4 ta JLPT bo'limiga taqsimlanadi.
+        </p>
+        <FormField label="Daraja">
+          <select style={selectStyle} value={genForm.level} onChange={e => setGen('level', e.target.value)}>
+            {LEVELS.map(l => <option key={l} value={l}>{l}</option>)}
+          </select>
+        </FormField>
+        <FormField label="Davomiylik (daqiqa)">
+          <input style={inputStyle} type="number" value={genForm.durationMinutes} onChange={e => setGen('durationMinutes', e.target.value)} />
+        </FormField>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          <FormField label="So'z savollari">
+            <input style={inputStyle} type="number" min="0" value={genForm.vocabCount} onChange={e => setGen('vocabCount', e.target.value)} />
+          </FormField>
+          <FormField label="Kanji savollari">
+            <input style={inputStyle} type="number" min="0" value={genForm.kanjiCount} onChange={e => setGen('kanjiCount', e.target.value)} />
+          </FormField>
+          <FormField label="Grammatika savollari">
+            <input style={inputStyle} type="number" min="0" value={genForm.grammarCount} onChange={e => setGen('grammarCount', e.target.value)} />
+          </FormField>
+          <FormField label="O'qish savollari">
+            <input style={inputStyle} type="number" min="0" value={genForm.readingCount} onChange={e => setGen('readingCount', e.target.value)} />
+          </FormField>
+          <FormField label="Tinglash savollari">
+            <input style={inputStyle} type="number" min="0" value={genForm.listeningCount} onChange={e => setGen('listeningCount', e.target.value)} />
+          </FormField>
+        </div>
+      </AdminModal>
     </div>
   );
 }
@@ -274,6 +345,19 @@ const styles = {
     gap: 6,
     marginBottom: 16,
     flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+  genBtn: {
+    marginLeft: 'auto',
+    padding: '8px 16px',
+    borderRadius: 10,
+    border: 'none',
+    background: 'var(--primary)',
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: 800,
+    cursor: 'pointer',
+    boxShadow: '0 3px 0 var(--primary-dark)',
   },
   filterBtn: {
     padding: '6px 14px',

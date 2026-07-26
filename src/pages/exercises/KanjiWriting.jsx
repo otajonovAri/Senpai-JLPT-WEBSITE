@@ -5,6 +5,44 @@ import { submitKanjiWriting } from '../../api/lessons';
 import ErrorState from '../../components/ErrorState';
 import { ArrowLeft, RotateCcw, Eye, Loader } from 'lucide-react';
 
+// KanjiVG SVG'dan har stroke'ning boshlanish/tugash nuqtasi va yo'nalishini oladi
+// (0..1 ga normalizatsiya qilingan — KanjiVG koordinata maydoni 109×109).
+async function parseReferenceStrokes(url) {
+  const res = await fetch(url);
+  const text = await res.text();
+  const doc = new DOMParser().parseFromString(text, 'image/svg+xml');
+  const group = doc.querySelector('[id^="kvg:StrokePaths"]') || doc;
+  const paths = [...group.querySelectorAll('path')];
+  const NS = 'http://www.w3.org/2000/svg';
+  return paths.map(p => {
+    const el = document.createElementNS(NS, 'path');
+    el.setAttribute('d', p.getAttribute('d') || '');
+    let len = 0;
+    try { len = el.getTotalLength(); } catch { /* ignore */ }
+    const s = len ? el.getPointAtLength(0) : { x: 0, y: 0 };
+    const e = len ? el.getPointAtLength(len) : { x: 0, y: 0 };
+    const m = len ? el.getPointAtLength(len / 2) : { x: 0, y: 0 };
+    return {
+      sx: s.x / 109, sy: s.y / 109,
+      mx: m.x / 109, my: m.y / 109,
+      ex: e.x / 109, ey: e.y / 109,
+    };
+  });
+}
+
+// Ikki stroke'ni tartib + yo'nalish + joylashuv bo'yicha 0..1 ball bilan solishtiradi.
+function scoreStroke(ref, drawn) {
+  const rAng = Math.atan2(ref.ey - ref.sy, ref.ex - ref.sx);
+  const dAng = Math.atan2(drawn.ey - drawn.sy, drawn.ex - drawn.sx);
+  let diff = Math.abs(rAng - dAng);
+  if (diff > Math.PI) diff = 2 * Math.PI - diff;
+  const dirScore = Math.max(0, 1 - diff / (Math.PI / 2));           // 90°+ og'ish → 0
+  const posDist = (Math.hypot(ref.sx - drawn.sx, ref.sy - drawn.sy) +
+                   Math.hypot(ref.ex - drawn.ex, ref.ey - drawn.ey)) / 2;
+  const posScore = Math.max(0, 1 - posDist / 0.6);                  // ~0.6 birlik dopusk
+  return 0.6 * dirScore + 0.4 * posScore;
+}
+
 export default function KanjiWriting() {
   const navigate = useNavigate();
   const { id } = useParams(); // kanjiId
