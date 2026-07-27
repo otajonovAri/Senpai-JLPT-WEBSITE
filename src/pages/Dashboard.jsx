@@ -18,9 +18,9 @@ const QUEST_ICONS = {
 };
 
 const QUEST_ROUTES = {
-  LearnWords: '/lessons', LearnKanji: '/kanji', LearnGrammar: '/lessons',
+  LearnWords: '/dictionary', LearnKanji: '/kanji', LearnGrammar: '/lessons',
   CompleteReviews: '/review', WriteKanji: '/kanji', CompleteLessons: '/lessons',
-  EarnXp: '/lessons', StudyMinutes: '/lessons',
+  EarnXp: '/roadmap', StudyMinutes: '/roadmap',
 };
 
 export default function Dashboard() {

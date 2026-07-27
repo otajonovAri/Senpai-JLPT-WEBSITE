@@ -10,16 +10,18 @@ const QUEST_ICONS = {
   WriteKanji: '✍️', CompleteLessons: '📚', EarnXp: '⚡', StudyMinutes: '⏱️',
 };
 
-// Har vazifa turi — uni bajarish uchun ochiladigan sahifa
+// Har vazifa turi — uni bajarish uchun ochiladigan sahifa.
+// EarnXp/StudyMinutes umumiy vazifalar (XP/vaqt istalgan faoliyatdan) →
+// "o'qishni davom ettir" joyi bo'lgan yo'l xaritasiga olib boradi.
 const QUEST_ROUTES = {
-  LearnWords: '/lessons',
+  LearnWords: '/dictionary',
   LearnKanji: '/kanji',
   LearnGrammar: '/lessons',
   CompleteReviews: '/review',
   WriteKanji: '/kanji',
   CompleteLessons: '/lessons',
-  EarnXp: '/lessons',
-  StudyMinutes: '/lessons',
+  EarnXp: '/roadmap',
+  StudyMinutes: '/roadmap',
 };
 
 export default function DailyQuests() {
