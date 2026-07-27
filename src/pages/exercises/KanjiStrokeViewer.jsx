@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getKanjiById } from '../../api/dictionary';
+import { getKanjiById, searchKanji } from '../../api/dictionary';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import KanjiStrokeAnimation from '../../components/KanjiStrokeAnimation';
 import ErrorState from '../../components/ErrorState';
@@ -17,6 +17,7 @@ export default function KanjiStrokeViewer() {
   const [error, setError] = useState(null);
   const [practiceMode, setPracticeMode] = useState(false);
   const [showOverlay, setShowOverlay] = useState(true);
+  const [siblings, setSiblings] = useState([]);   // shu darajadagi kanji ID'lari (tartibda)
   const canvasRef = useRef(null);
   const drawingRef = useRef(false);
   const lastPointRef = useRef(null);
@@ -38,6 +39,10 @@ export default function KanjiStrokeViewer() {
           strokeOrderUrl: k.strokeOrderUrl,
           jlptLevel: k.level,
         });
+        // Oldingi/keyingi navigatsiya uchun shu darajadagi kanjilar ro'yxati (ID = UUID)
+        searchKanji({ level: k.level, pageSize: 500 })
+          .then(list => setSiblings((list?.items || []).map(x => x.id)))
+          .catch(() => setSiblings([]));
       })
       .catch(err => setError(err.message))
       .finally(() => setLoading(false));
@@ -102,9 +107,12 @@ export default function KanjiStrokeViewer() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
 
+  // Kanji ID'lari UUID — tartibli ro'yxatdagi qo'shni kanjiga o'tamiz (raqam qo'shish emas)
+  const curIdx = siblings.indexOf(id);
   const goTo = (offset) => {
-    const numId = Number(id);
-    if (!isNaN(numId)) navigate(`/kanji-stroke/${numId + offset}`);
+    if (curIdx === -1) return;
+    const target = siblings[curIdx + offset];
+    if (target) navigate(`/kanji-stroke/${target}`);
   };
 
   if (loading) return (
@@ -212,10 +220,18 @@ export default function KanjiStrokeViewer() {
 
       {/* Navigation */}
       <div style={styles.navRow} className="anim-fade-up">
-        <button style={styles.navButton} onClick={() => goTo(-1)}>
+        <button
+          style={{ ...styles.navButton, ...(curIdx > 0 ? {} : styles.navDisabled) }}
+          onClick={() => goTo(-1)}
+          disabled={curIdx <= 0}
+        >
           <ChevronLeft size={16} /> Oldingi
         </button>
-        <button style={styles.navButton} onClick={() => goTo(1)}>
+        <button
+          style={{ ...styles.navButton, ...(curIdx >= 0 && curIdx < siblings.length - 1 ? {} : styles.navDisabled) }}
+          onClick={() => goTo(1)}
+          disabled={curIdx < 0 || curIdx >= siblings.length - 1}
+        >
           Keyingi <ChevronRight size={16} />
         </button>
       </div>
@@ -337,4 +353,5 @@ const styles = {
     cursor: 'pointer',
     transition: 'background 0.15s',
   },
+  navDisabled: { opacity: 0.4, cursor: 'not-allowed' },
 };
