@@ -1,15 +1,29 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getDailyQuests, claimQuestReward } from '../../api/gamification';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { Target, Gift, Clock, Loader } from 'lucide-react';
+import { Target, Gift, Clock, Loader, ChevronRight } from 'lucide-react';
 
 const QUEST_ICONS = {
   LearnWords: '📖', LearnKanji: '🈷️', LearnGrammar: '📝', CompleteReviews: '🔁',
   WriteKanji: '✍️', CompleteLessons: '📚', EarnXp: '⚡', StudyMinutes: '⏱️',
 };
 
+// Har vazifa turi — uni bajarish uchun ochiladigan sahifa
+const QUEST_ROUTES = {
+  LearnWords: '/lessons',
+  LearnKanji: '/kanji',
+  LearnGrammar: '/lessons',
+  CompleteReviews: '/review',
+  WriteKanji: '/kanji',
+  CompleteLessons: '/lessons',
+  EarnXp: '/lessons',
+  StudyMinutes: '/lessons',
+};
+
 export default function DailyQuests() {
+  const navigate = useNavigate();
   const [quests, setQuests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,9 +36,11 @@ export default function DailyQuests() {
       .then(data => {
         const list = (data?.quests || []).map(q => ({
           id: q.questId,
+          type: q.type,
           title: q.descriptionUz || q.description,
           description: '',
           icon: QUEST_ICONS[q.type] || '⭐',
+          route: QUEST_ROUTES[q.type] || '/lessons',
           current: q.currentProgress,
           target: q.targetValue,
           reward: q.coinReward,
@@ -73,7 +89,13 @@ export default function DailyQuests() {
         {quests.map(quest => {
           const done = quest.current >= quest.target;
           return (
-            <div key={quest.id} style={{ ...styles.card, ...(done ? styles.cardDone : {}) }} className="hover-scale">
+            <div
+              key={quest.id}
+              style={{ ...styles.card, ...(done ? styles.cardDone : {}), cursor: 'pointer' }}
+              className="hover-scale"
+              onClick={() => navigate(quest.route)}
+              title="Vazifani bajarishga o'tish"
+            >
               <div style={styles.questIcon}>{quest.icon || '⭐'}</div>
               <div style={styles.questInfo}>
                 <div style={styles.questTitle}>{quest.title}</div>
@@ -85,11 +107,16 @@ export default function DailyQuests() {
               <div style={styles.questRight}>
                 <div style={styles.questReward}>+{quest.reward || 10} 💰</div>
                 {done && !quest.claimed ? (
-                  <button style={styles.claimBtn} className="press anim-glow-pulse" onClick={() => handleClaim(quest.id)}>Olish</button>
+                  <button
+                    style={styles.claimBtn}
+                    className="press anim-glow-pulse"
+                    onClick={(e) => { e.stopPropagation(); handleClaim(quest.id); }}
+                  >Olish</button>
                 ) : done && quest.claimed ? (
                   <span style={styles.claimedBadge}>Olingan ✓</span>
                 ) : null}
               </div>
+              <ChevronRight size={18} color="var(--text-light)" style={{ flexShrink: 0 }} />
             </div>
           );
         })}

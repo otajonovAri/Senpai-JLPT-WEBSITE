@@ -52,10 +52,13 @@ export default function KanjiWriting() {
   const [strokesDrawn, setStrokesDrawn] = useState(0);
   const [showGuide, setShowGuide] = useState(true);
   const [completed, setCompleted] = useState(false);
-  const [resultXp, setResultXp] = useState(null);
+  const [result, setResult] = useState(null);
   const canvasRef = useRef(null);
   const drawingRef = useRef(false);
   const lastPointRef = useRef(null);
+  const currentStrokeRef = useRef([]);   // chizilayotgan chiziq nuqtalari
+  const drawnStrokesRef = useRef([]);    // tugallangan chiziqlar: {sx,sy,mx,my,ex,ey} 0..1
+  const refStrokesRef = useRef(null);    // KanjiVG referens strokelari (yo'q bo'lsa null)
 
   const load = useCallback(() => {
     setLoading(true);
@@ -70,6 +73,13 @@ export default function KanjiWriting() {
           strokeCount: k.strokeCount || 1,
           strokeOrderUrl: k.strokeOrderUrl,
         });
+        // Referens strokelarni fon rejimida yuklaymiz (baholash uchun; yo'q bo'lsa fallback)
+        refStrokesRef.current = null;
+        if (k.strokeOrderUrl) {
+          parseReferenceStrokes(k.strokeOrderUrl)
+            .then(strokes => { refStrokesRef.current = strokes?.length ? strokes : null; })
+            .catch(() => { refStrokesRef.current = null; });
+        }
       })
       .catch(err => setError(err.message))
       .finally(() => setLoading(false));
@@ -91,7 +101,9 @@ export default function KanjiWriting() {
     if (completed) return;
     e.preventDefault();
     drawingRef.current = true;
-    lastPointRef.current = getPoint(e);
+    const p = getPoint(e);
+    lastPointRef.current = p;
+    currentStrokeRef.current = [p];
     canvasRef.current?.setPointerCapture?.(e.pointerId);
   };
 
@@ -109,33 +121,70 @@ export default function KanjiWriting() {
     ctx.lineTo(p.x, p.y);
     ctx.stroke();
     lastPointRef.current = p;
+    currentStrokeRef.current.push(p);
   };
 
   const handlePointerUp = () => {
     if (!drawingRef.current) return;
     drawingRef.current = false;
+    // Chizilgan chiziqning boshi/o'rtasi/oxirini 0..1 ga normalizatsiya qilib saqlaymiz
+    const pts = currentStrokeRef.current;
+    if (pts.length > 0) {
+      const W = canvasRef.current?.width || 400;
+      const H = canvasRef.current?.height || 400;
+      const first = pts[0], mid = pts[Math.floor(pts.length / 2)], last = pts[pts.length - 1];
+      drawnStrokesRef.current.push({
+        sx: first.x / W, sy: first.y / H,
+        mx: mid.x / W, my: mid.y / H,
+        ex: last.x / W, ey: last.y / H,
+      });
+    }
+    currentStrokeRef.current = [];
     setStrokesDrawn(s => s + 1);
   };
 
   const clearCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    drawnStrokesRef.current = [];
+    currentStrokeRef.current = [];
     setStrokesDrawn(0);
   }, []);
 
   const handleCheck = () => {
     if (strokesDrawn === 0) return;
     const total = kanji.strokeCount;
-    // Chizilgan chiziqlar soni to'g'ri songa qanchalik yaqin — shuncha yuqori ball
-    const correctStrokes = Math.min(strokesDrawn, total);
-    const overshoot = Math.max(0, strokesDrawn - total);
-    const score = Math.max(0, Math.round((correctStrokes / total) * 100) - overshoot * 10);
+    const drawn = drawnStrokesRef.current;
+    const ref = refStrokesRef.current;
+
+    let score;
+    let correctStrokes;
+    if (ref && ref.length > 0) {
+      // Referens mavjud — har chiziqni TARTIB + YO'NALISH + JOYLASHUV bo'yicha baholaymiz
+      let sum = 0;
+      let matched = 0;
+      for (let i = 0; i < ref.length; i++) {
+        const d = drawn[i];               // i-chi chizilgan chiziq (tartib muhim)
+        if (!d) continue;                 // yetishmayotgan chiziq → 0 ball
+        const s = scoreStroke(ref[i], d);
+        sum += s;
+        if (s >= 0.5) matched++;          // yarmidan yuqori — "to'g'ri" hisoblanadi
+      }
+      const extra = Math.max(0, drawn.length - ref.length);   // ortiqcha chiziqlar jazosi
+      score = Math.max(0, Math.round((sum / ref.length) * 100) - extra * 8);
+      correctStrokes = matched;
+    } else {
+      // Fallback — KanjiVG referens yo'q: eski soni-asosidagi baho
+      correctStrokes = Math.min(strokesDrawn, total);
+      const overshoot = Math.max(0, strokesDrawn - total);
+      score = Math.max(0, Math.round((correctStrokes / total) * 100) - overshoot * 10);
+    }
     setCompleted(true);
 
     if (kanji?.id) {
       // §11.5 — POST /exercises/kanji-writing { kanjiId, score, strokeCount, correctStrokes }
       submitKanjiWriting(kanji.id, score, total, correctStrokes)
-        .then(res => setResultXp(res?.xpEarned ?? null))
+        .then(res => setResult(res || null))
         .catch(() => {});
     }
   };
@@ -148,12 +197,16 @@ export default function KanjiWriting() {
     return (
       <div style={styles.page} className="stagger">
         <div style={styles.resultCard}>
-          <div style={{ fontSize: 56, marginBottom: 12 }}>✍️</div>
-          <h2 style={styles.resultTitle}>Yaxshi yozdingiz!</h2>
+          <div style={{ fontSize: 56, marginBottom: 12 }}>{result?.justLearned ? '🎉' : '✍️'}</div>
+          <h2 style={styles.resultTitle}>{result?.justLearned ? 'Kanjini o\'rgandingiz!' : 'Yaxshi yozdingiz!'}</h2>
           <div style={styles.resultKanji} className="jp">{kanji.character}</div>
-          {resultXp !== null && <div style={styles.xpBadge}>+{resultXp} XP</div>}
+          {result?.score != null && <div style={styles.scoreLine}>Aniqlik: {result.score}%</div>}
+          {result?.xpEarned > 0 && <div style={styles.xpBadge}>+{result.xpEarned} XP</div>}
+          {result?.learned && (
+            <div style={styles.learnedBadge}>✓ O'rganilgan</div>
+          )}
           <div style={styles.resultBtns}>
-            <button style={styles.secBtn} onClick={() => { setCompleted(false); setResultXp(null); setTimeout(clearCanvas, 0); }}>
+            <button style={styles.secBtn} onClick={() => { setCompleted(false); setResult(null); setTimeout(clearCanvas, 0); }}>
               <RotateCcw size={16} /> Qayta yozish
             </button>
             <button style={styles.btn} onClick={() => navigate(-1)}>Davom etish</button>
@@ -247,7 +300,9 @@ const styles = {
   resultCard: { textAlign: 'center', background: 'var(--bg-card)', borderRadius: 20, padding: 40, boxShadow: 'var(--shadow-lg)' },
   resultTitle: { fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 12 },
   resultKanji: { fontSize: 64, fontWeight: 900, color: 'var(--primary)', marginBottom: 12 },
+  scoreLine: { fontSize: 15, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 10 },
   xpBadge: { display: 'inline-block', padding: '6px 16px', borderRadius: 12, background: 'rgba(167,139,250,0.12)', color: '#7C3AED', fontSize: 14, fontWeight: 700, marginBottom: 16 },
+  learnedBadge: { display: 'inline-block', padding: '6px 16px', borderRadius: 12, background: 'var(--success-soft)', color: 'var(--success-dark)', fontSize: 13, fontWeight: 800, marginBottom: 16, marginLeft: 8 },
   resultBtns: { display: 'flex', gap: 8, justifyContent: 'center' },
   btn: { padding: '13px 24px', borderRadius: 12, background: 'var(--primary)', color: 'white', fontSize: 14, fontWeight: 600, border: 'none', cursor: 'pointer' },
   secBtn: { display: 'flex', alignItems: 'center', gap: 6, padding: '13px 18px', borderRadius: 12, background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)', fontSize: 13, fontWeight: 500, cursor: 'pointer' },

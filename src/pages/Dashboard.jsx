@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { getHomeDashboard } from '../api/home';
 import { getDailyQuests, claimQuestReward } from '../api/gamification';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SkeletonList } from '../components/Skeleton';
 import ErrorState from '../components/ErrorState';
 import { CountUp, Confetti } from '../components/ui';
@@ -17,9 +17,16 @@ const QUEST_ICONS = {
   WriteKanji: '✍️', CompleteLessons: '📚', EarnXp: '⚡', StudyMinutes: '⏱️',
 };
 
+const QUEST_ROUTES = {
+  LearnWords: '/lessons', LearnKanji: '/kanji', LearnGrammar: '/lessons',
+  CompleteReviews: '/review', WriteKanji: '/kanji', CompleteLessons: '/lessons',
+  EarnXp: '/lessons', StudyMinutes: '/lessons',
+};
+
 export default function Dashboard() {
   const { user } = useAuth();
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [stats, setStats] = useState(null);
   const [quests, setQuests] = useState([]);
   const [reviewsDue, setReviewsDue] = useState(0);
@@ -46,6 +53,7 @@ export default function Dashboard() {
         isCompleted: q.isCompleted,
         isClaimed: q.isClaimed,
         icon: QUEST_ICONS[q.type] || '🎯',
+        route: QUEST_ROUTES[q.type] || '/lessons',
       }));
 
       const goalPercent = mappedQuests.length
@@ -205,7 +213,13 @@ export default function Dashboard() {
         </div>
         <div style={styles.questList} className="stagger">
           {quests.map(q => (
-            <div key={q.id} style={{ ...styles.questItem, ...(q.isCompleted ? styles.questCompleted : {}) }} className="hover-scale">
+            <div
+              key={q.id}
+              style={{ ...styles.questItem, ...(q.isCompleted ? styles.questCompleted : {}), cursor: 'pointer' }}
+              className="hover-scale"
+              onClick={() => navigate(q.route)}
+              title="Vazifani bajarishga o'tish"
+            >
               <div style={styles.questLeft}>
                 <div style={{ ...styles.questCheck, ...(q.isCompleted ? styles.questCheckDone : {}) }} className={q.isCompleted ? 'anim-pop' : ''}>
                   {q.isCompleted ? '✓' : ''}
@@ -218,7 +232,7 @@ export default function Dashboard() {
                 <div style={styles.questReward}>+{q.coinReward} {t('dashboard.coin')}</div>
                 <div style={styles.questProgress}>{q.current}/{q.target}</div>
                 {q.isCompleted && !q.isClaimed && (
-                  <button style={styles.claimBtn} className="press anim-glow-pulse" onClick={() => handleClaimQuest(q.id)}>{t('dashboard.claim')}</button>
+                  <button style={styles.claimBtn} className="press anim-glow-pulse" onClick={(e) => { e.stopPropagation(); handleClaimQuest(q.id); }}>{t('dashboard.claim')}</button>
                 )}
                 {q.isClaimed && <span className="anim-pop" style={{ fontSize: 11, color: 'var(--success)', fontWeight: 800 }}>✓ {t('dashboard.claimed')}</span>}
                 {celebrateId === q.id && <Confetti key={q.id} count={16} spread={70} />}

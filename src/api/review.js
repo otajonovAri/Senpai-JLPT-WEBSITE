@@ -21,9 +21,11 @@ export async function getReviewForecast() {
   return api('/review/forecast');
 }
 
-export async function getFlashcardItems(type, limit = 30) {
+export async function getFlashcardItems(type, limit = 30, level = null, learnedOnly = false) {
   const qs = new URLSearchParams();
   if (type != null) qs.set('type', type);
+  if (level != null) qs.set('level', level);
+  if (learnedOnly) qs.set('learnedOnly', 'true');
   qs.set('limit', limit);
   return api(`/review/flashcards?${qs}`);
 }

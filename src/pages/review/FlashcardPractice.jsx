@@ -15,6 +15,8 @@ const TYPES = [
 export default function FlashcardPractice() {
   const navigate = useNavigate();
   const [type, setType] = useState(null);
+  const [level, setLevel] = useState(null);         // JlptLevel nomi: null | 'N5'..'N1'
+  const [learnedOnly, setLearnedOnly] = useState(false);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,14 +24,14 @@ export default function FlashcardPractice() {
   const [flipped, setFlipped] = useState(false);
   const [stats, setStats] = useState({ known: 0, review: 0 });
 
-  const load = useCallback((itemType) => {
+  const load = useCallback(() => {
     setLoading(true);
     setError(null);
     setCurrent(0);
     setFlipped(false);
     setStats({ known: 0, review: 0 });
 
-    getFlashcardItems(itemType, 30)
+    getFlashcardItems(type, 30, level, learnedOnly)
       .then(async (data) => {
         const items = data || [];
         if (items.length === 0) {
@@ -63,9 +65,9 @@ export default function FlashcardPractice() {
       })
       .catch(err => setError(err.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [type, level, learnedOnly]);
 
-  useEffect(() => { load(type); }, [load, type]);
+  useEffect(() => { load(); }, [load]);
 
   const handleNext = (knew) => {
     setStats(prev => ({
@@ -86,7 +88,7 @@ export default function FlashcardPractice() {
     );
   }
 
-  if (error) return <ErrorState message={error} onRetry={() => load(type)} />;
+  if (error) return <ErrorState message={error} onRetry={() => load()} />;
 
   return (
     <div style={styles.page} className="stagger">
@@ -118,6 +120,28 @@ export default function FlashcardPractice() {
         })}
       </div>
 
+      <div style={styles.filterRow}>
+        <div style={styles.levelChips}>
+          {[null, 'N5', 'N4', 'N3', 'N2', 'N1'].map(lv => (
+            <button
+              key={lv || 'all'}
+              style={{ ...styles.levelChip, ...(level === lv ? styles.levelChipActive : {}) }}
+              className="press"
+              onClick={() => setLevel(lv)}
+            >
+              {lv || 'Barcha daraja'}
+            </button>
+          ))}
+        </div>
+        <button
+          style={{ ...styles.learnedToggle, ...(learnedOnly ? styles.learnedToggleActive : {}) }}
+          className="press"
+          onClick={() => setLearnedOnly(v => !v)}
+        >
+          {learnedOnly ? '✓ ' : ''}Faqat o'rganilgan
+        </button>
+      </div>
+
       {cards.length === 0 && !loading && (
         <EmptyState
           emoji="📚"
@@ -135,7 +159,7 @@ export default function FlashcardPractice() {
             <span style={{ color: 'var(--danger)' }}>✗ {stats.review} takrorlash kerak</span>
           </div>
           <div style={styles.resultBtns}>
-            <button style={styles.btnOutline} className="press" onClick={() => load(type)}>
+            <button style={styles.btnOutline} className="press" onClick={() => load()}>
               <RotateCcw size={16} /> Yana mashq
             </button>
             <button style={styles.btn} className="press" onClick={() => navigate('/review')}>
@@ -220,6 +244,27 @@ const styles = {
   tabActive: {
     background: 'var(--primary)', color: 'white',
     border: '1px solid var(--primary)',
+  },
+  filterRow: {
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    gap: 10, width: '100%', flexWrap: 'wrap',
+  },
+  levelChips: { display: 'flex', gap: 6, flexWrap: 'wrap' },
+  levelChip: {
+    padding: '6px 12px', borderRadius: 'var(--radius-full)',
+    border: '2px solid var(--border)', background: 'var(--bg-alt)',
+    color: 'var(--text-light)', fontSize: 12.5, fontWeight: 800, cursor: 'pointer',
+  },
+  levelChipActive: {
+    background: 'var(--primary-soft)', color: 'var(--primary-dark)', borderColor: 'var(--primary)',
+  },
+  learnedToggle: {
+    padding: '6px 14px', borderRadius: 'var(--radius-full)',
+    border: '2px solid var(--border)', background: 'var(--bg-alt)',
+    color: 'var(--text-light)', fontSize: 12.5, fontWeight: 800, cursor: 'pointer', whiteSpace: 'nowrap',
+  },
+  learnedToggleActive: {
+    background: 'var(--success-soft)', color: 'var(--success-dark)', borderColor: 'var(--success)',
   },
   progressBg: { height: 4, background: 'var(--border-light)', borderRadius: 2, overflow: 'hidden', width: '100%' },
   progressFill: { height: '100%', background: 'var(--primary)', borderRadius: 2, transition: 'width 0.3s' },
