@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchKanji } from '../../api/dictionary';
+import { getFlashcardItems } from '../../api/review';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { Search, Loader } from 'lucide-react';
@@ -19,6 +20,7 @@ export default function KanjiList() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
+  const [learnedIds, setLearnedIds] = useState(() => new Set());   // o'rganilgan kanji ID'lari
 
   const mapKanji = (k) => ({
     id: k.id,
@@ -58,6 +60,14 @@ export default function KanjiList() {
     const timer = setTimeout(() => load(1, false), query ? 400 : 0);
     return () => clearTimeout(timer);
   }, [load, query]);
+
+  // Foydalanuvchi o'rgangan kanjilar (Mastery >= Known) — kartaga belgi qo'yish uchun.
+  // 1 = LearningItemType.Kanji, learnedOnly=true.
+  useEffect(() => {
+    getFlashcardItems(1, 500, null, true)
+      .then(items => setLearnedIds(new Set((items || []).map(x => x.itemId))))
+      .catch(() => { /* mehmon yoki xato — belgisiz ko'rsatamiz */ });
+  }, []);
 
   if (loading) {
     return (
@@ -106,19 +116,23 @@ export default function KanjiList() {
       ) : (
         <>
           <div style={styles.grid} className="stagger-grid">
-            {kanjiItems.map(kanji => (
-              <div key={kanji.id} style={styles.card} className="card-interactive"
-                onClick={() => navigate(`/kanji/${kanji.id}`)}>
-                <div style={styles.character} className="jp">{kanji.character}</div>
-                <div style={{ ...styles.meaning, ...(kanji.hasUz ? {} : styles.meaningEn) }}>
-                  {kanji.meaning}
+            {kanjiItems.map(kanji => {
+              const learned = learnedIds.has(kanji.id);
+              return (
+                <div key={kanji.id} style={{ ...styles.card, ...(learned ? styles.cardLearned : {}) }} className="card-interactive"
+                  onClick={() => navigate(`/kanji/${kanji.id}`)}>
+                  {learned && <span style={styles.learnedTick} title="O'rganilgan">✓</span>}
+                  <div style={styles.character} className="jp">{kanji.character}</div>
+                  <div style={{ ...styles.meaning, ...(kanji.hasUz ? {} : styles.meaningEn) }}>
+                    {kanji.meaning}
+                  </div>
+                  <div style={styles.cardMeta}>
+                    <span style={styles.levelTag}>{kanji.level}</span>
+                    <span style={styles.strokeTag}>{kanji.strokeCount} chiziq</span>
+                  </div>
                 </div>
-                <div style={styles.cardMeta}>
-                  <span style={styles.levelTag}>{kanji.level}</span>
-                  <span style={styles.strokeTag}>{kanji.strokeCount} chiziq</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {hasNext && (
@@ -157,9 +171,21 @@ const styles = {
     gap: 10,
   },
   card: {
+    position: 'relative',
     background: 'var(--bg-card)', borderRadius: 14, padding: '14px 8px',
     textAlign: 'center', cursor: 'pointer', border: '1px solid var(--border-light)',
     boxShadow: 'var(--shadow-sm)', transition: 'transform 0.2s, box-shadow 0.2s',
+  },
+  cardLearned: {
+    borderColor: 'var(--success)',
+    background: 'var(--success-soft)',
+  },
+  learnedTick: {
+    position: 'absolute', top: 6, right: 6,
+    width: 18, height: 18, borderRadius: '50%',
+    background: 'var(--success)', color: '#fff',
+    fontSize: 11, fontWeight: 900, lineHeight: '18px',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
   character: { fontSize: 38, fontWeight: 700, color: 'var(--text)', marginBottom: 4, lineHeight: 1.2 },
   meaning: { fontSize: 12, fontWeight: 500, color: 'var(--primary)', marginBottom: 8, minHeight: 16, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
