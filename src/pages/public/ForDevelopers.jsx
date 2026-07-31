@@ -43,7 +43,7 @@ export default function ForDevelopers() {
       <Section title="Namuna so'rov">
         <pre style={S.code}>
 {`curl -H "Authorization: Bearer <TOKEN>" \\
-  "https://api.senpaiari.uz/api/vocabulary?level=N5&page=1"`}
+  "https://api.senpaijlpt.uz/api/vocabulary?level=N5&page=1"`}
         </pre>
         <p style={S.note}>
           Kalit olish uchun ariza qoldiring — notijorat va ta'lim loyihalari uchun bepul.

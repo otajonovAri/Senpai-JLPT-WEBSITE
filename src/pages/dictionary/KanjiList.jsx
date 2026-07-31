@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchKanji } from '../../api/dictionary';
-import { getFlashcardItems } from '../../api/review';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { Search, Loader } from 'lucide-react';
@@ -20,7 +19,6 @@ export default function KanjiList() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
-  const [learnedIds, setLearnedIds] = useState(() => new Set());   // o'rganilgan kanji ID'lari
 
   const mapKanji = (k) => ({
     id: k.id,
@@ -31,6 +29,7 @@ export default function KanjiList() {
     hasUz: !!k.meaningsUz?.length,
     level: k.level,
     strokeCount: k.strokeCount,
+    isLearned: !!k.isLearned,   // backend: Mastery >= Known
   });
 
   // §8.1 — GET /kanji?level=..&search=..&page=..&pageSize=.. (PagedResult)
@@ -60,14 +59,6 @@ export default function KanjiList() {
     const timer = setTimeout(() => load(1, false), query ? 400 : 0);
     return () => clearTimeout(timer);
   }, [load, query]);
-
-  // Foydalanuvchi o'rgangan kanjilar (Mastery >= Known) — kartaga belgi qo'yish uchun.
-  // 1 = LearningItemType.Kanji, learnedOnly=true.
-  useEffect(() => {
-    getFlashcardItems(1, 500, null, true)
-      .then(items => setLearnedIds(new Set((items || []).map(x => x.itemId))))
-      .catch(() => { /* mehmon yoki xato — belgisiz ko'rsatamiz */ });
-  }, []);
 
   if (loading) {
     return (
@@ -117,7 +108,7 @@ export default function KanjiList() {
         <>
           <div style={styles.grid} className="stagger-grid">
             {kanjiItems.map(kanji => {
-              const learned = learnedIds.has(kanji.id);
+              const learned = kanji.isLearned;
               return (
                 <div key={kanji.id} style={{ ...styles.card, ...(learned ? styles.cardLearned : {}) }} className="card-interactive"
                   onClick={() => navigate(`/kanji/${kanji.id}`)}>

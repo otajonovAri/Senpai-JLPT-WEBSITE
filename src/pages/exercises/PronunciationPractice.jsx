@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchVocabulary } from '../../api/dictionary';
+import { pickAudio } from '../../utils/voice';
 import ErrorState from '../../components/ErrorState';
 import { Pill } from '../../components/ui';
 import PronunciationSession from './PronunciationSession';
@@ -49,7 +50,7 @@ export default function PronunciationPractice() {
             jp: v.word,
             reading: v.reading || v.romaji || '',
             uz: (v.meaningsUz?.length ? v.meaningsUz : v.meanings || []).slice(0, 3).join(', '),
-            audioUrl: v.audioUrl,
+            audioUrl: pickAudio(v),
           }));
         const picked = shuffle(mapped).slice(0, 10);
         if (picked.length === 0) {

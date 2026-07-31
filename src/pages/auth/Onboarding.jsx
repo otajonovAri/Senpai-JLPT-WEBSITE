@@ -1,34 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 import { Button } from '../../components/ui';
-
-const slides = [
-  {
-    emoji: './assets/emoji/learn.png  ',
-    title: "Yapon tilini o'zbek tilida o'rganing",
-    sub: "18,000+ so'z va 2,000+ kanji bilan noldan boshlab o'rganing",
-    tint: 'var(--primary-soft)',
-    ring: 'var(--primary)',
-  },
-  {
-    emoji: './assets/emoji/srs.png',
-    title: 'SRS takrorlash tizimi',
-    sub: "Ilmiy usul bilan so'zlarni uzoq muddatga eslab qoling",
-    tint: 'var(--secondary-soft)',
-    ring: 'var(--secondary)',
-  },
-  {
-    emoji: './assets/emoji/mock.png',
-    title: 'JLPT N5–N1 tayyorgarlik',
-    sub: "Haqiqiy imtihonga yaqin mock testlar va mashqlar",
-    tint: 'var(--accent-soft)',
-    ring: 'var(--accent)',
-  },
-];
 
 export default function Onboarding() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [step, setStep] = useState(0);
+
+  const slides = [
+    { title: t('onboarding.slide1Title'), sub: t('onboarding.slide1Sub'), tint: 'var(--primary-soft)', ring: 'var(--primary)' },
+    { title: t('onboarding.slide2Title'), sub: t('onboarding.slide2Sub'), tint: 'var(--secondary-soft)', ring: 'var(--secondary)' },
+    { title: t('onboarding.slide3Title'), sub: t('onboarding.slide3Sub'), tint: 'var(--accent-soft)', ring: 'var(--accent)' },
+  ];
 
   const handleNext = () => {
     if (step < slides.length - 1) setStep(step + 1);
@@ -40,8 +24,8 @@ export default function Onboarding() {
   return (
     <div style={styles.page}>
       <div style={styles.top}>
-        <span style={styles.brand}><span className="jp" style={{ color: 'var(--primary)' }}>Kana</span> HUB</span>
-        <button style={styles.skip} onClick={() => navigate('/login')}>O'tkazish</button>
+        <span style={styles.brand}>Senpai<span style={{ color: 'var(--primary)' }}>JLPT</span></span>
+        <button style={styles.skip} onClick={() => navigate('/login')}>{t('onboarding.skip')}</button>
       </div>
 
       <div style={styles.center}>
@@ -65,7 +49,7 @@ export default function Onboarding() {
           ))}
         </div>
         <Button variant="primary" size="lg" onClick={handleNext}>
-          {step === slides.length - 1 ? 'Boshlash 🚀' : 'Keyingi'}
+          {step === slides.length - 1 ? t('onboarding.start') : t('onboarding.next')}
         </Button>
       </div>
     </div>

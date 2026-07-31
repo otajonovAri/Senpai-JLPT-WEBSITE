@@ -7,11 +7,12 @@ export async function searchVocabulary(params = {}) {
   if (params.wordType) qs.set('wordType', params.wordType);
   qs.set('page', params.page || 1);
   qs.set('pageSize', params.pageSize || 20);
-  return api(`/vocabulary?${qs}`, { auth: false });
+  // Token bo'lsa yuboriladi (isLearned belgisi uchun); mehmon bo'lsa oddiy ishlaydi.
+  return api(`/vocabulary?${qs}`);
 }
 
 export async function getVocabularyById(id) {
-  return api(`/vocabulary/${id}`, { auth: false });
+  return api(`/vocabulary/${id}`);
 }
 
 export async function searchKanji(params = {}) {
@@ -20,7 +21,8 @@ export async function searchKanji(params = {}) {
   if (params.search) qs.set('search', params.search);
   qs.set('page', params.page || 1);
   qs.set('pageSize', params.pageSize || 50);
-  return api(`/kanji?${qs}`, { auth: false });
+  // Token bo'lsa yuboriladi (isLearned belgisi uchun); mehmon bo'lsa oddiy ishlaydi.
+  return api(`/kanji?${qs}`);
 }
 
 export async function getKanjiById(id) {

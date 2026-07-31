@@ -287,5 +287,32 @@
     "deleteConfirmDesc": "Bu amaldan keyin hisobingizga kira olmaysiz. Barcha progress saqlanadi, lekin hisob faolsizlantiriladi.",
     "deleteConfirmYes": "Ha, o'chirish",
     "passwordWrong": "Parol noto'g'ri"
+  },
+  "onboarding": {
+    "skip": "O'tkazish",
+    "next": "Keyingi",
+    "start": "Boshlash 🚀",
+    "slide1Title": "Yapon tilini o'zbek tilida o'rganing",
+    "slide1Sub": "18,000+ so'z va 2,000+ kanji bilan noldan boshlab o'rganing",
+    "slide2Title": "SRS takrorlash tizimi",
+    "slide2Sub": "Ilmiy usul bilan so'zlarni uzoq muddatga eslab qoling",
+    "slide3Title": "JLPT N5–N1 tayyorgarlik",
+    "slide3Sub": "Haqiqiy imtihonga yaqin mock testlar va mashqlar"
+  },
+  "goalSetup": {
+    "title": "Kunlik maqsadingiz",
+    "subtitle": "Har kuni qancha o'rganmoqchisiz?",
+    "words": "So'zlar",
+    "wordsDesc": "Kunlik yangi so'zlar",
+    "kanji": "Kanji",
+    "kanjiDesc": "Kunlik yangi kanji",
+    "grammar": "Grammatika",
+    "grammarDesc": "Kunlik grammatika qoidasi",
+    "dailyTime": "Kunlik vaqt",
+    "minutesShort": "daq",
+    "perDay": "daqiqa/kun",
+    "estPrefix": "N5 darajasini",
+    "estSuffix": "oyda o'tish mumkin",
+    "start": "Boshlash 🚀"
   }
 }

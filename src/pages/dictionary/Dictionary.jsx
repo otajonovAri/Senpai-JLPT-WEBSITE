@@ -32,6 +32,7 @@ export default function Dictionary() {
     hasUz: !!(v.meaningsUz?.length),
     level: v.level || 'N5',
     wordType: v.wordTypeUz || v.wordType || '',
+    isLearned: !!v.isLearned,   // backend: Mastery >= Known
   });
 
   const load = useCallback((pageNum, append = false) => {
@@ -124,7 +125,7 @@ export default function Dictionary() {
         <>
           <div style={styles.wordList} className="stagger">
             {words.map(word => (
-              <div key={word.id} style={styles.wordCard} className="card-interactive"
+              <div key={word.id} style={{ ...styles.wordCard, ...(word.isLearned ? styles.wordCardLearned : {}) }} className="card-interactive"
                 onClick={() => navigate(`/word/${word.id}`)}>
                 <div style={styles.wordMain}>
                   <div style={styles.wordJp} className="jp">{word.word}</div>
@@ -134,6 +135,7 @@ export default function Dictionary() {
                   </div>
                 </div>
                 <div style={styles.wordRight}>
+                  {word.isLearned && <span style={styles.learnedTick} title="O'rganilgan">✓</span>}
                   <span style={styles.wordLevel}>{word.level}</span>
                   <span style={styles.wordType}>{word.wordType}</span>
                   <button style={styles.saveBtn} className="press" onClick={(e) => handleToggleSave(word.id, e)}>
@@ -182,6 +184,16 @@ const styles = {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
     padding: '14px 18px', background: 'var(--bg-card)', borderRadius: 12,
     border: '1px solid var(--border-light)', cursor: 'pointer',
+    borderLeft: '3px solid transparent',
+  },
+  wordCardLearned: {
+    borderLeftColor: 'var(--success)',
+    background: 'var(--success-soft)',
+  },
+  learnedTick: {
+    width: 18, height: 18, borderRadius: '50%', background: 'var(--success)',
+    color: '#fff', fontSize: 11, fontWeight: 900,
+    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
   },
   wordMain: {},
   wordJp: { fontSize: 22, fontWeight: 600, color: 'var(--text)', marginBottom: 2 },

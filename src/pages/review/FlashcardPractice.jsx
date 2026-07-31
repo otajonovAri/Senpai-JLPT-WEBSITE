@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getFlashcardItems } from '../../api/review';
+import { getFlashcardItems, submitReview } from '../../api/review';
 import { getVocabularyById, getKanjiById } from '../../api/dictionary';
+import { kanaToRomaji } from '../../utils/kana';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { ArrowLeft, Loader, RotateCcw, Layers, BookOpen, BookMarked } from 'lucide-react';
@@ -12,9 +13,36 @@ const TYPES = [
   { value: 1, label: 'Kanji', icon: BookMarked },
 ];
 
+// Flashcard yo'nalishlari — old (prompt) va orqa (answer) tomonda qaysi maydon ko'rsatiladi.
+// k=kana, e=ma'no, kj=kanji, r=romaji, kk=kanji+kana
+const MODES = [
+  { id: 'kana2en', prompt: 'k', answer: 'e', label: 'かな → Ma\'no' },
+  { id: 'en2kana', prompt: 'e', answer: 'k', label: 'Ma\'no → かな' },
+  { id: 'kanji2en', prompt: 'kj', answer: 'e', label: '漢字 → Ma\'no' },
+  { id: 'romaji2en', prompt: 'r', answer: 'e', label: 'Rōmaji → Ma\'no' },
+  { id: 'en2romaji', prompt: 'e', answer: 'r', label: 'Ma\'no → Rōmaji' },
+  { id: 'kana2romaji', prompt: 'k', answer: 'r', label: 'かな → Rōmaji' },
+  { id: 'kanjiKana2romaji', prompt: 'kk', answer: 'r', label: '漢字＋かな → Rōmaji' },
+];
+
+const isJp = (f) => f === 'k' || f === 'kj' || f === 'kk';
+
+// Kartadan berilgan maydon matnini oladi (bo'sh bo'lsa mos zaxira maydon).
+function fieldText(card, f) {
+  switch (f) {
+    case 'k': return card.kana || card.kanji;
+    case 'e': return card.meaning;
+    case 'kj': return card.kanji || card.kana;
+    case 'r': return card.romaji || kanaToRomaji(card.kana);
+    case 'kk': return card.kana && card.kana !== card.kanji ? `${card.kanji}（${card.kana}）` : card.kanji;
+    default: return card.kanji;
+  }
+}
+
 export default function FlashcardPractice() {
   const navigate = useNavigate();
   const [type, setType] = useState(null);
+  const [mode, setMode] = useState(MODES[0]);
   const [level, setLevel] = useState(null);         // JlptLevel nomi: null | 'N5'..'N1'
   const [learnedOnly, setLearnedOnly] = useState(false);
   const [cards, setCards] = useState([]);
@@ -43,18 +71,22 @@ export default function FlashcardPractice() {
           try {
             if (item.itemType === 'Kanji') {
               const k = await getKanjiById(item.itemId);
+              const kana = (k.kunyomi || []).join('、');
+              const firstKun = (k.kunyomi || [])[0] || (k.onyomi || [])[0] || '';
               return {
                 ...item,
-                word: k.character,
-                reading: (k.kunyomi || []).join('、'),
+                kanji: k.character,
+                kana,
+                romaji: kanaToRomaji(firstKun.replace(/[.．・]/g, '')),
                 meaning: (k.meaningsUz?.length ? k.meaningsUz : k.meanings || []).slice(0, 3).join(', '),
               };
             }
             const v = await getVocabularyById(item.itemId);
             return {
               ...item,
-              word: v.word,
-              reading: v.reading,
+              kanji: v.word,
+              kana: v.reading,
+              romaji: v.romaji || kanaToRomaji(v.reading),
               meaning: (v.meaningsUz?.length ? v.meaningsUz : v.meanings || []).join(', '),
             };
           } catch {
@@ -70,6 +102,11 @@ export default function FlashcardPractice() {
   useEffect(() => { load(); }, [load]);
 
   const handleNext = (knew) => {
+    const card = cards[current];
+    // §12.2 — natijani backend SRS'ga yuboramiz (quality: bilaman=5, bilmayman=2).
+    if (card?.itemId) {
+      submitReview(card.itemId, card.itemType, knew ? 5 : 2).catch(() => {});
+    }
     setStats(prev => ({
       known: prev.known + (knew ? 1 : 0),
       review: prev.review + (knew ? 0 : 1),
@@ -89,6 +126,8 @@ export default function FlashcardPractice() {
   }
 
   if (error) return <ErrorState message={error} onRetry={() => load()} />;
+
+  const card = cards[current];
 
   return (
     <div style={styles.page} className="stagger">
@@ -120,6 +159,20 @@ export default function FlashcardPractice() {
         })}
       </div>
 
+      {/* Yo'nalish (rejim) tanlash — 7 xil savol-javob turi */}
+      <div style={styles.modeRow}>
+        {MODES.map(m => (
+          <button
+            key={m.id}
+            style={{ ...styles.modeChip, ...(mode.id === m.id ? styles.modeChipActive : {}) }}
+            className="press jp"
+            onClick={() => { setMode(m); setFlipped(false); }}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+
       <div style={styles.filterRow}>
         <div style={styles.levelChips}>
           {[null, 'N5', 'N4', 'N3', 'N2', 'N1'].map(lv => (
@@ -146,7 +199,7 @@ export default function FlashcardPractice() {
         <EmptyState
           emoji="📚"
           title="Hali o'rganilgan so'zlar yo'q"
-          subtitle="Darslarni tugatib, so'zlar o'rganingdan keyin flashcard mashq ochiladi"
+          subtitle="Darslarni tugatib, so'zlar o'rgangandan keyin flashcard mashq ochiladi"
         />
       )}
 
@@ -169,7 +222,7 @@ export default function FlashcardPractice() {
         </div>
       )}
 
-      {!finished && cards.length > 0 && (
+      {!finished && card && (
         <>
           <div style={styles.progressBg}>
             <div style={{ ...styles.progressFill, width: `${((current + 1) / cards.length) * 100}%` }} />
@@ -184,19 +237,35 @@ export default function FlashcardPractice() {
               <div className="flip-front" style={styles.cardFace}>
                 <div style={styles.cardFront}>
                   <div style={styles.typeBadge}>
-                    {cards[current].itemType === 'Kanji' ? '漢字' : '単語'}
+                    {card.itemType === 'Kanji' ? '漢字' : '単語'}
                   </div>
-                  <div style={styles.cardWord} className="jp">{cards[current].word}</div>
-                  <div style={styles.cardReading}>{cards[current].reading}</div>
+                  <div style={styles.modeHint}>{mode.label}</div>
+                  <div
+                    style={{ ...styles.cardWord, ...(isJp(mode.prompt) ? {} : styles.cardWordLatin) }}
+                    className={isJp(mode.prompt) ? 'jp' : ''}
+                  >
+                    {fieldText(card, mode.prompt)}
+                  </div>
                   <div style={styles.tapHint}>Kartani bosing</div>
                 </div>
               </div>
               <div className="flip-back" style={styles.cardFace}>
                 <div style={styles.cardBack}>
-                  <div style={styles.cardWord} className="jp">{cards[current].word}</div>
-                  <div style={styles.cardMeaning} className="anim-pop">{cards[current].meaning}</div>
-                  <div style={styles.cardReading}>{cards[current].reading}</div>
-                  <div style={styles.masteryBadge}>{cards[current].mastery}</div>
+                  <div style={styles.answerLabel}>Javob</div>
+                  <div
+                    style={{ ...styles.cardAnswer, ...(isJp(mode.answer) ? {} : styles.cardAnswerLatin) }}
+                    className={`anim-pop${isJp(mode.answer) ? ' jp' : ''}`}
+                  >
+                    {fieldText(card, mode.answer)}
+                  </div>
+                  <div style={styles.supportBlock}>
+                    <div style={styles.supWord} className="jp">{card.kanji}</div>
+                    <div style={styles.supReading}>
+                      {card.kana}{card.romaji ? ` · ${card.romaji}` : ''}
+                    </div>
+                    <div style={styles.supMeaning}>{card.meaning}</div>
+                  </div>
+                  {card.mastery && <div style={styles.masteryBadge}>{card.mastery}</div>}
                 </div>
               </div>
             </div>
@@ -245,6 +314,18 @@ const styles = {
     background: 'var(--primary)', color: 'white',
     border: '1px solid var(--primary)',
   },
+  modeRow: {
+    display: 'flex', gap: 6, width: '100%', overflowX: 'auto',
+    paddingBottom: 4, scrollbarWidth: 'thin',
+  },
+  modeChip: {
+    flexShrink: 0, padding: '6px 12px', borderRadius: 'var(--radius-full)',
+    border: '2px solid var(--border)', background: 'var(--bg-alt)',
+    color: 'var(--text-light)', fontSize: 12.5, fontWeight: 800, cursor: 'pointer', whiteSpace: 'nowrap',
+  },
+  modeChipActive: {
+    background: 'var(--secondary-soft)', color: 'var(--secondary-dark, var(--secondary))', borderColor: 'var(--secondary)',
+  },
   filterRow: {
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     gap: 10, width: '100%', flexWrap: 'wrap',
@@ -271,23 +352,38 @@ const styles = {
   flashcard: { width: '100%', minHeight: 280, cursor: 'pointer' },
   flipInner: { width: '100%', minHeight: 280, position: 'relative' },
   cardFace: {
-    background: 'var(--bg-card, white)', borderRadius: 20, padding: '48px 24px',
+    background: 'var(--bg-card, white)', borderRadius: 20, padding: '40px 24px',
     boxShadow: 'var(--shadow-lg)', border: '1px solid var(--border-light)',
     textAlign: 'center', width: '100%', minHeight: 280,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
-  cardFront: { textAlign: 'center' },
-  cardBack: { textAlign: 'center' },
-  cardWord: { fontSize: 48, fontWeight: 700, color: 'var(--text)', marginBottom: 8 },
-  cardReading: { fontSize: 16, color: 'var(--text-light)' },
-  cardMeaning: {
-    fontSize: 22, fontWeight: 600, color: 'var(--primary)', marginBottom: 8,
-    background: 'rgba(88,204,2,0.08)', padding: '6px 16px', borderRadius: 10,
-    display: 'inline-block',
+  cardFront: { textAlign: 'center', width: '100%' },
+  cardBack: { textAlign: 'center', width: '100%' },
+  cardWord: { fontSize: 48, fontWeight: 700, color: 'var(--text)', marginBottom: 8, wordBreak: 'break-word' },
+  cardWordLatin: { fontSize: 30 },
+  modeHint: {
+    display: 'inline-block', padding: '3px 10px', borderRadius: 8, marginBottom: 14,
+    background: 'var(--secondary-soft)', color: 'var(--secondary-dark, var(--secondary))',
+    fontSize: 11, fontWeight: 800,
   },
+  answerLabel: { fontSize: 11, fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 },
+  cardAnswer: {
+    fontSize: 34, fontWeight: 800, color: 'var(--primary)', marginBottom: 16,
+    background: 'var(--primary-soft)', padding: '8px 18px', borderRadius: 12,
+    display: 'inline-block', wordBreak: 'break-word',
+  },
+  cardAnswerLatin: { fontSize: 26 },
+  supportBlock: {
+    borderTop: '1px dashed var(--border)', paddingTop: 12, marginTop: 4,
+    display: 'flex', flexDirection: 'column', gap: 2,
+  },
+  supWord: { fontSize: 24, fontWeight: 700, color: 'var(--text)' },
+  supReading: { fontSize: 14, color: 'var(--text-secondary)', fontWeight: 600 },
+  supMeaning: { fontSize: 13, color: 'var(--text-light)', marginTop: 2 },
   typeBadge: {
     display: 'inline-block', padding: '3px 10px', borderRadius: 6,
     background: 'var(--bg)', color: 'var(--text-light)',
-    fontSize: 11, fontWeight: 600, marginBottom: 16,
+    fontSize: 11, fontWeight: 600, marginBottom: 8,
     fontFamily: 'var(--font-jp)',
   },
   masteryBadge: {

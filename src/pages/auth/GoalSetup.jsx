@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { updateSettings } from '../../api/profile';
+import { useLanguage } from '../../context/LanguageContext';
 import { Button } from '../../components/ui';
 import { Target, Clock, Minus, Plus } from 'lucide-react';
 
 export default function GoalSetup() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [goals, setGoals] = useState({ words: 20, kanji: 10, grammar: 5 });
   const [minutes, setMinutes] = useState(15);
 
@@ -35,9 +37,9 @@ export default function GoalSetup() {
   };
 
   const items = [
-    { key: 'words', label: "So'zlar", desc: 'Kunlik yangi so\'zlar', icon: '語', color: 'var(--purple)', soft: 'color-mix(in srgb, var(--purple) 16%, transparent)', max: 50 },
-    { key: 'kanji', label: 'Kanji', desc: 'Kunlik yangi kanji', icon: '漢', color: 'var(--secondary)', soft: 'var(--secondary-soft)', max: 30 },
-    { key: 'grammar', label: 'Grammatika', desc: 'Kunlik grammatika qoidasi', icon: '文', color: 'var(--primary)', soft: 'var(--primary-soft)', max: 20 },
+    { key: 'words', label: t('goalSetup.words'), desc: t('goalSetup.wordsDesc'), icon: '語', color: 'var(--purple)', soft: 'color-mix(in srgb, var(--purple) 16%, transparent)', max: 50 },
+    { key: 'kanji', label: t('goalSetup.kanji'), desc: t('goalSetup.kanjiDesc'), icon: '漢', color: 'var(--secondary)', soft: 'var(--secondary-soft)', max: 30 },
+    { key: 'grammar', label: t('goalSetup.grammar'), desc: t('goalSetup.grammarDesc'), icon: '文', color: 'var(--primary)', soft: 'var(--primary-soft)', max: 20 },
   ];
 
   const timeOptions = [5, 10, 15, 30];
@@ -50,8 +52,8 @@ export default function GoalSetup() {
           <div style={{ ...styles.step, background: 'var(--primary)' }} />
           <div style={styles.step} />
         </div>
-        <h1 style={styles.title}><Target size={22} color="var(--primary)" /> Kunlik maqsadingiz</h1>
-        <p style={styles.sub}>Har kuni qancha o'rganmoqchisiz?</p>
+        <h1 style={styles.title}><Target size={22} color="var(--primary)" /> {t('goalSetup.title')}</h1>
+        <p style={styles.sub}>{t('goalSetup.subtitle')}</p>
 
         <div style={styles.goalList}>
           {items.map(item => (
@@ -73,12 +75,12 @@ export default function GoalSetup() {
         </div>
 
         <div style={styles.timeSection}>
-          <div style={styles.timeLabel}>Kunlik vaqt</div>
+          <div style={styles.timeLabel}>{t('goalSetup.dailyTime')}</div>
           <div style={styles.timeChips}>
-            {timeOptions.map(t => (
-              <button key={t} onClick={() => setMinutes(t)} className="press"
-                style={{ ...styles.timeChip, ...(minutes === t ? styles.timeChipActive : {}) }}>
-                {t} daq
+            {timeOptions.map(m => (
+              <button key={m} onClick={() => setMinutes(m)} className="press"
+                style={{ ...styles.timeChip, ...(minutes === m ? styles.timeChipActive : {}) }}>
+                {m} {t('goalSetup.minutesShort')}
               </button>
             ))}
           </div>
@@ -87,12 +89,12 @@ export default function GoalSetup() {
         <div style={styles.estimate}>
           <Clock size={18} color="var(--primary)" />
           <div>
-            <div style={styles.estTitle}>~{minutes} daqiqa/kun</div>
-            <div style={styles.estSub}>N5 darajasini {minutes <= 10 ? '6' : minutes <= 15 ? '3' : '2'} oyda o'tish mumkin</div>
+            <div style={styles.estTitle}>~{minutes} {t('goalSetup.perDay')}</div>
+            <div style={styles.estSub}>{t('goalSetup.estPrefix')} {minutes <= 10 ? '6' : minutes <= 15 ? '3' : '2'} {t('goalSetup.estSuffix')}</div>
           </div>
         </div>
 
-        <Button variant="primary" size="lg" full onClick={handleStart}>Boshlash 🚀</Button>
+        <Button variant="primary" size="lg" full onClick={handleStart}>{t('goalSetup.start')}</Button>
       </div>
     </div>
   );

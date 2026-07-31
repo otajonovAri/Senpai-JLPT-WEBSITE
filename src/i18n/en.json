@@ -287,5 +287,32 @@
     "deleteConfirmDesc": "After this you won't be able to log in. All progress is kept, but the account is deactivated.",
     "deleteConfirmYes": "Yes, delete",
     "passwordWrong": "Wrong password"
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "next": "Next",
+    "start": "Get started 🚀",
+    "slide1Title": "Learn Japanese in your language",
+    "slide1Sub": "Start from zero with 18,000+ words and 2,000+ kanji",
+    "slide2Title": "SRS review system",
+    "slide2Sub": "Remember words long-term with a science-based method",
+    "slide3Title": "JLPT N5–N1 preparation",
+    "slide3Sub": "Realistic mock tests and exercises"
+  },
+  "goalSetup": {
+    "title": "Your daily goal",
+    "subtitle": "How much do you want to learn each day?",
+    "words": "Words",
+    "wordsDesc": "New words per day",
+    "kanji": "Kanji",
+    "kanjiDesc": "New kanji per day",
+    "grammar": "Grammar",
+    "grammarDesc": "Grammar points per day",
+    "dailyTime": "Daily time",
+    "minutesShort": "min",
+    "perDay": "minutes/day",
+    "estPrefix": "You can pass N5 in",
+    "estSuffix": "months",
+    "start": "Get started 🚀"
   }
 }

@@ -52,7 +52,7 @@ export default function Partnership() {
         title="Taklifingizni yuboring"
         body="Qanday hamkorlikni ko'zlayotganingizni yozing — jamoamiz 2 ish kuni ichida javob beradi."
         buttonText="Bog'lanish"
-        href="https://t.me/senpaiari_uz"
+        href="https://t.me/senpaijlpt_uz"
       />
     </PublicLayout>
   );
