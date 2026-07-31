@@ -9,9 +9,9 @@ import { useLanguage } from '../../context/LanguageContext';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import {
   Globe, Bell, Target, Shield, HelpCircle,
-  ChevronRight, ChevronDown, Save, Loader, Trash2, MailCheck, Moon, Sun, Monitor
-} from 'lucide-react';
+  ChevronRight, ChevronDown, Save, Loader, Trash2, MailCheck, Moon, Sun, Monitor, Settings } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
+import PageHeader from '../../components/PageHeader';
 
 export default function SettingsPage() {
   const { theme, setTheme, dark } = useTheme();
@@ -103,7 +103,7 @@ export default function SettingsPage() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title}>{t('settings.title')}</h1>
+      <PageHeader icon={Settings} title={t('settings.title')} subtitle={t('settings.subtitle')} />
 
       <div style={styles.section}>
         <h2 style={styles.sectionTitle}><Globe size={18} /> {t('settings.language')}</h2>

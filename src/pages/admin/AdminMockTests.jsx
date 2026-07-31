@@ -401,9 +401,9 @@ const styles = {
   removeBtn: {
     padding: '3px 10px',
     borderRadius: 6,
-    border: '1px solid var(--danger, #e74c3c)',
+    border: '1px solid var(--danger, var(--danger))',
     background: 'transparent',
-    color: 'var(--danger, #e74c3c)',
+    color: 'var(--danger, var(--danger))',
     fontSize: 11,
     fontWeight: 600,
     cursor: 'pointer',

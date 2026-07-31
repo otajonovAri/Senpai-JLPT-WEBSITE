@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const COLORS = ['#58CC02', '#F5B50A', '#2563EB', '#A78BFA', '#F472B6', '#FB923C'];
+const COLORS = ['var(--primary)', 'var(--accent)', 'var(--secondary)', 'var(--purple)', 'var(--pink)', 'var(--warning)'];
 
 /**
  * CSS confetti burst. Render it (conditionally) inside a

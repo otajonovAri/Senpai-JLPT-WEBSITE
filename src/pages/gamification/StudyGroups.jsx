@@ -5,12 +5,13 @@ import { useToast } from '../../context/ToastContext';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { Users, Plus, Search, Lock, Globe, Loader, X, Clock } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
 
 // Guruh holati badge'lari (student o'z guruhida ko'radi)
 const STATUS_BADGE = {
-  Pending: { label: 'Tasdiq kutilmoqda', bg: 'rgba(245,181,10,0.12)', color: '#B45309' },
+  Pending: { label: 'Tasdiq kutilmoqda', bg: 'rgba(245,181,10,0.12)', color: 'var(--accent-dark)' },
   Rejected: { label: 'Rad etilgan', bg: 'rgba(239,68,68,0.1)', color: 'var(--danger)' },
 };
 
@@ -81,16 +82,18 @@ export default function StudyGroups() {
 
   return (
     <div style={S.page} className="stagger">
-      <div style={S.header} className="anim-fade-up">
-        <div>
-          <h1 style={S.title}>O'qish guruhlari</h1>
-          <p style={S.sub}>Do'stlar bilan birgalikda o'rganing</p>
-        </div>
-        <div style={S.headerActions}>
-          <button style={S.codeBtn} className="press" onClick={() => setShowJoinCode(true)}>Kod bilan</button>
-          <button style={S.createBtn} className="press" onClick={() => setShowCreate(true)}><Plus size={16} /> Yangi guruh</button>
-        </div>
-      </div>
+      <PageHeader
+        icon={Users}
+        title="O'qish guruhlari"
+        subtitle="Do'stlar bilan birgalikda o'rganing"
+        accent="blue"
+        right={
+          <>
+            <button style={S.codeBtn} className="press" onClick={() => setShowJoinCode(true)}>Kod bilan</button>
+            <button style={S.createBtn} className="press" onClick={() => setShowCreate(true)}><Plus size={16} /> Yangi guruh</button>
+          </>
+        }
+      />
 
       <div style={S.tabs} className="anim-fade-up">
         <button style={{ ...S.tab, ...(tab === 'my' ? S.tabActive : {}) }} onClick={() => setTab('my')}>Mening guruhlarim</button>
@@ -124,7 +127,7 @@ export default function StudyGroups() {
             <div key={g.id} style={S.card} className="card-interactive" onClick={() => navigate('/study-groups/' + g.id)}>
               <div style={S.cardHeader}>
                 <div style={{ ...S.cardIcon, background: g.isPublic ? 'rgba(76,175,80,0.1)' : 'rgba(255,152,0,0.1)' }}>
-                  {g.isPublic ? <Globe size={20} color="#4CAF50" /> : <Lock size={20} color="#FF9800" />}
+                  {g.isPublic ? <Globe size={20} color="var(--success)" /> : <Lock size={20} color="var(--warning)" />}
                 </div>
                 <span style={S.levelBadge}>{/^N[1-5]$/.test(g.level) ? g.level : 'N5'}</span>
               </div>
@@ -197,7 +200,7 @@ const S = {
   card: { background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: 16, padding: 16, cursor: 'pointer' },
   cardHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
   cardIcon: { width: 40, height: 40, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' },
-  levelBadge: { padding: '3px 10px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', fontSize: 11, fontWeight: 700, color: '#1565C0' },
+  levelBadge: { padding: '3px 10px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', fontSize: 11, fontWeight: 700, color: 'var(--secondary-dark)' },
   cardTitle: { fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 4 },
   cardDesc: { fontSize: 12, color: 'var(--text-light)', marginBottom: 12, lineHeight: 1.4 },
   statusBadge: { display: 'inline-flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 999, fontSize: 11, fontWeight: 700, marginBottom: 10 },

@@ -447,8 +447,8 @@ const actionBtnStyle = {
 
 const dangerBtnStyle = {
   ...actionBtnStyle,
-  color: 'var(--danger, #e74c3c)',
-  borderColor: 'var(--danger, #e74c3c)',
+  color: 'var(--danger, var(--danger))',
+  borderColor: 'var(--danger, var(--danger))',
 };
 
 const epListStyles = {

@@ -3,6 +3,7 @@ import { getFaq } from '../../api/profile';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { HelpCircle, ChevronDown, ChevronUp, MessageCircle, Mail, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function HelpFaq() {
   const [faqs, setFaqs] = useState([]);
@@ -37,7 +38,7 @@ export default function HelpFaq() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title}><HelpCircle size={22} /> Yordam va FAQ</h1>
+      <PageHeader icon={HelpCircle} title="Yordam va FAQ" subtitle="Ko'p beriladigan savollar va aloqa" accent="blue" />
 
       <div style={styles.contactRow}>
         <div style={styles.contactCard}>

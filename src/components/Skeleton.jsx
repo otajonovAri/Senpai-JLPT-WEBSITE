@@ -5,7 +5,7 @@ export function Skeleton({ width = '100%', height = 16, radius = 8, style = {} }
     <div
       style={{
         width, height, borderRadius: radius,
-        background: 'linear-gradient(90deg, var(--border-light) 25%, #f5f2ec 50%, var(--border-light) 75%)',
+        background: 'linear-gradient(90deg, var(--border-light) 25%, var(--bg-alt) 50%, var(--border-light) 75%)',
         backgroundSize: '200% 100%',
         animation: 'shimmer 1.4s ease-in-out infinite',
         ...style,

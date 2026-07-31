@@ -1,10 +1,10 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { adminApi } from '../../api/admin';
 import { useToast } from '../../context/ToastContext';
 import ErrorState from '../../components/ErrorState';
 import AdminModal, { FormField, inputStyle, selectStyle } from './AdminModal';
-import { ArrowLeft, Search, Loader, Users, ShieldBan, ShieldCheck, UserCog } from 'lucide-react';
+import { Search, Loader, Users, ShieldBan, ShieldCheck, UserCog } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const ROLES = [
   { value: 0, label: 'Student' },
@@ -136,14 +136,13 @@ export default function AdminUsers() {
 
   return (
     <div>
-      <div style={styles.header}>
-        <div style={styles.headerLeft}>
-          <Link to="/admin" style={styles.backBtn} className="press"><ArrowLeft size={18} /></Link>
-          <Users size={20} style={{ color: 'var(--secondary)' }} />
-          <h1 style={styles.title}>Foydalanuvchilar</h1>
-          {data && <span style={styles.count}>{data.length} ta</span>}
-        </div>
-      </div>
+      <PageHeader
+        icon={Users}
+        title="Foydalanuvchilar"
+        subtitle={data ? `${data.length} ta foydalanuvchi` : 'Yuklanmoqda…'}
+        accent="blue"
+        back="/admin"
+      />
 
       <div style={styles.searchWrap}>
         <Search size={16} style={{ color: 'var(--text-light)' }} />

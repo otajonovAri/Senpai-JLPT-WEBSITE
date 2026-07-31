@@ -1,8 +1,9 @@
 ﻿import { useState, useEffect, useCallback, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getEpisode, updateProgress } from '../../api/podcasts';
 import ErrorState from '../../components/ErrorState';
-import { ChevronLeft, Play, Pause, SkipBack, SkipForward, Loader, Eye, EyeOff } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Loader, Eye, EyeOff, Headphones } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 function fmtTime(sec) {
   const m = Math.floor(sec / 60);
@@ -12,7 +13,6 @@ function fmtTime(sec) {
 
 export default function EpisodePlayer() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [episode, setEpisode] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -94,12 +94,15 @@ export default function EpisodePlayer() {
 
   return (
     <div style={S.page} className="stagger">
-      <button style={S.backBtn} onClick={() => navigate(-1)} className="anim-fade-up">
-        <ChevronLeft size={18} /> Orqaga
-      </button>
+      <PageHeader
+        icon={Headphones}
+        title={episode.titleUz || episode.title}
+        accent="blue"
+        size="sm"
+        back
+      />
 
       <div style={S.playerCard} className="anim-fade-up">
-        <h2 style={S.epTitle}>{episode.titleUz || episode.title}</h2>
 
         {episode.audioUrl && (
           <audio ref={audioRef} src={episode.audioUrl} preload="metadata"
@@ -175,7 +178,7 @@ const S = {
   epTitle: { fontSize: 18, fontWeight: 700, color: 'var(--text)', textAlign: 'center' },
   progressWrap: { width: '100%', cursor: 'pointer' },
   progressBg: { width: '100%', height: 6, borderRadius: 3, background: 'var(--bg)', overflow: 'hidden' },
-  progressFill: { height: '100%', borderRadius: 3, background: 'linear-gradient(90deg, var(--primary), #FF8A65)', transition: 'width 0.3s' },
+  progressFill: { height: '100%', borderRadius: 3, background: 'linear-gradient(90deg, var(--primary), var(--warning))', transition: 'width 0.3s' },
   timeRow: { display: 'flex', justifyContent: 'space-between', marginTop: 4 },
   timeText: { fontSize: 11, color: 'var(--text-light)', fontVariantNumeric: 'tabular-nums' },
   controls: { display: 'flex', alignItems: 'center', gap: 12 },
@@ -183,7 +186,7 @@ const S = {
   playBtn: { width: 56, height: 56, borderRadius: 16, border: 'none', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 16px rgba(88,204,2,0.3)' },
   speedBtn: { padding: '6px 10px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--bg-card)', color: 'var(--text)', fontSize: 12, fontWeight: 700, cursor: 'pointer' },
   disabled: { opacity: 0.4, cursor: 'not-allowed', boxShadow: 'none' },
-  audioErrorBox: { marginTop: 14, padding: '10px 14px', borderRadius: 12, background: 'rgba(245,181,10,0.12)', color: '#B45309', fontSize: 13, fontWeight: 600, textAlign: 'center', lineHeight: 1.5 },
+  audioErrorBox: { marginTop: 14, padding: '10px 14px', borderRadius: 12, background: 'rgba(245,181,10,0.12)', color: 'var(--accent-dark)', fontSize: 13, fontWeight: 600, textAlign: 'center', lineHeight: 1.5 },
   transcriptHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
   sectionTitle: { fontSize: 16, fontWeight: 700, color: 'var(--text)' },
   transcriptToggles: { display: 'flex', gap: 6 },

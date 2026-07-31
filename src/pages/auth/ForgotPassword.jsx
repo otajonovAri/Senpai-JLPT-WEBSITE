@@ -150,9 +150,9 @@ const styles = {
   },
   btn: {
     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-    padding: 14, borderRadius: 14, background: '#58CC02', color: 'white',
+    padding: 14, borderRadius: 14, background: 'var(--primary)', color: 'white',
     fontSize: 14, fontWeight: 800, border: 'none', textDecoration: 'none',
-    marginTop: 4, cursor: 'pointer', boxShadow: '0 4px 0 #46A302',
+    marginTop: 4, cursor: 'pointer', boxShadow: '0 4px 0 var(--primary-dark)',
   },
   error: {
     background: 'var(--danger-soft)', color: 'var(--danger-dark)', padding: '10px 14px',

@@ -14,8 +14,8 @@ const STATUS_TABS = [
 ];
 
 const STATUS_BADGE = {
-  Pending: { label: 'Kutilmoqda', bg: 'rgba(245,181,10,0.12)', color: '#B45309' },
-  Approved: { label: 'Tasdiqlangan', bg: 'rgba(88,204,2,0.12)', color: '#2E7D32' },
+  Pending: { label: 'Kutilmoqda', bg: 'rgba(245,181,10,0.12)', color: 'var(--accent-dark)' },
+  Approved: { label: 'Tasdiqlangan', bg: 'rgba(88,204,2,0.12)', color: 'var(--success-dark)' },
   Rejected: { label: 'Rad etilgan', bg: 'rgba(239,68,68,0.1)', color: 'var(--danger)' },
 };
 
@@ -224,7 +224,7 @@ const statusBadge = {
 const approveBtn = {
   display: 'flex', alignItems: 'center', gap: 4,
   padding: '5px 10px', borderRadius: 8, border: 'none', cursor: 'pointer',
-  background: 'rgba(88,204,2,0.12)', color: '#2E7D32', fontSize: 12, fontWeight: 700,
+  background: 'rgba(88,204,2,0.12)', color: 'var(--success-dark)', fontSize: 12, fontWeight: 700,
   whiteSpace: 'nowrap',
 };
 const rejectBtn = {

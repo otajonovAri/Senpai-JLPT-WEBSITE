@@ -6,6 +6,7 @@ import ErrorState from '../../components/ErrorState';
 import { Pill } from '../../components/ui';
 import PronunciationSession from './PronunciationSession';
 import { Mic, Loader, ChevronRight } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const LEVELS = [
   { id: 'N5', label: 'N5', sub: 'Boshlang\'ich', color: 'var(--success)' },
@@ -88,13 +89,12 @@ export default function PronunciationPractice() {
   // Level picker (hub)
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.hero}>
-        <div>
-          <img src="/mascot/microphone.png" style={{ width: 80, height: 80, objectFit: 'contain' }} />
-        </div>
-        <h1 style={styles.heroTitle}>Talaffuz mashqi</h1>
-        <p style={styles.heroSub}>Darajani tanlang va yapon so'zlari talaffuzini mikrofon orqali mashq qiling. Har bo'g'in aniqligini ko'rasiz.</p>
-      </div>
+      <PageHeader
+        icon={Mic}
+        title="Talaffuz mashqi"
+        subtitle="Darajani tanlang va so'z talaffuzini mikrofon orqali mashq qiling"
+        right={<img src="/mascot/microphone.png" alt="" style={{ width: 70, height: 70, objectFit: 'contain' }} />}
+      />
 
       <div style={styles.levelLabel}>Darajani tanlang</div>
       <div style={styles.levels}>

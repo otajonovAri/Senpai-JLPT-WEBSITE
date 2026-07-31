@@ -16,6 +16,7 @@
     "studyGroups": "Guruhlar",
     "mockTest": "Mock Test",
     "review": "Takrorlash",
+    "games": "O'yinlar",
     "pronunciation": "Talaffuz",
     "friends": "Do'stlar",
     "achievements": "Yutuqlar",
@@ -244,6 +245,7 @@
   },
   "settings": {
     "title": "Sozlamalar",
+    "subtitle": "Ilova sozlamalari va hisobingiz",
     "language": "Til",
     "theme": "Mavzu",
     "themeLight": "Yorug'",

@@ -4,14 +4,15 @@ import { getLeagueStandings } from '../../api/gamification';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { ChevronUp, ChevronDown, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 // §15.5 — LeagueTier: Bronze=0..Diamond=4; route'da NOM ishlatiladi
 const LEAGUES = [
-  { tier: 'Bronze', name: 'Bronza', icon: '🥉', color: '#CD7F32' },
-  { tier: 'Silver', name: 'Kumush', icon: '🥈', color: '#C0C0C0' },
-  { tier: 'Gold', name: 'Oltin', icon: '🥇', color: '#FFD700' },
-  { tier: 'Platinum', name: 'Platina', icon: '💎', color: '#50C878' },
-  { tier: 'Diamond', name: 'Olmos', icon: '👑', color: '#B9F2FF' },
+  { tier: 'Bronze', name: 'Bronza', icon: '🥉', color: 'var(--medal-bronze)' },
+  { tier: 'Silver', name: 'Kumush', icon: '🥈', color: 'var(--medal-silver)' },
+  { tier: 'Gold', name: 'Oltin', icon: '🥇', color: 'var(--medal-gold)' },
+  { tier: 'Platinum', name: 'Platina', icon: '💎', color: 'var(--success)' },
+  { tier: 'Diamond', name: 'Olmos', icon: '👑', color: 'var(--secondary-light)' },
 ];
 
 export default function Leagues() {
@@ -42,12 +43,14 @@ export default function Leagues() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={{ ...styles.banner, background: `linear-gradient(135deg, ${league.color}22, ${league.color}44)` }} className="anim-scale-in">
-        <div style={styles.bannerIcon} className="anim-float">{league.icon}</div>
-        <h1 style={styles.bannerTitle}>{league.name} Ligasi</h1>
-        <p style={styles.bannerSub}>
-          {data ? `${data.weekStart} — ${data.weekEnd} haftasi` : "Eng yaxshi 10 ta keyingi ligaga o'tadi"}
-        </p>
+      <PageHeader
+        icon={league.icon}
+        title={`${league.name} Ligasi`}
+        subtitle={data ? `${data.weekStart} — ${data.weekEnd} haftasi` : "Eng yaxshi 10 ta keyingi ligaga o'tadi"}
+        accent="gold"
+      />
+
+      <div style={{ ...styles.banner, background: `linear-gradient(135deg, color-mix(in srgb, ${league.color} 18%, transparent), color-mix(in srgb, ${league.color} 38%, transparent))` }} className="anim-scale-in">
         <div style={styles.leagueRow}>
           {LEAGUES.map((l, i) => (
             <button key={l.tier} onClick={() => setTierIndex(i)}
@@ -83,7 +86,7 @@ export default function Leagues() {
           {players.map((p, i) => {
             const isMe = p.userId === user?.id;
             return (
-              <div key={p.userId} className={isMe ? 'anim-glow-pulse' : 'hover-scale'} style={{ ...styles.row, ...(isMe ? styles.myRow : {}), ...(i < 3 ? { borderLeft: `3px solid ${['#FFD700', '#C0C0C0', '#CD7F32'][i]}` } : {}) }}>
+              <div key={p.userId} className={isMe ? 'anim-glow-pulse' : 'hover-scale'} style={{ ...styles.row, ...(isMe ? styles.myRow : {}), ...(i < 3 ? { borderLeft: `3px solid ${['var(--medal-gold)', 'var(--medal-silver)', 'var(--medal-bronze)'][i]}` } : {}) }}>
                 <div style={styles.rank}>{i < 3 ? ['🥇', '🥈', '🥉'][i] : `#${p.rank}`}</div>
                 <div style={styles.avatar}>
                   {p.avatarUrl

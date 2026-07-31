@@ -106,7 +106,7 @@ export default function Footer() {
 
 const S = {
   footer: {
-    background: 'linear-gradient(145deg, #58CC02, #3B8B00)',
+    background: 'linear-gradient(145deg, var(--primary), var(--primary-dark))',
     color: '#fff',
     padding: '56px 24px 28px',
     borderRadius: '48px 48px 0 0',
@@ -137,7 +137,7 @@ const S = {
   socialLink: {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     width: 58, height: 58, borderRadius: '50%', background: '#fff',
-    boxShadow: '0 6px 0 #2D7A00, 0 10px 24px rgba(0,0,0,0.14)',
+    boxShadow: '0 6px 0 var(--primary-dark), 0 10px 24px rgba(0,0,0,0.14)',
     textDecoration: 'none',
   },
   socialImg: { width: 34, height: 34, objectFit: 'contain', display: 'block' },

@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { applyReferralCode, getReferralInfo } from '../../api/gamification';
 import { useToast } from '../../context/ToastContext';
 import { Gift, Copy, Share2, Check, Users } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function Referral() {
   const { user } = useAuth();
@@ -49,12 +50,13 @@ export default function Referral() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.banner}>
-        {/* <Gift size={48} color="var(--primary)" /> */}
-        <img src="/mascot/Dragon_with_Lucky_Gift-removebg-preview.png" alt="Banner" style={styles.bannerImage} />
-        <h1 style={styles.bannerTitle}>Do'stingizni taklif qiling!</h1>
-        <p style={styles.bannerSub}>Har bir taklif uchun 50 tanga oling</p>
-      </div>
+      <PageHeader
+        icon={Gift}
+        title="Do'stingizni taklif qiling!"
+        subtitle="Har bir taklif uchun 50 tanga oling"
+        accent="pink"
+        right={<img src="/mascot/Dragon_with_Lucky_Gift-removebg-preview.png" alt="" style={styles.bannerImage} />}
+      />
 
       <div style={styles.card}>
         <div style={styles.cardTitle}>Sizning kodingiz</div>

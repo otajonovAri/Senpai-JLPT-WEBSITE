@@ -5,6 +5,7 @@ import { useToast } from '../../context/ToastContext';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { Palette, Check, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 // §18.1 — kosmetik kategoriyalar (StreakFreeze/XpBooster boost, bu sahifada ko'rsatilmaydi)
 const COSMETIC_TABS = [
@@ -71,7 +72,7 @@ export default function MascotCustomize() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title}><Palette size={22} /> Maskotni sozlash</h1>
+      <PageHeader icon={Palette} title="Maskotni sozlash" subtitle="Sotib olingan buyumlarni kiydiring" accent="purple" />
 
       <div style={styles.mascotPreview}>
         <div style={styles.mascotCircle}>🦊</div>

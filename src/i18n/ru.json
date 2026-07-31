@@ -16,6 +16,7 @@
     "studyGroups": "Группы",
     "mockTest": "Пробный тест",
     "review": "Повторение",
+    "games": "Игры",
     "pronunciation": "Произношение",
     "friends": "Друзья",
     "achievements": "Достижения",
@@ -244,6 +245,7 @@
   },
   "settings": {
     "title": "Настройки",
+    "subtitle": "Настройки приложения и аккаунта",
     "language": "Язык",
     "theme": "Тема",
     "themeLight": "Светлая",

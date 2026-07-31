@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { getSavedItems, toggleSavedItem } from '../../api/profile';
 import ErrorState from '../../components/ErrorState';
 import { Bookmark, BookmarkX, Search, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function SavedItems() {
   const [items, setItems] = useState([]);
@@ -52,7 +53,7 @@ export default function SavedItems() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title}><Bookmark size={22} /> Saqlangan</h1>
+      <PageHeader icon={Bookmark} title="Saqlangan" subtitle="Belgilab qo'ygan so'z va kanjilaringiz" accent="purple" />
 
       <div style={styles.searchBox}>
         <Search size={16} color="var(--text-light)" />

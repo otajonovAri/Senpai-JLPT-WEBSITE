@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { getAchievements } from '../../api/gamification';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { Lock, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
+import { Lock, Loader, Award } from 'lucide-react';
 
 export default function Achievements() {
   const [achievements, setAchievements] = useState([]);
@@ -41,19 +42,18 @@ export default function Achievements() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.heroBanner} className="anim-scale-in">
-        <div style={styles.heroContent}>
-          <h1 style={styles.heroTitle}>Yutuqlar</h1>
-          <p style={styles.heroSub}>{unlocked}/{achievements.length} yutuq ochilgan</p>
-        </div>
-        <img src="/mascot/badges.png" alt="Achievements" style={styles.heroMascot} />
-      </div>
+      <PageHeader
+        icon={Award}
+        title="Yutuqlar"
+        subtitle={`${unlocked}/${achievements.length} yutuq ochilgan`}
+        accent="gold"
+        right={<img src="/mascot/badges.png" alt="" style={styles.heroMascot} />}
+      />
 
-      <div style={styles.tabs}>
+      <div className="chip-row">
         {[['all', 'Barchasi'], ['unlocked', 'Ochilgan'], ['locked', 'Yopiq']].map(([key, label]) => (
           <button key={key} onClick={() => setTab(key)}
-            className="press"
-            style={{ ...styles.tabBtn, ...(tab === key ? styles.tabActive : {}) }}>{label}</button>
+            className={`chip${tab === key ? ' chip--active' : ''}`}>{label}</button>
         ))}
       </div>
 
@@ -82,21 +82,9 @@ export default function Achievements() {
 
 const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 14 },
-  heroBanner: {
-    display: 'flex', alignItems: 'center', gap: 16,
-    padding: '24px 28px', borderRadius: 20,
-    background: 'linear-gradient(135deg, #4CAF50, #66BB6A)',
-    color: 'white', overflow: 'hidden', position: 'relative',
-  },
-  heroContent: { flex: 1, zIndex: 1 },
-  heroTitle: { fontSize: 26, fontWeight: 800, letterSpacing: -0.5, marginBottom: 4 },
-  heroSub: { fontSize: 14, opacity: 0.85, fontWeight: 600 },
-  heroMascot: { width: 80, height: 80, objectFit: 'contain', flexShrink: 0 },
-  tabs: { display: 'flex', gap: 6 },
-  tabBtn: { padding: '6px 16px', borderRadius: 16, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' },
-  tabActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
+  heroMascot: { width: 72, height: 72, objectFit: 'contain', flexShrink: 0 },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 10 },
-  card: { background: 'var(--bg-card)', borderRadius: 14, padding: 16, textAlign: 'center', border: '1px solid var(--border-light)' },
+  card: { background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', padding: 16, textAlign: 'center', border: '2px solid var(--border)' },
   cardIcon: { fontSize: 36, marginBottom: 6 },
   cardTitle: { fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 4 },
   cardDesc: { fontSize: 11, color: 'var(--text-light)', marginBottom: 8, lineHeight: 1.3 },

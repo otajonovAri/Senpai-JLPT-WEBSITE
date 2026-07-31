@@ -2,9 +2,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getKanjiById } from '../../api/dictionary';
 import ErrorState from '../../components/ErrorState';
-import { ArrowLeft, Bookmark, PenTool, Loader, PlayCircle } from 'lucide-react';
+import { Bookmark, PenTool, Loader, PlayCircle, BookMarked } from 'lucide-react';
 import KanjiStrokeAnimation from '../../components/KanjiStrokeAnimation';
 import { toggleSavedItem } from '../../api/profile';
+import PageHeader from '../../components/PageHeader';
 
 export default function KanjiDetail() {
   const { id } = useParams();
@@ -53,11 +54,14 @@ export default function KanjiDetail() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.header}>
-        <button style={styles.backBtn} onClick={() => navigate(-1)}><ArrowLeft size={20} /></button>
-        <span style={styles.headerTitle}>Kanji tafsiloti</span>
-        <span style={styles.levelBadge}>{kanji.jlptLevel}</span>
-      </div>
+      <PageHeader
+        icon={BookMarked}
+        title="Kanji tafsiloti"
+        subtitle={kanji.jlptLevel}
+        accent="blue"
+        size="sm"
+        back
+      />
 
       <div style={styles.kanjiBox}>
         <div style={styles.kanjiChar} className="jp">{kanji.character}</div>
@@ -73,7 +77,7 @@ export default function KanjiDetail() {
 
       <div style={styles.readingsGrid}>
         <div style={styles.readingCard}>
-          <div style={{ ...styles.readingType, color: '#2196F3' }}>ON'YOMI</div>
+          <div style={{ ...styles.readingType, color: 'var(--secondary)' }}>ON'YOMI</div>
           <div style={styles.readingKana} className="jp">{kanji.onyomi}</div>
         </div>
         <div style={styles.readingCard}>

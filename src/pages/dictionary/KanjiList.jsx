@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { searchKanji } from '../../api/dictionary';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { Search, Loader } from 'lucide-react';
+import { Search, Loader, BookMarked } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const PAGE_SIZE = 60;
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
@@ -71,7 +72,7 @@ export default function KanjiList() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title} className="anim-fade-up">Kanji</h1>
+      <PageHeader icon={BookMarked} title="Kanji" subtitle="Ieroglif bazasi — daraja bo'yicha" accent="blue" />
       <p style={styles.sub}>
         {query
           ? `"${query}" bo'yicha qidiruv — ${totalCount} ta natija`
@@ -182,7 +183,7 @@ const styles = {
   meaning: { fontSize: 12, fontWeight: 500, color: 'var(--primary)', marginBottom: 8, minHeight: 16, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
   meaningEn: { color: 'var(--text-secondary)', fontStyle: 'italic' },
   cardMeta: { display: 'flex', justifyContent: 'center', gap: 6 },
-  levelTag: { padding: '1px 7px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', color: '#1565C0', fontSize: 10, fontWeight: 700 },
+  levelTag: { padding: '1px 7px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', color: 'var(--secondary-dark)', fontSize: 10, fontWeight: 700 },
   strokeTag: { fontSize: 10, color: 'var(--text-light)' },
   loadMoreBtn: {
     alignSelf: 'center', display: 'flex', alignItems: 'center', gap: 8,

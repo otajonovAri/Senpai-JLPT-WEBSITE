@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { useAuth } from "../../context/AuthContext";
 import { updateProfile, uploadAvatar, changePassword } from '../../api/profile';
 import { useToast } from '../../context/ToastContext';
-import { ArrowLeft, Camera, Save, Loader } from 'lucide-react';
+import { Camera, Save, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function ProfileEdit() {
-  const navigate = useNavigate();
   const { user, refreshUser } = useAuth();
   const toast = useToast();
 
@@ -70,10 +70,7 @@ export default function ProfileEdit() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.header}>
-        <button style={styles.backBtn} onClick={() => navigate(-1)}><ArrowLeft size={20} /></button>
-        <span style={styles.headerTitle}>Profilni tahrirlash</span>
-      </div>
+      <PageHeader icon={Camera} title="Profilni tahrirlash" size="sm" back />
 
       <div style={styles.avatarSection}>
         <div style={styles.avatarWrap}>

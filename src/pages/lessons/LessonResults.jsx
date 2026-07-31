@@ -33,7 +33,7 @@ export default function LessonResults() {
 
       <div style={styles.statsGrid}>
         <div style={styles.statCard}>
-          <div style={{ ...styles.statIcon, background: 'rgba(167,139,250,0.1)' }}><Zap size={18} color="#7C3AED" /></div>
+          <div style={{ ...styles.statIcon, background: 'rgba(167,139,250,0.1)' }}><Zap size={18} color="var(--purple-dark)" /></div>
           <div>
             <div style={styles.statVal}>{results.xp}</div>
             <div style={styles.statLabel}>XP</div>
@@ -54,7 +54,7 @@ export default function LessonResults() {
           </div>
         </div>
         <div style={styles.statCard}>
-          <div style={{ ...styles.statIcon, background: 'rgba(33,150,243,0.1)' }}><Clock size={18} color="#1565C0" /></div>
+          <div style={{ ...styles.statIcon, background: 'rgba(33,150,243,0.1)' }}><Clock size={18} color="var(--secondary-dark)" /></div>
           <div>
             <div style={styles.statVal}>{results.time}</div>
             <div style={styles.statLabel}>Vaqt</div>
@@ -75,7 +75,7 @@ export default function LessonResults() {
 const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 16 },
   top: { textAlign: 'center', padding: '32px 20px 0' },
-  checkCircle: { width: 96, height: 96, borderRadius: '50%', background: 'linear-gradient(135deg, var(--success), #2E7D32)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 0 40px rgba(76,175,80,0.3)' },
+  checkCircle: { width: 96, height: 96, borderRadius: '50%', background: 'linear-gradient(135deg, var(--success), var(--success-dark))', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 0 40px rgba(76,175,80,0.3)' },
   title: { fontSize: 24, fontWeight: 800, color: 'var(--text)' },
   sub: { fontSize: 13, color: 'var(--text-light)', marginTop: 4 },
   statsGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 },

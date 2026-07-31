@@ -256,7 +256,7 @@ const styles = {
     position: 'relative', overflow: 'hidden',
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
     padding: '20px 24px', background: 'linear-gradient(135deg, var(--primary-dark), var(--primary) 60%, var(--primary-light))',
-    borderRadius: 20, color: 'white', boxShadow: '0 5px 0 #37810A',
+    borderRadius: 20, color: 'white', boxShadow: '0 5px 0 var(--primary-dark)',
   },
   welcomeDecor1: {
     position: 'absolute', top: -46, right: 90, width: 150, height: 150,

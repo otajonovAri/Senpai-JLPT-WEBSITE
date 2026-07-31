@@ -368,7 +368,7 @@ const st = {
   wrapper: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 },
   box: {
     position: 'relative', background: 'var(--bg-card, #fff)',
-    border: '2px solid var(--border, #e0e0e0)', borderRadius: 20,
+    border: '2px solid var(--border, var(--border))', borderRadius: 20,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
   },
@@ -380,13 +380,13 @@ const st = {
   controls: { display: 'flex', alignItems: 'center', gap: 8 },
   btn: {
     width: 36, height: 36, borderRadius: 10,
-    border: '1px solid var(--border, #e0e0e0)',
+    border: '1px solid var(--border, var(--border))',
     background: 'var(--bg-card, #fff)', color: 'var(--text)',
     display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
   },
   sel: {
     padding: '6px 10px', borderRadius: 8,
-    border: '1px solid var(--border, #e0e0e0)',
+    border: '1px solid var(--border, var(--border))',
     background: 'var(--bg-card, #fff)', color: 'var(--text)',
     fontSize: 12, fontWeight: 600, cursor: 'pointer', outline: 'none',
   },

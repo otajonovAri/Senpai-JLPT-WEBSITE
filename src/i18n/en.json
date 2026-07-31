@@ -16,6 +16,7 @@
     "studyGroups": "Groups",
     "mockTest": "Mock Test",
     "review": "Review",
+    "games": "Games",
     "pronunciation": "Pronunciation",
     "friends": "Friends",
     "achievements": "Achievements",
@@ -244,6 +245,7 @@
   },
   "settings": {
     "title": "Settings",
+    "subtitle": "App preferences and your account",
     "language": "Language",
     "theme": "Theme",
     "themeLight": "Light",

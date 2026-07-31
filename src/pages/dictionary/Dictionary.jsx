@@ -5,6 +5,7 @@ import { toggleSavedItem } from '../../api/profile';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { Search, Bookmark, BookmarkCheck, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const PAGE_SIZE = 40;
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
@@ -81,12 +82,17 @@ export default function Dictionary() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1 style={styles.title} className="anim-fade-up">Lug'at</h1>
-        <Link to="/saved" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 10, background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--primary)', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
-          <Bookmark size={16} /> Saqlangan
-        </Link>
-      </div>
+      <PageHeader
+        icon={Search}
+        title="Lug'at"
+        subtitle="Yapon so'zlarini qidiring va saqlang"
+        accent="purple"
+        right={
+          <Link to="/saved" className="page-head__back" style={{ width: 'auto', padding: '0 14px', gap: 6, fontSize: 13, fontWeight: 800 }}>
+            <Bookmark size={16} /> Saqlangan
+          </Link>
+        }
+      />
       <p style={styles.sub}>
         {query
           ? `"${query}" bo'yicha qidiruv — ${totalCount} ta natija`
@@ -203,7 +209,7 @@ const styles = {
   wordRight: { display: 'flex', alignItems: 'center', gap: 8 },
   wordLevel: {
     padding: '2px 8px', borderRadius: 8, background: 'rgba(33,150,243,0.1)',
-    fontSize: 11, fontWeight: 600, color: '#1565C0',
+    fontSize: 11, fontWeight: 600, color: 'var(--secondary-dark)',
   },
   wordType: { fontSize: 11, color: 'var(--text-light)' },
   saveBtn: { background: 'none', padding: 4 },

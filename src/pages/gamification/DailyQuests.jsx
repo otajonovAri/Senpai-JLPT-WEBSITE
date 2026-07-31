@@ -4,6 +4,7 @@ import { getDailyQuests, claimQuestReward } from '../../api/gamification';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { Target, Gift, Clock, Loader, ChevronRight } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const QUEST_ICONS = {
   LearnWords: '📖', LearnKanji: '🈷️', LearnGrammar: '📝', CompleteReviews: '🔁',
@@ -71,7 +72,7 @@ export default function DailyQuests() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title} className="anim-fade-up"><Target size={22} /> Kunlik vazifalar</h1>
+      <PageHeader icon={Target} title="Kunlik vazifalar" subtitle="Har kuni bajaring va tanga yig'ing" />
 
       <div style={styles.summaryCard} className="card-interactive">
         <div style={styles.summaryIcon} className="anim-pulse"><Gift size={24} color="var(--primary)" /></div>

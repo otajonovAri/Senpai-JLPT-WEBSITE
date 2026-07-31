@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getVocabularyById } from '../../api/dictionary';
 import { toggleSavedItem } from '../../api/profile';
 import { pickAudio, setVoice, getVoice } from '../../utils/voice';
 import { useToast } from '../../context/ToastContext';
 import ErrorState from '../../components/ErrorState';
 import { Button } from '../../components/ui';
-import { ArrowLeft, Volume2, Bookmark, BookOpen, Loader } from 'lucide-react';
+import { Volume2, Bookmark, BookOpen, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const LEVEL_COLORS = {
   N5: { bg: 'var(--success-soft)', fg: 'var(--success-dark)', bd: 'var(--success)' },
@@ -19,7 +20,6 @@ const LEVEL_COLORS = {
 // 44-ekran: So'z Tafsiloti
 export default function WordDetail() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const toast = useToast();
   const [word, setWord] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -88,13 +88,18 @@ export default function WordDetail() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.header}>
-        <button style={styles.iconBtn} className="press" onClick={() => navigate(-1)}><ArrowLeft size={20} /></button>
-        <h1 style={styles.title}>So'z tafsiloti</h1>
-        <button style={{ ...styles.iconBtn, ...(saved ? styles.savedBtn : {}) }} className="press" onClick={handleSave} aria-label="Saqlash">
-          <Bookmark size={18} fill={saved ? 'var(--accent)' : 'none'} color={saved ? 'var(--accent)' : 'currentColor'} />
-        </button>
-      </div>
+      <PageHeader
+        icon={BookOpen}
+        title="So'z tafsiloti"
+        accent="purple"
+        size="sm"
+        back
+        right={
+          <button className="page-head__back" onClick={handleSave} aria-label="Saqlash">
+            <Bookmark size={18} fill={saved ? '#fff' : 'none'} color="#fff" />
+          </button>
+        }
+      />
 
       {/* Hero word card */}
       <div style={styles.heroCard} className="anim-scale-in">

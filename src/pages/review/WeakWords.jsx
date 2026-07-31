@@ -3,6 +3,7 @@ import { getWeakWords } from '../../api/review';
 import { getVocabularyById, getKanjiById } from '../../api/dictionary';
 import ErrorState from '../../components/ErrorState';
 import { AlertTriangle, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function WeakWords() {
   const [words, setWords] = useState([]);
@@ -49,8 +50,7 @@ export default function WeakWords() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title}><AlertTriangle size={22} color="var(--accent)" /> Zaif so'zlarim</h1>
-      <p style={styles.sub}>Ko'p xato qilingan so'zlar — takrorlash tavsiya etiladi</p>
+      <PageHeader icon={AlertTriangle} title="Zaif so'zlarim" subtitle="Ko'p xato qilingan so'zlar — takrorlash tavsiya etiladi" accent="orange" />
 
       <div style={styles.list}>
         {words.map(word => (

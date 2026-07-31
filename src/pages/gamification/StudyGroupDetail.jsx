@@ -2,7 +2,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { getGroupDetail, leaveGroup } from '../../api/studyGroups';
 import ErrorState from '../../components/ErrorState';
-import { Users, Crown, Shield, Copy, Check, ChevronLeft, LogOut, Loader } from 'lucide-react';
+import { Users, Crown, Shield, Copy, Check, LogOut, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function StudyGroupDetail() {
   const { id } = useParams();
@@ -41,20 +42,22 @@ export default function StudyGroupDetail() {
   if (!group) return null;
 
   const roleIcon = (role) => {
-    if (role === 'Owner' || role === 2) return <Crown size={14} color="#FF9800" />;
-    if (role === 'Admin' || role === 1) return <Shield size={14} color="#2196F3" />;
+    if (role === 'Owner' || role === 2) return <Crown size={14} color="var(--warning)" />;
+    if (role === 'Admin' || role === 1) return <Shield size={14} color="var(--secondary)" />;
     return null;
   };
 
   return (
     <div style={S.page} className="stagger">
-      <button style={S.backBtn} onClick={() => navigate('/study-groups')} className="anim-fade-up">
-        <ChevronLeft size={18} /> Guruhlarga qaytish
-      </button>
+      <PageHeader
+        icon={Users}
+        title={group.name}
+        subtitle={group.description || "Tavsif yo'q"}
+        accent="blue"
+        back="/study-groups"
+      />
 
       <div style={S.infoCard} className="card-interactive anim-fade-up">
-        <h1 style={S.name}>{group.name}</h1>
-        <p style={S.desc}>{group.description || "Tavsif yo'q"}</p>
         <div style={S.meta}>
           <span style={S.badge}>N{5 - (group.level || 0)}</span>
           <span style={S.metaText}><Users size={14} /> {group.members?.length || 0}/{group.maxMembers}</span>
@@ -67,7 +70,7 @@ export default function StudyGroupDetail() {
           <span style={S.inviteLabel}>Taklif kodi:</span>
           <code style={S.inviteCode}>{group.inviteCode}</code>
           <button style={S.copyBtn} onClick={handleCopy} className="press">
-            {copied ? <Check size={16} color="#4CAF50" /> : <Copy size={16} />}
+            {copied ? <Check size={16} color="var(--success)" /> : <Copy size={16} />}
           </button>
         </div>
       )}
@@ -101,7 +104,7 @@ const S = {
   name: { fontSize: 24, fontWeight: 700, color: 'var(--text)', marginBottom: 6 },
   desc: { fontSize: 14, color: 'var(--text-light)', lineHeight: 1.5, marginBottom: 12 },
   meta: { display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' },
-  badge: { padding: '4px 12px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', fontSize: 12, fontWeight: 700, color: '#1565C0' },
+  badge: { padding: '4px 12px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', fontSize: 12, fontWeight: 700, color: 'var(--secondary-dark)' },
   metaText: { display: 'flex', alignItems: 'center', gap: 4, fontSize: 13, color: 'var(--text-light)' },
   inviteCard: { display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: 12, padding: '12px 16px' },
   inviteLabel: { fontSize: 12, color: 'var(--text-light)', fontWeight: 600 },

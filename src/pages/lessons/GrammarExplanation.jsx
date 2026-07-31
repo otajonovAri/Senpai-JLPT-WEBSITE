@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getGrammarById } from '../../api/dictionary';
 import ErrorState from '../../components/ErrorState';
-import { ArrowLeft, BookOpen, Loader } from 'lucide-react';
+import { BookOpen, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function GrammarExplanation() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [grammar, setGrammar] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,11 +28,13 @@ export default function GrammarExplanation() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.header}>
-        <button style={styles.backBtn} onClick={() => navigate(-1)}><ArrowLeft size={20} /></button>
-        <h1 style={styles.title}>Grammatika</h1>
-        <span style={styles.levelBadge}>{grammar.level}</span>
-      </div>
+      <PageHeader
+        icon={BookOpen}
+        title="Grammatika"
+        subtitle={grammar.level}
+        size="sm"
+        back
+      />
 
       <div style={styles.mainCard}>
         <div style={styles.grammarTitle} className="jp">{grammar.title}</div>
@@ -81,7 +83,7 @@ const styles = {
   header: { display: 'flex', alignItems: 'center', gap: 12 },
   backBtn: { background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 10, width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
   title: { flex: 1, fontSize: 20, fontWeight: 700, color: 'var(--text)' },
-  levelBadge: { padding: '4px 12px', borderRadius: 20, background: 'rgba(33,150,243,0.1)', color: '#1565C0', fontSize: 12, fontWeight: 700 },
+  levelBadge: { padding: '4px 12px', borderRadius: 20, background: 'rgba(33,150,243,0.1)', color: 'var(--secondary-dark)', fontSize: 12, fontWeight: 700 },
   mainCard: { background: 'var(--bg-card)', borderRadius: 16, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' },
   grammarTitle: { fontSize: 36, fontWeight: 700, color: 'var(--primary)', marginBottom: 12 },
   explanation: { fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 16 },

@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { adminApi } from '../../api/admin';
 import ErrorState from '../../components/ErrorState';
+import PageHeader from '../../components/PageHeader';
 import {
   Users, BookOpen, Languages, Layers, ShoppingBag,
   HelpCircle, Trophy, CreditCard, Shield, Loader,
@@ -9,19 +10,19 @@ import {
 } from 'lucide-react';
 
 const sections = [
-  { key: 'totalUsers', label: 'Foydalanuvchilar', icon: Users, path: '/admin/users', color: '#4CAF50' },
-  { key: 'totalVocabulary', label: "Lug'at so'zlari", icon: BookOpen, path: '/admin/vocabulary', color: '#2196F3' },
-  { key: 'totalKanji', label: 'Kanji', icon: Languages, path: '/admin/kanji', color: '#FF6B35' },
-  { key: 'totalGrammar', label: 'Grammatika', icon: Layers, path: '/admin/grammar', color: '#9C27B0' },
-  { key: 'totalLessons', label: 'Darslar', icon: BarChart3, path: '/admin/lessons', color: '#00BCD4' },
-  { key: 'totalShopItems', label: "Do'kon mahsulotlari", icon: ShoppingBag, path: '/admin/shop-items', color: '#FF9800' },
-  { key: 'totalFaq', label: 'FAQ', icon: HelpCircle, path: '/admin/faq', color: '#607D8B' },
-  { key: 'totalAchievements', label: 'Yutuqlar', icon: Trophy, path: '/admin/achievements', color: '#FFD700' },
-  { key: 'totalSubscriptionPlans', label: 'Obuna rejalar', icon: CreditCard, path: '/admin/subscription-plans', color: '#E91E63' },
-  { key: 'totalPodcasts', label: 'Podkastlar', icon: Mic, path: '/admin/podcasts', color: '#795548' },
-  { key: 'totalMockTests', label: 'Mock Testlar', icon: ClipboardCheck, path: '/admin/mock-tests', color: '#3F51B5' },
-  { key: 'totalDailyQuests', label: 'Kunlik vazifalar', icon: Swords, path: '/admin/daily-quests', color: '#F44336' },
-  { key: 'totalStudyGroups', label: "O'quv guruhlari", icon: Users, path: '/admin/study-groups', color: '#009688', badgeKey: 'pendingStudyGroups' },
+  { key: 'totalUsers', label: 'Foydalanuvchilar', icon: Users, path: '/admin/users', color: 'var(--success)' },
+  { key: 'totalVocabulary', label: "Lug'at so'zlari", icon: BookOpen, path: '/admin/vocabulary', color: 'var(--secondary)' },
+  { key: 'totalKanji', label: 'Kanji', icon: Languages, path: '/admin/kanji', color: 'var(--warning)' },
+  { key: 'totalGrammar', label: 'Grammatika', icon: Layers, path: '/admin/grammar', color: 'var(--purple-dark)' },
+  { key: 'totalLessons', label: 'Darslar', icon: BarChart3, path: '/admin/lessons', color: 'var(--secondary-light)' },
+  { key: 'totalShopItems', label: "Do'kon mahsulotlari", icon: ShoppingBag, path: '/admin/shop-items', color: 'var(--warning)' },
+  { key: 'totalFaq', label: 'FAQ', icon: HelpCircle, path: '/admin/faq', color: 'var(--text-secondary)' },
+  { key: 'totalAchievements', label: 'Yutuqlar', icon: Trophy, path: '/admin/achievements', color: 'var(--medal-gold)' },
+  { key: 'totalSubscriptionPlans', label: 'Obuna rejalar', icon: CreditCard, path: '/admin/subscription-plans', color: 'var(--pink-dark)' },
+  { key: 'totalPodcasts', label: 'Podkastlar', icon: Mic, path: '/admin/podcasts', color: 'var(--warning-dark)' },
+  { key: 'totalMockTests', label: 'Mock Testlar', icon: ClipboardCheck, path: '/admin/mock-tests', color: 'var(--secondary-dark)' },
+  { key: 'totalDailyQuests', label: 'Kunlik vazifalar', icon: Swords, path: '/admin/daily-quests', color: 'var(--danger)' },
+  { key: 'totalStudyGroups', label: "O'quv guruhlari", icon: Users, path: '/admin/study-groups', color: 'var(--success-dark)', badgeKey: 'pendingStudyGroups' },
 ];
 
 export default function AdminDashboard() {
@@ -54,16 +55,13 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div>
-      <div style={styles.header}>
-        <div style={styles.headerIcon}>
-          <Shield size={22} color="white" />
-        </div>
-        <div>
-          <h1 style={styles.title}>Admin Panel</h1>
-          <p style={styles.subtitle}>Kontentni boshqarish va statistika</p>
-        </div>
-      </div>
+    <div className="page">
+      <PageHeader
+        icon={Shield}
+        title="Admin Panel"
+        subtitle="Kontentni boshqarish va statistika"
+        accent="blue"
+      />
 
       <div style={styles.statsGrid}>
         {sections.map((sec, i) => {
@@ -78,7 +76,7 @@ export default function AdminDashboard() {
               className="card-interactive anim-fade-up"
             >
               <div style={styles.cardTop}>
-                <div style={{ ...styles.iconWrap, background: `${sec.color}15` }}>
+                <div style={{ ...styles.iconWrap, background: `color-mix(in srgb, ${sec.color} 14%, transparent)` }}>
                   <Icon size={20} color={sec.color} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -110,7 +108,7 @@ const styles = {
     width: 48,
     height: 48,
     borderRadius: 12,
-    background: 'linear-gradient(135deg, var(--secondary), #4A2D8A)',
+    background: 'linear-gradient(135deg, var(--secondary), var(--premium-light))',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -178,7 +176,7 @@ const styles = {
     padding: '3px 8px',
     borderRadius: 999,
     background: 'rgba(245,181,10,0.15)',
-    color: '#B45309',
+    color: 'var(--accent-dark)',
     fontSize: 10,
     fontWeight: 800,
     whiteSpace: 'nowrap',

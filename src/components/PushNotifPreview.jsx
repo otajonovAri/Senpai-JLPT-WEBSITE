@@ -38,7 +38,7 @@ export default function PushNotifPreview() {
 }
 
 const styles = {
-  screen: { background: 'linear-gradient(180deg, #2D1B69, #1a1040)', borderRadius: 16, padding: 20, color: 'white' },
+  screen: { background: 'linear-gradient(180deg, var(--premium), var(--premium-dark))', borderRadius: 16, padding: 20, color: 'white' },
   timeSection: { textAlign: 'center', padding: '20px 0 10px' },
   clock: { fontSize: 48, fontWeight: 200, letterSpacing: 1 },
   date: { fontSize: 13, opacity: 0.6, marginTop: 2 },

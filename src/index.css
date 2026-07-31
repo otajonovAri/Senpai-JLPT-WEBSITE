@@ -73,6 +73,30 @@
   --nav-height: 64px;
   --sidebar-width: 260px;
 
+  /* --- Semantic category aliases (ICONS_FLUTTER.md colour code) ---
+     Always use these in feature code instead of raw hexes, so a brand
+     tweak stays a one-line change and dark mode keeps working. */
+  --cat-words: var(--purple);
+  --cat-kanji: var(--secondary);
+  --cat-grammar: var(--success);
+  --cat-streak: var(--warning);
+  --cat-srs: var(--pink);
+  --cat-listening: var(--secondary-light);
+
+  /* --- Rank / medal palette (podium, leagues, achievements) --- */
+  --medal-gold: #F5B50A;
+  --medal-gold-dark: #B77F04;
+  --medal-silver: #A9B6BF;
+  --medal-silver-dark: #7A8894;
+  --medal-bronze: #CE8946;
+  --medal-bronze-dark: #9C6229;
+
+  /* --- Premium / subscription --- deliberately the deep violet from the
+     mobile app, the one place the green brand steps aside. */
+  --premium: #2D1B69;
+  --premium-dark: #1A1040;
+  --premium-light: #4A3690;
+
   color-scheme: light;
 }
 
@@ -104,6 +128,9 @@
   --shadow-md: 0 4px 14px rgba(0,0,0,0.5);
   --shadow-lg: 0 10px 28px rgba(0,0,0,0.6);
   --shadow-xl: 0 18px 50px rgba(0,0,0,0.65);
+
+  --medal-silver: #8E9BA5;
+  --medal-silver-dark: #64727D;
 
   color-scheme: dark;
 }
@@ -307,6 +334,171 @@ h1, h2, h3, h4 { font-weight: 800; color: var(--text); letter-spacing: -0.01em; 
 .pill--gold   { background: var(--accent-soft); color: var(--accent-dark); }
 .pill--pink   { background: var(--pink-soft); color: var(--pink-dark); }
 .pill--red    { background: var(--danger-soft); color: var(--danger-dark); }
+
+/* ============================================================
+   PAGE SHELL — one layout language for every inner screen.
+   Every page renders <PageHeader> then sections inside `.page`,
+   so spacing, title scale and hero treatment match everywhere.
+   ============================================================ */
+
+.page { display: flex; flex-direction: column; gap: 20px; }
+.page--tight { gap: 14px; }
+
+/* ---- Hero header (gradient banner) ----
+   Accent is driven by --ph-bg / --ph-lip, set by the accent modifier. */
+.page-head {
+  --ph-bg: var(--primary);
+  --ph-bg2: var(--primary-light);
+  --ph-lip: var(--primary-dark);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--ph-lip), var(--ph-bg) 58%, var(--ph-bg2));
+  box-shadow: 0 5px 0 var(--ph-lip);
+  color: #fff;
+}
+/* Soft light blobs — same decor language as the dashboard welcome card */
+.page-head::before,
+.page-head::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+.page-head::before { top: -54px; right: 64px; width: 150px; height: 150px; }
+.page-head::after  { bottom: -62px; left: 42%; width: 120px; height: 120px; background: rgba(255,255,255,0.09); }
+
+.page-head > * { position: relative; z-index: 1; }
+
+.page-head__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  font-size: 24px;
+}
+.page-head__body { flex: 1; min-width: 0; }
+.page-head__title {
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.page-head__sub { font-size: 14px; font-weight: 600; opacity: 0.85; margin-top: 2px; }
+.page-head__actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.page-head__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.26);
+  color: #fff;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+.page-head__back:hover { background: rgba(255, 255, 255, 0.3); }
+.page-head__back:active { transform: scale(0.94); }
+
+/* Accent variants — pick the one matching the page's category colour */
+.page-head--primary { --ph-bg: var(--primary);   --ph-bg2: var(--primary-light);   --ph-lip: var(--primary-dark); }
+.page-head--blue    { --ph-bg: var(--secondary); --ph-bg2: var(--secondary-light); --ph-lip: var(--secondary-dark); }
+.page-head--purple  { --ph-bg: var(--purple-dark); --ph-bg2: var(--purple);        --ph-lip: #5B21B6; }
+.page-head--pink    { --ph-bg: var(--pink-dark); --ph-bg2: var(--pink);            --ph-lip: #9D1C55; }
+.page-head--gold    { --ph-bg: var(--accent);    --ph-bg2: #FFCA3A;                --ph-lip: var(--accent-dark); }
+.page-head--orange  { --ph-bg: var(--warning);   --ph-bg2: #FDBA74;                --ph-lip: var(--warning-dark); }
+.page-head--red     { --ph-bg: var(--danger);    --ph-bg2: #F87171;                --ph-lip: var(--danger-dark); }
+
+/* Compact variant for drill/detail screens that need vertical room */
+.page-head--sm { padding: 12px 16px; border-radius: var(--radius-lg); box-shadow: 0 4px 0 var(--ph-lip); }
+.page-head--sm .page-head__icon { width: 40px; height: 40px; font-size: 20px; }
+.page-head--sm .page-head__title { font-size: 18px; }
+.page-head--sm .page-head__sub { font-size: 12px; }
+
+@media (max-width: 600px) {
+  .page-head { padding: 14px 16px; gap: 12px; }
+  .page-head__title { font-size: 20px; }
+  .page-head__icon { width: 44px; height: 44px; font-size: 21px; }
+  .page-head__sub { font-size: 13px; }
+}
+
+/* ---- Section heading inside a page ---- */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* ---- Responsive auto grid (tiles, stat cards, catalogue items) ---- */
+.grid-auto { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(var(--col, 220px), 1fr)); }
+.grid-auto--sm { --col: 150px; }
+.grid-auto--lg { --col: 300px; }
+
+/* ---- Stat tile (numbers row) ---- */
+.stat-tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+}
+.stat-tile__icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: var(--bg-alt);
+}
+.stat-tile__value { font-size: 20px; font-weight: 900; color: var(--text); line-height: 1.15; }
+.stat-tile__label { font-size: 12px; font-weight: 700; color: var(--text-light); }
+
+/* ---- List row (leaderboard, friends, settings, quests) ---- */
+.row-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg-alt);
+  border: 2px solid transparent;
+}
+.row-item--card { background: var(--bg-card); border-color: var(--border); }
+.row-item--active { background: var(--primary-soft); border-color: var(--primary); }
+
+/* ---- Filter / tab chip row ---- */
+.chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--bg-alt);
+  border: 2px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+}
+.chip:hover { border-color: var(--border-dark); }
+.chip:active { transform: scale(0.96); }
+.chip--active { background: var(--primary); border-color: var(--primary-dark); color: #fff; }
 
 /* Scrollbar */
 ::-webkit-scrollbar {

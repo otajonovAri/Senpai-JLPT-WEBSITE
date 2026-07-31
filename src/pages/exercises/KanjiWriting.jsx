@@ -112,7 +112,8 @@ export default function KanjiWriting() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const p = getPoint(e);
-    ctx.strokeStyle = '#2b2b3d';
+    // Canvas can't resolve CSS custom properties — read the live token value.
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#2A2A3C';
     ctx.lineWidth = 8;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -280,10 +281,10 @@ const styles = {
   header: { display: 'flex', alignItems: 'center', gap: 10 },
   backBtn: { background: 'none', color: 'var(--text-secondary)', border: 'none', cursor: 'pointer' },
   headerTitle: { flex: 1, textAlign: 'center', fontSize: 15, fontWeight: 700, color: 'var(--text)' },
-  hintBtn: { display: 'flex', alignItems: 'center', gap: 4, padding: '5px 10px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', border: '1px solid rgba(33,150,243,0.2)', color: '#1565C0', fontSize: 10, fontWeight: 700, cursor: 'pointer' },
+  hintBtn: { display: 'flex', alignItems: 'center', gap: 4, padding: '5px 10px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', border: '1px solid rgba(33,150,243,0.2)', color: 'var(--secondary-dark)', fontSize: 10, fontWeight: 700, cursor: 'pointer' },
   refRow: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, padding: '4px 0' },
   refKanji: { fontSize: 40, fontWeight: 900, color: 'var(--primary)' },
-  refReading: { fontSize: 14, color: '#2196F3', fontWeight: 600 },
+  refReading: { fontSize: 14, color: 'var(--secondary)', fontWeight: 600 },
   refMeaning: { fontSize: 12, color: 'var(--text-light)', marginTop: 2 },
   canvasWrap: { height: 280, background: 'var(--bg-card)', border: '2px solid var(--border-light)', borderRadius: 22, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', boxShadow: 'var(--shadow)' },
   canvas: { width: '100%', height: '100%', touchAction: 'none', cursor: 'crosshair', position: 'relative', zIndex: 1 },
@@ -301,7 +302,7 @@ const styles = {
   resultTitle: { fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 12 },
   resultKanji: { fontSize: 64, fontWeight: 900, color: 'var(--primary)', marginBottom: 12 },
   scoreLine: { fontSize: 15, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 10 },
-  xpBadge: { display: 'inline-block', padding: '6px 16px', borderRadius: 12, background: 'rgba(167,139,250,0.12)', color: '#7C3AED', fontSize: 14, fontWeight: 700, marginBottom: 16 },
+  xpBadge: { display: 'inline-block', padding: '6px 16px', borderRadius: 12, background: 'rgba(167,139,250,0.12)', color: 'var(--purple-dark)', fontSize: 14, fontWeight: 700, marginBottom: 16 },
   learnedBadge: { display: 'inline-block', padding: '6px 16px', borderRadius: 12, background: 'var(--success-soft)', color: 'var(--success-dark)', fontSize: 13, fontWeight: 800, marginBottom: 16, marginLeft: 8 },
   resultBtns: { display: 'flex', gap: 8, justifyContent: 'center' },
   btn: { padding: '13px 24px', borderRadius: 12, background: 'var(--primary)', color: 'white', fontSize: 14, fontWeight: 600, border: 'none', cursor: 'pointer' },

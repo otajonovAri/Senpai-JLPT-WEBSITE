@@ -55,10 +55,10 @@ const S = {
   steps: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 },
   step: {
     background: 'var(--bg-card, #fff)', borderRadius: 22, padding: '24px 20px',
-    border: '1px solid var(--border-light, #EDEFEA)',
+    border: '1px solid var(--border-light, var(--border-light))',
   },
   stepNum: {
-    width: 40, height: 40, borderRadius: '50%', background: '#58CC02', color: '#fff',
+    width: 40, height: 40, borderRadius: '50%', background: 'var(--primary)', color: '#fff',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     fontSize: 18, fontWeight: 900, marginBottom: 12,
   },

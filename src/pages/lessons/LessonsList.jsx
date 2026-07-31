@@ -5,6 +5,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { BookOpen, Lock, Star, Clock, ChevronRight, Play, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const levels = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const STATUS_COLORS = {
@@ -52,10 +53,7 @@ export default function LessonsList() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.header} className="anim-fade-up">
-        <h1 style={styles.title}>{t('lessons.title')}</h1>
-        <p style={styles.sub}>{t('lessons.subtitle')}</p>
-      </div>
+      <PageHeader icon={BookOpen} title={t('lessons.title')} subtitle={t('lessons.subtitle')} />
 
       <div style={styles.filters}>
         {levels.map(lv => (
@@ -116,8 +114,8 @@ export default function LessonsList() {
                       {[1, 2, 3].map(s => (
                         <Star key={s} size={16}
                           className={s <= lesson.progress.stars ? 'lesson-star' : ''}
-                          fill={s <= lesson.progress.stars ? '#F5B50A' : 'none'}
-                          color={s <= lesson.progress.stars ? '#F5B50A' : 'var(--border-dark)'} />
+                          fill={s <= lesson.progress.stars ? 'var(--accent)' : 'none'}
+                          color={s <= lesson.progress.stars ? 'var(--accent)' : 'var(--border-dark)'} />
                       ))}
                     </div>
                   )}

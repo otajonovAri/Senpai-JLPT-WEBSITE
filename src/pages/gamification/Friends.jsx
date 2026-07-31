@@ -5,6 +5,7 @@ import { getFriends, sendFriendRequest, respondFriendRequest, getChallenges, res
 import { useToast } from '../../context/ToastContext';
 import ErrorState from '../../components/ErrorState';
 import { Users, UserPlus, Search, Check, X, Swords, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function Friends() {
   const navigate = useNavigate();
@@ -118,10 +119,17 @@ export default function Friends() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.headerRow}>
-        <h1 style={styles.title} className="anim-fade-up"><Users size={22} /> Do'stlar</h1>
-        <button style={styles.addBtn} className="press" onClick={() => setShowAdd(!showAdd)}><UserPlus size={18} /></button>
-      </div>
+      <PageHeader
+        icon={Users}
+        title="Do'stlar"
+        subtitle="Birga o'rganing va bellashing"
+        accent="blue"
+        right={
+          <button className="page-head__back" onClick={() => setShowAdd(!showAdd)} aria-label="Do'st qo'shish">
+            <UserPlus size={18} />
+          </button>
+        }
+      />
 
       {showAdd && (
         <div style={styles.addCard}>

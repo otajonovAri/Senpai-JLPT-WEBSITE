@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getUserProfile, createChallenge, getChallenges, removeFriend } from '../../api/gamification';
 import { useToast } from '../../context/ToastContext';
 import ErrorState from '../../components/ErrorState';
-import { ArrowLeft, Trophy, Flame, Swords, Loader, UserMinus } from 'lucide-react';
+import { Trophy, Flame, Swords, Loader, UserMinus } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function FriendProfile() {
   const { id } = useParams(); // do'stning userId'si
@@ -65,7 +66,7 @@ export default function FriendProfile() {
 
   return (
     <div style={styles.page} className="stagger">
-      <button style={styles.backBtn} onClick={() => navigate(-1)}><ArrowLeft size={20} /> Orqaga</button>
+      <PageHeader icon={Trophy} title={friend.name} subtitle={`${friend.xp.toLocaleString()} XP`} accent="purple" back />
 
       <div style={styles.profileCard}>
         <div style={styles.avatar}>

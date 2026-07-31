@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getCurrentSubscription, cancelSubscription } from '../../api/shop';
 import ErrorState from '../../components/ErrorState';
 import { Crown, CreditCard, Calendar, AlertTriangle, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 function fmtDate(iso) {
   if (!iso) return '—';
@@ -53,7 +54,7 @@ export default function SubscriptionManage() {
   if (isFree) {
     return (
       <div style={styles.page} className="stagger">
-        <h1 style={styles.title}><Crown size={22} color="#FFD700" /> Obuna boshqaruvi</h1>
+        <PageHeader icon={Crown} title="Obuna boshqaruvi" subtitle="Joriy rejangiz" accent="gold" />
         <div style={styles.freeCard}>
           <div style={{ fontSize: 48, marginBottom: 12 }}>🆓</div>
           <div style={styles.freeName}>Bepul reja</div>
@@ -66,7 +67,7 @@ export default function SubscriptionManage() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title}><Crown size={22} color="#FFD700" /> Obuna boshqaruvi</h1>
+      <PageHeader icon={Crown} title="Obuna boshqaruvi" subtitle="Joriy rejangiz va to'lov tarixi" accent="gold" />
 
       <div style={styles.card}>
         <div style={styles.planRow}>
@@ -129,15 +130,15 @@ export default function SubscriptionManage() {
 const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 16 },
   title: { fontSize: 24, fontWeight: 700, color: 'var(--text)', display: 'flex', alignItems: 'center', gap: 8 },
-  card: { background: 'linear-gradient(135deg, #2D1B69, #1a1040)', borderRadius: 16, padding: 20, color: 'white' },
+  card: { background: 'linear-gradient(135deg, var(--premium), var(--premium-dark))', borderRadius: 16, padding: 20, color: 'white' },
   planRow: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' },
   planName: { fontSize: 18, fontWeight: 700, color: 'white' },
   planPrice: { fontSize: 13, opacity: 0.7, marginTop: 4, color: '#ccc' },
-  statusBadge: { padding: '4px 12px', borderRadius: 10, background: 'rgba(76,175,80,0.2)', color: '#81C784', fontSize: 12, fontWeight: 600 },
+  statusBadge: { padding: '4px 12px', borderRadius: 10, background: 'rgba(76,175,80,0.2)', color: 'var(--primary-light)', fontSize: 12, fontWeight: 600 },
   progressSection: { marginTop: 16 },
   progressLabel: { fontSize: 12, opacity: 0.7, marginBottom: 6, color: '#ccc' },
   progressBg: { height: 6, background: 'rgba(255,255,255,0.15)', borderRadius: 3 },
-  progressFill: { height: '100%', background: '#FFD700', borderRadius: 3 },
+  progressFill: { height: '100%', background: 'var(--medal-gold)', borderRadius: 3 },
   detailsCard: { background: 'var(--bg-card)', borderRadius: 14, padding: 16, border: '1px solid var(--border-light)' },
   detailRow: { display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0', borderBottom: '1px solid var(--border-light)' },
   detailLabel: { flex: 1, fontSize: 13, color: 'var(--text-light)' },

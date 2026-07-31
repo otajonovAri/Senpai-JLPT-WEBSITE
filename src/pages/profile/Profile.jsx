@@ -108,10 +108,10 @@ export default function Profile() {
 
       <div style={styles.statsGrid} className="stagger-grid">
         {[
-          { icon: <Flame size={20} color="#FF6B35" className="anim-flame" />, label: 'Streak', value: `${user?.currentStreak || 0} kun`, sub: `Eng uzun: ${user?.longestStreak || 0}` },
-          { icon: <Coins size={20} color="#FFB800" />, label: 'Tangalar', value: user?.coins || 0, sub: "Do'konda sarflang" },
-          { icon: <BarChart3 size={20} color="#4CAF50" />, label: "So'zlar", value: s.totalWordsLearned || 0, sub: "O'rganilgan" },
-          { icon: <Target size={20} color="#2196F3" />, label: "Aniqlik", value: `${s.overallAccuracy || 0}%`, sub: "O'rtacha natija" },
+          { icon: <Flame size={20} color="var(--warning)" className="anim-flame" />, label: 'Streak', value: `${user?.currentStreak || 0} kun`, sub: `Eng uzun: ${user?.longestStreak || 0}` },
+          { icon: <Coins size={20} color="var(--accent)" />, label: 'Tangalar', value: user?.coins || 0, sub: "Do'konda sarflang" },
+          { icon: <BarChart3 size={20} color="var(--success)" />, label: "So'zlar", value: s.totalWordsLearned || 0, sub: "O'rganilgan" },
+          { icon: <Target size={20} color="var(--secondary)" />, label: "Aniqlik", value: `${s.overallAccuracy || 0}%`, sub: "O'rtacha natija" },
         ].map((stat, i) => (
           <div key={i} style={styles.statCard} className="card-interactive">
             {stat.icon}
@@ -124,11 +124,11 @@ export default function Profile() {
 
       <div style={styles.quickLinksGrid} className="stagger-grid">
         {[
-          { to: '/friends', icon: <Users size={20} color="#2196F3" />, label: "Do'stlar" },
-          { to: '/achievements', icon: <Award size={20} color="#FFD700" />, label: 'Yutuqlar' },
-          { to: '/saved', icon: <Bookmark size={20} color="#4CAF50" />, label: 'Saqlangan' },
-          { to: '/referral', icon: <Gift size={20} color="#E91E63" />, label: 'Taklif kodi' },
-          { to: '/notifications', icon: <Bell size={20} color="#FF9800" />, label: 'Bildirishnomalar' },
+          { to: '/friends', icon: <Users size={20} color="var(--secondary)" />, label: "Do'stlar" },
+          { to: '/achievements', icon: <Award size={20} color="var(--medal-gold)" />, label: 'Yutuqlar' },
+          { to: '/saved', icon: <Bookmark size={20} color="var(--success)" />, label: 'Saqlangan' },
+          { to: '/referral', icon: <Gift size={20} color="var(--pink-dark)" />, label: 'Taklif kodi' },
+          { to: '/notifications', icon: <Bell size={20} color="var(--warning)" />, label: 'Bildirishnomalar' },
         ].map(link => (
           <Link key={link.to} to={link.to} style={styles.quickLink} className="card-interactive">
             {link.icon}
@@ -144,10 +144,10 @@ export default function Profile() {
           {heatmapDays.map((day, i) => (
             <div key={i} style={{
               ...styles.heatmapDay,
-              background: day.intensity === 0 ? '#EEEEEE' :
-                day.intensity === 1 ? '#C8E6C9' :
-                day.intensity === 2 ? '#81C784' :
-                day.intensity === 3 ? '#4CAF50' : '#2E7D32',
+              background: day.intensity === 0 ? 'var(--border-light)' :
+                day.intensity === 1 ? 'var(--success-soft)' :
+                day.intensity === 2 ? 'var(--primary-light)' :
+                day.intensity === 3 ? 'var(--success)' : 'var(--success-dark)',
             }} title={day.date.toLocaleDateString()} />
           ))}
         </div>
@@ -156,8 +156,8 @@ export default function Profile() {
           {[0, 1, 2, 3, 4].map(i => (
             <div key={i} style={{
               ...styles.legendBox,
-              background: i === 0 ? '#EEEEEE' : i === 1 ? '#C8E6C9' :
-                i === 2 ? '#81C784' : i === 3 ? '#4CAF50' : '#2E7D32',
+              background: i === 0 ? 'var(--border-light)' : i === 1 ? 'var(--success-soft)' :
+                i === 2 ? 'var(--primary-light)' : i === 3 ? 'var(--success)' : 'var(--success-dark)',
             }} />
           ))}
           <span style={styles.legendLabel}>Ko'p</span>
@@ -207,16 +207,19 @@ export default function Profile() {
 
 const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 20 },
+  // Same hero language as <PageHeader>/the dashboard welcome card — the
+  // premium violet is reserved for subscription screens only.
   profileCard: {
-    background: 'linear-gradient(135deg, #2D1B69, #4a3690)',
-    borderRadius: 20, padding: 24, color: 'white',
+    background: 'linear-gradient(135deg, var(--primary-dark), var(--primary) 58%, var(--primary-light))',
+    boxShadow: '0 5px 0 var(--primary-dark)',
+    borderRadius: 'var(--radius-xl)', padding: 24, color: 'white',
   },
   profileTop: { display: 'flex', gap: 16, alignItems: 'center', marginBottom: 20 },
   editBtn: {
     display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto', alignSelf: 'flex-start',
-    padding: '8px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.15)',
-    border: '1px solid rgba(255,255,255,0.3)', color: 'white',
-    fontSize: 12, fontWeight: 600, cursor: 'pointer', flexShrink: 0,
+    padding: '8px 14px', borderRadius: 'var(--radius-md)', background: 'rgba(255,255,255,0.2)',
+    border: '2px solid rgba(255,255,255,0.3)', color: 'white',
+    fontSize: 12, fontWeight: 800, cursor: 'pointer', flexShrink: 0,
   },
   avatarLarge: {
     width: 72, height: 72, borderRadius: '50%',
@@ -236,7 +239,7 @@ const styles = {
   },
   planBadge: {
     padding: '4px 10px', borderRadius: 8, background: 'rgba(255,184,0,0.3)',
-    fontSize: 12, fontWeight: 600, color: '#FFD54F',
+    fontSize: 12, fontWeight: 600, color: 'var(--accent)',
   },
   joinDate: { display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, opacity: 0.6 },
   xpSection: {},

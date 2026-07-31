@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { getHiragana, getKatakana, getKanaById } from '../../api/dictionary';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { Volume2, Loader } from 'lucide-react';
+import { Volume2, Loader, Languages } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function HiraganaTable() {
   const [tab, setTab] = useState('hiragana');
@@ -39,8 +40,12 @@ export default function HiraganaTable() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title}>{tab === 'hiragana' ? 'Hiragana' : 'Katakana'} jadvali</h1>
-      <p style={styles.sub}>Yapon alifbosi</p>
+      <PageHeader
+        icon={Languages}
+        title={`${tab === 'hiragana' ? 'Hiragana' : 'Katakana'} jadvali`}
+        subtitle="Yapon alifbosi"
+        accent="pink"
+      />
 
       <div style={styles.tabs}>
         <button onClick={() => setTab('hiragana')} style={{ ...styles.tab, ...(tab === 'hiragana' ? styles.tabActive : {}) }}>

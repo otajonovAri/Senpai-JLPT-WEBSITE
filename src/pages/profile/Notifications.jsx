@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { getNotifications, markNotificationRead } from '../../api/shop';
 import ErrorState from '../../components/ErrorState';
 import { Bell, Check, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 // §19.1 — NotificationType nomlari bo'yicha ikonkalar
 const TYPE_ICONS = {
@@ -63,16 +64,17 @@ export default function Notifications() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.headerRow}>
-        <h1 style={styles.title}><Bell size={22} /> Bildirishnomalar</h1>
-        {unread > 0 && (
-          <button style={styles.markAllBtn} onClick={handleMarkAllRead}>
+      <PageHeader
+        icon={Bell}
+        title="Bildirishnomalar"
+        subtitle={unread > 0 ? `${unread} ta o'qilmagan` : "Hammasi o'qilgan"}
+        accent="orange"
+        right={unread > 0 ? (
+          <button className="page-head__back" style={{ width: 'auto', padding: '0 14px', gap: 6, fontSize: 13, fontWeight: 800 }} onClick={handleMarkAllRead}>
             <Check size={14} /> Barchasini o'qish
           </button>
-        )}
-      </div>
-
-      {unread > 0 && <div style={styles.unreadBadge}>{unread} ta o'qilmagan</div>}
+        ) : null}
+      />
 
       <div style={styles.list}>
         {notifs.map(n => (

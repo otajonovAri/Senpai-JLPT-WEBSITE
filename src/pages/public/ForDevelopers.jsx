@@ -63,11 +63,11 @@ export default function ForDevelopers() {
 const S = {
   specTable: {
     background: 'var(--bg-card, #fff)', borderRadius: 22,
-    border: '1px solid var(--border-light, #EDEFEA)', overflow: 'hidden',
+    border: '1px solid var(--border-light, var(--border-light))', overflow: 'hidden',
   },
   specRow: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16,
-    padding: '14px 20px', borderBottom: '1px solid var(--border-light, #EDEFEA)',
+    padding: '14px 20px', borderBottom: '1px solid var(--border-light, var(--border-light))',
   },
   specKey: { fontSize: 14, fontWeight: 700, color: 'var(--text-secondary)' },
   specVal: { fontSize: 14, fontWeight: 600, color: 'var(--text)', textAlign: 'right' },

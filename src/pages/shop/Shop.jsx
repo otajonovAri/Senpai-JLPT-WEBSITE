@@ -3,7 +3,8 @@ import { getShopItems, purchaseItem } from '../../api/shop';
 import { useToast } from '../../context/ToastContext';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { Coins, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
+import { Coins, Loader, ShoppingBag } from 'lucide-react';
 
 const CATEGORY_ICONS = {
   StreakFreeze: '❄️', XpBooster: '⚡', Hat: '🎩', Outfit: '👘',
@@ -66,16 +67,18 @@ export default function Shop() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.heroBanner} className="anim-scale-in">
-        <div style={styles.heroContent}>
-          <h1 style={styles.heroTitle}>Do'kon</h1>
-          <p style={styles.heroSub}>Coinlar bilan xarid qiling</p>
-        </div>
-        <div style={styles.heroRight}>
-          <div style={styles.coinsBadge} className="anim-pop"><Coins size={18} /> {coins}</div>
-        </div>
-        <img src="/mascot/shopkeeper.png" alt="Shopkeeper" style={styles.heroMascot} />
-      </div>
+      <PageHeader
+        icon={ShoppingBag}
+        title="Do'kon"
+        subtitle="Coinlar bilan xarid qiling"
+        accent="gold"
+        right={
+          <>
+            <div style={styles.coinsBadge} className="anim-pop"><Coins size={18} /> {coins}</div>
+            <img src="/mascot/shopkeeper.png" alt="" style={styles.heroMascot} />
+          </>
+        }
+      />
 
       <div style={styles.tabs}>
         {[['all', 'Barchasi'], ['boost', 'Boost'], ['cosmetic', 'Kosmetik']].map(([key, label]) => (
@@ -109,18 +112,8 @@ export default function Shop() {
 
 const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 14 },
-  heroBanner: {
-    display: 'flex', alignItems: 'center', gap: 16,
-    padding: '24px 28px', borderRadius: 20,
-    background: 'linear-gradient(135deg, #FF9800, #F57C00)',
-    color: 'white', overflow: 'hidden', position: 'relative',
-  },
-  heroContent: { flex: 1, zIndex: 1 },
-  heroTitle: { fontSize: 26, fontWeight: 800, letterSpacing: -0.5, marginBottom: 4 },
-  heroSub: { fontSize: 14, opacity: 0.85, fontWeight: 600 },
-  heroRight: { zIndex: 1 },
-  heroMascot: { width: 80, height: 80, objectFit: 'contain', flexShrink: 0 },
-  coinsBadge: { display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 20, background: 'rgba(255,255,255,0.25)', color: 'white', fontSize: 16, fontWeight: 800, backdropFilter: 'blur(8px)' },
+  heroMascot: { width: 72, height: 72, objectFit: 'contain', flexShrink: 0 },
+  coinsBadge: { display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 'var(--radius-full)', background: 'rgba(255,255,255,0.25)', border: '2px solid rgba(255,255,255,0.3)', color: 'white', fontSize: 16, fontWeight: 800 },
   tabs: { display: 'flex', gap: 6 },
   tabBtn: { padding: '6px 16px', borderRadius: 16, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' },
   tabActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },

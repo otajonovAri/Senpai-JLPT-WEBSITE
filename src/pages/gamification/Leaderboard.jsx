@@ -4,7 +4,8 @@ import { useAuth } from '../../context/AuthContext';
 import { getLeaderboard, getLeagueStandings } from '../../api/gamification';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { Flame, Loader, ChevronRight } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
+import { Flame, Loader, ChevronRight, Trophy } from 'lucide-react';
 
 export default function Leaderboard() {
   const { user } = useAuth();
@@ -54,17 +55,21 @@ export default function Leaderboard() {
   if (entries.length === 0) return <EmptyState title="Reyting bo'sh" subtitle="Hozircha foydalanuvchilar yo'q" />;
 
   return (
-    <div style={styles.page} className="stagger">
-      <div style={styles.heroBanner} className="anim-scale-in">
-        <div style={styles.heroContent}>
-          <h1 style={styles.heroTitle}>Reyting jadvali</h1>
-          <p style={styles.heroSub}>Eng yaxshi o'rganuvchilar reytingi</p>
-        </div>
-        <Link to="/leagues" style={styles.leagueLink} className="press">
-          <img src="/mascot/shield.png" alt="Liga" style={{ width: 20, height: 20, objectFit: 'contain' }} /> Ligalar <ChevronRight size={16} />
-        </Link>
-        <img src="/mascot/champion.png" alt="Champion" style={styles.heroMascot} />
-      </div>
+    <div className="page stagger">
+      <PageHeader
+        icon={Trophy}
+        title="Reyting jadvali"
+        subtitle="Eng yaxshi o'rganuvchilar reytingi"
+        accent="gold"
+        right={
+          <>
+            <Link to="/leagues" style={styles.leagueLink} className="press">
+              <img src="/mascot/shield.png" alt="" style={{ width: 20, height: 20, objectFit: 'contain' }} /> Ligalar <ChevronRight size={16} />
+            </Link>
+            <img src="/mascot/champion.png" alt="" style={styles.heroMascot} />
+          </>
+        }
+      />
 
       {league && (
         <div style={styles.leagueBanner} className="anim-scale-in">
@@ -88,7 +93,7 @@ export default function Leaderboard() {
             <div style={{
               ...styles.podiumAvatar,
               width: i === 0 ? 64 : 52, height: i === 0 ? 64 : 52,
-              border: `3px solid ${i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : '#CD7F32'}`,
+              border: `3px solid ${i === 0 ? 'var(--medal-gold)' : i === 1 ? 'var(--medal-silver)' : 'var(--medal-bronze)'}`,
             }}>
               {entry.avatarUrl
                 ? <img src={entry.avatarUrl} alt="" style={styles.avatarImg} />
@@ -96,7 +101,7 @@ export default function Leaderboard() {
             </div>
             <div style={styles.podiumName}>{entry.name}</div>
             <div style={styles.podiumXp}>{entry.xp.toLocaleString()} XP</div>
-            <div style={{ ...styles.podiumBadge, background: i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : '#CD7F32' }}>
+            <div style={{ ...styles.podiumBadge, background: i === 0 ? 'var(--medal-gold)' : i === 1 ? 'var(--medal-silver)' : 'var(--medal-bronze)' }}>
               {i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉'}
             </div>
           </div>
@@ -112,7 +117,7 @@ export default function Leaderboard() {
                 <span style={{
                   ...styles.rank,
                   color: entry.rank <= 3
-                    ? entry.rank === 1 ? '#FFD700' : entry.rank === 2 ? '#9E9E9E' : '#CD7F32'
+                    ? entry.rank === 1 ? 'var(--medal-gold)' : entry.rank === 2 ? 'var(--medal-silver-dark)' : 'var(--medal-bronze)'
                     : 'var(--text-secondary)',
                 }}>#{entry.rank}</span>
                 <div style={styles.rowAvatar}>
@@ -123,7 +128,7 @@ export default function Leaderboard() {
                 <span style={styles.rowName}>{entry.name}{isMe ? ' (Siz)' : ''}</span>
               </div>
               <div style={styles.rowRight}>
-                <span style={styles.streak}><Flame size={13} color="#FF6B35" /> {entry.streak}</span>
+                <span style={styles.streak}><Flame size={13} color="var(--warning)" /> {entry.streak}</span>
                 <span style={styles.rowXp}>{entry.xp.toLocaleString()} XP</span>
               </div>
             </div>
@@ -135,21 +140,11 @@ export default function Leaderboard() {
 }
 
 const styles = {
-  page: { display: 'flex', flexDirection: 'column', gap: 20 },
-  heroBanner: {
-    display: 'flex', alignItems: 'center', gap: 16,
-    padding: '24px 28px', borderRadius: 20,
-    background: 'linear-gradient(135deg, #FFD700, #FFA000)',
-    color: '#3E2723', overflow: 'hidden', position: 'relative',
-  },
-  heroContent: { flex: 1, zIndex: 1 },
-  heroTitle: { fontSize: 26, fontWeight: 800, letterSpacing: -0.5, marginBottom: 4 },
-  heroSub: { fontSize: 14, opacity: 0.7, fontWeight: 600 },
-  heroMascot: { width: 80, height: 80, objectFit: 'contain', flexShrink: 0 },
+  heroMascot: { width: 72, height: 72, objectFit: 'contain', flexShrink: 0 },
   leagueBanner: {
     display: 'flex', alignItems: 'center', gap: 16,
-    padding: '18px 24px', borderRadius: 16,
-    background: 'linear-gradient(135deg, #607D8B, #78909C)', color: 'white',
+    padding: '18px 24px', borderRadius: 'var(--radius-lg)',
+    background: 'linear-gradient(135deg, var(--secondary-dark), var(--secondary))', color: 'white',
   },
   leagueIcon: { padding: 4 },
   leagueShield: { width: 42, height: 42, objectFit: 'contain' },
@@ -176,12 +171,12 @@ const styles = {
   list: { display: 'flex', flexDirection: 'column', gap: 4 },
   row: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    padding: '12px 16px', borderRadius: 10, background: 'var(--bg-card)',
-    border: '1px solid var(--border-light)',
+    padding: '12px 16px', borderRadius: 'var(--radius-md)', background: 'var(--bg-card)',
+    border: '2px solid var(--border)',
   },
-  rowMe: { background: 'rgba(88,204,2,0.05)', borderColor: 'var(--primary)' },
+  rowMe: { background: 'var(--primary-soft)', borderColor: 'var(--primary)' },
   rowLeft: { display: 'flex', alignItems: 'center', gap: 10 },
-  rank: { fontSize: 14, fontWeight: 700, width: 30 },
+  rank: { fontSize: 14, fontWeight: 900, width: 30 },
   rowAvatar: {
     width: 32, height: 32, borderRadius: '50%', background: 'var(--secondary-light)',
     color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -193,9 +188,9 @@ const styles = {
   rowXp: { fontSize: 14, fontWeight: 600, color: 'var(--text)' },
   leagueLink: {
     display: 'flex', alignItems: 'center', gap: 6,
-    padding: '8px 14px', borderRadius: 12,
-    background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(8px)',
-    color: '#3E2723', fontSize: 13, fontWeight: 700,
-    textDecoration: 'none', zIndex: 1, flexShrink: 0,
+    padding: '8px 14px', borderRadius: 'var(--radius-md)',
+    background: 'rgba(255,255,255,0.22)', border: '2px solid rgba(255,255,255,0.3)',
+    color: '#fff', fontSize: 13, fontWeight: 800,
+    textDecoration: 'none', flexShrink: 0, whiteSpace: 'nowrap',
   },
 };

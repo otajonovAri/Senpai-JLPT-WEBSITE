@@ -54,7 +54,7 @@ const styles = {
     justifyContent: 'center',
     gap: 8,
     padding: '8px 16px',
-    background: '#2b2b3d',
+    background: 'var(--text)',
     color: 'white',
     fontSize: 12.5,
     fontWeight: 600,

@@ -9,7 +9,7 @@ import {
   Menu, X, Flame, Coins, GraduationCap, Settings,
   BarChart3, BookMarked, Map, ShoppingBag, Languages,
   Headphones, Users, Bell, ClipboardCheck, Star, UserPlus, Award, Bookmark,
-  CreditCard, Mic
+  CreditCard, Mic, Gamepad2
 } from 'lucide-react';
 
 function getStudentNavItems(t) {
@@ -24,6 +24,7 @@ function getStudentNavItems(t) {
     { path: '/study-groups', label: t('nav.studyGroups'), icon: Users },
     { path: '/mock-test', label: t('nav.mockTest'), icon: ClipboardCheck },
     { path: '/review', label: t('nav.review'), icon: Star },
+    { path: '/games', label: t('nav.games'), icon: Gamepad2 },
     { path: '/pronunciation', label: t('nav.pronunciation'), icon: Mic },
     { path: '/friends', label: t('nav.friends'), icon: UserPlus },
     { path: '/achievements', label: t('nav.achievements'), icon: Award },
@@ -86,11 +87,11 @@ export default function Layout() {
           </div>
           <div style={styles.headerRight}>
             <div style={{ ...styles.headerStat, background: 'var(--warning-soft)', color: 'var(--warning-dark)' }}>
-              <Flame size={16} color="#FB923C" className="anim-flame-glow" />
+              <Flame size={16} color="var(--warning)" className="anim-flame-glow" />
               <span>{user?.currentStreak || 0}</span>
             </div>
             <div style={{ ...styles.headerStat, background: 'var(--accent-soft)', color: 'var(--accent-dark)' }}>
-              <Coins size={16} color="#F5B50A" />
+              <Coins size={16} color="var(--accent)" />
               <span>{user?.coins || 0}</span>
             </div>
           </div>
@@ -119,11 +120,11 @@ export default function Layout() {
           <div style={styles.sidebarTop}>
             <div style={styles.statsRow}>
               <div style={{ ...styles.miniStat, background: 'var(--warning-soft)' }} title="Streak">
-                <Flame size={14} color="#FB923C" className="anim-flame-glow" />
+                <Flame size={14} color="var(--warning)" className="anim-flame-glow" />
                 <span style={{ ...styles.miniStatVal, color: 'var(--warning-dark)' }}>{user?.currentStreak || 0}</span>
               </div>
               <div style={{ ...styles.miniStat, background: 'var(--accent-soft)' }} title="Tanga">
-                <Coins size={14} color="#F5B50A" />
+                <Coins size={14} color="var(--accent)" />
                 <span style={{ ...styles.miniStatVal, color: 'var(--accent-dark)' }}>{user?.coins || 0}</span>
               </div>
               <div style={{ ...styles.miniStat, background: 'var(--primary-soft)' }} title="XP">

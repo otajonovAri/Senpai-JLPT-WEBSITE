@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
-import { Loader, Plus, Trash2, Pencil, Search, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Loader, Plus, Trash2, Pencil, Search, Database } from 'lucide-react';
 import ErrorState from '../../components/ErrorState';
+import PageHeader from '../../components/PageHeader';
 
 export default function AdminTable({
   title,
@@ -44,22 +44,20 @@ export default function AdminTable({
   }
 
   return (
-    <div>
-      <div style={styles.header}>
-        <div style={styles.headerLeft}>
-          <Link to={backLink} style={styles.backBtn} className="press">
-            <ArrowLeft size={18} />
-          </Link>
-          <h1 style={styles.title}>{title}</h1>
-          <span style={styles.count}>{data?.length || 0} ta</span>
-        </div>
-        {onCreate && (
-          <button style={styles.createBtn} className="press" onClick={onCreate}>
+    <div className="page">
+      <PageHeader
+        icon={Database}
+        title={title}
+        subtitle={`${data?.length || 0} ta yozuv`}
+        accent="blue"
+        back={backLink}
+        right={onCreate && (
+          <button className="page-head__back" style={styles.createBtn} onClick={onCreate}>
             <Plus size={16} />
             <span>Yangi qo'shish</span>
           </button>
         )}
-      </div>
+      />
 
       <div style={styles.searchWrap}>
         <Search size={16} style={{ color: 'var(--text-light)' }} />
@@ -173,17 +171,12 @@ const styles = {
     borderRadius: 10,
   },
   createBtn: {
-    display: 'flex',
-    alignItems: 'center',
+    width: 'auto',
+    padding: '0 16px',
     gap: 6,
-    padding: '9px 16px',
-    borderRadius: 10,
-    background: 'var(--secondary)',
-    color: 'white',
     fontSize: 13,
-    fontWeight: 600,
-    border: 'none',
-    cursor: 'pointer',
+    fontWeight: 800,
+    whiteSpace: 'nowrap',
   },
   searchWrap: {
     display: 'flex',

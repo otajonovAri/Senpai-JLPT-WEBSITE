@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { getPodcasts } from '../../api/podcasts';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { Loader, Star } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
+import { Loader, Star, Headphones } from 'lucide-react';
 
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const CATEGORIES = [
@@ -16,13 +17,14 @@ const CATEGORIES = [
   { key: 5, label: 'Biznes' },
 ];
 const CAT_EMOJI = ['💬', '📰', '📖', '📝', '🎌', '💼'];
+// Cover gradients drawn from the app palette so podcasts match the rest of the UI.
 const CAT_GRADIENT = [
-  'linear-gradient(135deg, #667eea, #764ba2)',
-  'linear-gradient(135deg, #f093fb, #f5576c)',
-  'linear-gradient(135deg, #4facfe, #00f2fe)',
-  'linear-gradient(135deg, #43e97b, #38f9d7)',
-  'linear-gradient(135deg, #fa709a, #fee140)',
-  'linear-gradient(135deg, #a18cd1, #fbc2eb)',
+  'linear-gradient(135deg, var(--secondary-dark), var(--secondary-light))',
+  'linear-gradient(135deg, var(--purple-dark), var(--purple))',
+  'linear-gradient(135deg, var(--pink-dark), var(--pink))',
+  'linear-gradient(135deg, var(--success-dark), var(--primary-light))',
+  'linear-gradient(135deg, var(--warning-dark), var(--warning))',
+  'linear-gradient(135deg, var(--accent-dark), var(--accent))',
 ];
 
 export default function PodcastList() {
@@ -44,26 +46,26 @@ export default function PodcastList() {
   useEffect(() => { load(); }, [load]);
 
   return (
-    <div style={S.page} className="stagger">
-      <div style={S.heroBanner} className="anim-scale-in">
-        <div style={S.heroContent}>
-          <h1 style={S.heroTitle}>Tinglash kutubxonasi</h1>
-          <p style={S.heroSub}>Daraja bo'yicha tinglash mashqlari</p>
-        </div>
-        <img src="/mascot/gramophone-removebg-preview.png" alt="Listening Dragon" style={S.heroMascot} />
-      </div>
+    <div className="page stagger">
+      <PageHeader
+        icon={Headphones}
+        title="Tinglash kutubxonasi"
+        subtitle="Daraja bo'yicha tinglash mashqlari"
+        accent="blue"
+        right={<img src="/mascot/gramophone-removebg-preview.png" alt="" style={S.heroMascot} />}
+      />
 
       <div style={S.filters} className="anim-fade-up">
-        <div style={S.levels}>
-          <button style={{ ...S.levelBtn, ...(level == null ? S.levelActive : {}) }} onClick={() => setLevel(null)} className="press">Barchasi</button>
+        <div className="chip-row">
+          <button className={`chip${level == null ? ' chip--active' : ''}`} onClick={() => setLevel(null)}>Barchasi</button>
           {LEVELS.map((lv, i) => (
-            <button key={lv} style={{ ...S.levelBtn, ...(level === i ? S.levelActive : {}) }} onClick={() => setLevel(i)} className="press">{lv}</button>
+            <button key={lv} className={`chip${level === i ? ' chip--active' : ''}`} onClick={() => setLevel(i)}>{lv}</button>
           ))}
         </div>
-        <div style={S.cats}>
+        <div className="chip-row">
           {CATEGORIES.map(c => (
-            <button key={String(c.key)} style={{ ...S.catBtn, ...(category === c.key ? S.catActive : {}) }}
-              onClick={() => setCategory(c.key)} className="press">{c.label}</button>
+            <button key={String(c.key)} className={`chip${category === c.key ? ' chip--active' : ''}`}
+              onClick={() => setCategory(c.key)}>{c.label}</button>
           ))}
         </div>
       </div>
@@ -99,34 +101,18 @@ export default function PodcastList() {
 }
 
 const S = {
-  page: { display: 'flex', flexDirection: 'column', gap: 16 },
-  heroBanner: {
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    padding: '24px 28px', borderRadius: 20,
-    background: 'linear-gradient(135deg, #667eea, #764ba2)',
-    color: 'white', overflow: 'hidden', position: 'relative',
-  },
-  heroContent: { flex: 1, zIndex: 1 },
-  heroTitle: { fontSize: 26, fontWeight: 800, letterSpacing: -0.5, marginBottom: 4 },
-  heroSub: { fontSize: 14, opacity: 0.85, fontWeight: 600 },
-  heroMascot: { width: 90, height: 90, objectFit: 'contain', flexShrink: 0 },
+  heroMascot: { width: 78, height: 78, objectFit: 'contain', flexShrink: 0 },
   filters: { display: 'flex', flexDirection: 'column', gap: 8 },
-  levels: { display: 'flex', gap: 6, flexWrap: 'wrap' },
-  levelBtn: { padding: '6px 14px', borderRadius: 14, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 12, fontWeight: 500, color: 'var(--text-secondary)', cursor: 'pointer' },
-  levelActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
-  cats: { display: 'flex', gap: 6, flexWrap: 'wrap' },
-  catBtn: { padding: '6px 12px', borderRadius: 14, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 11, fontWeight: 500, color: 'var(--text-secondary)', cursor: 'pointer' },
-  catActive: { background: 'var(--text)', color: 'var(--bg)', borderColor: 'var(--text)' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 14 },
-  card: { background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: 16, overflow: 'hidden', cursor: 'pointer' },
+  card: { background: 'var(--bg-card)', border: '2px solid var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', cursor: 'pointer' },
   cover: { height: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' },
   coverEmoji: { fontSize: 40 },
   cardBody: { padding: '12px 14px' },
-  cardTitle: { fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 4 },
+  cardTitle: { fontSize: 15, fontWeight: 800, color: 'var(--text)', marginBottom: 4 },
   cardDesc: { fontSize: 12, color: 'var(--text-light)', marginBottom: 10, lineHeight: 1.4 },
   cardFooter: { display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' },
-  cardLevel: { padding: '2px 8px', borderRadius: 6, background: 'rgba(33,150,243,0.1)', fontSize: 10, fontWeight: 700, color: '#1565C0' },
-  epCount: { fontSize: 11, color: 'var(--text-light)' },
-  freeBadge: { padding: '2px 8px', borderRadius: 6, background: 'rgba(76,175,80,0.1)', fontSize: 10, fontWeight: 700, color: '#4CAF50' },
-  premBadge: { display: 'flex', alignItems: 'center', gap: 3, padding: '2px 8px', borderRadius: 6, background: 'rgba(255,152,0,0.1)', fontSize: 10, fontWeight: 700, color: '#FF9800' },
+  cardLevel: { padding: '2px 8px', borderRadius: 6, background: 'var(--secondary-soft)', fontSize: 10, fontWeight: 800, color: 'var(--secondary-dark)' },
+  epCount: { fontSize: 11, color: 'var(--text-light)', fontWeight: 700 },
+  freeBadge: { padding: '2px 8px', borderRadius: 6, background: 'var(--success-soft)', fontSize: 10, fontWeight: 800, color: 'var(--success-dark)' },
+  premBadge: { display: 'flex', alignItems: 'center', gap: 3, padding: '2px 8px', borderRadius: 6, background: 'var(--accent-soft)', fontSize: 10, fontWeight: 800, color: 'var(--accent-dark)' },
 };

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { getReviewForecast } from '../../api/review';
 import ErrorState from '../../components/ErrorState';
 import { Calendar, Clock, TrendingUp, Loader } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const DAY_NAMES = ['Yak', 'Du', 'Se', 'Cho', 'Pa', 'Ju', 'Sha'];
 
@@ -37,8 +38,7 @@ export default function ReviewForecast() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title}><Calendar size={22} /> Takrorlash taqvimi</h1>
-      <p style={styles.sub}>Kelgusi 7 kun uchun SRS takrorlash rejasi</p>
+      <PageHeader icon={Calendar} title="Takrorlash taqvimi" subtitle="Kelgusi 7 kun uchun SRS takrorlash rejasi" accent="pink" />
 
       <div style={styles.summaryRow}>
         <div style={styles.summaryCard}>

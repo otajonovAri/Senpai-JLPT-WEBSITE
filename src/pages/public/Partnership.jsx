@@ -62,13 +62,13 @@ const S = {
   numbers: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 14 },
   numCard: {
     background: 'var(--bg-card, #fff)', borderRadius: 20, padding: '22px 16px',
-    textAlign: 'center', border: '1px solid var(--border-light, #EDEFEA)',
+    textAlign: 'center', border: '1px solid var(--border-light, var(--border-light))',
   },
-  num: { fontSize: 28, fontWeight: 900, color: 'var(--primary, #58CC02)', letterSpacing: -0.5 },
+  num: { fontSize: 28, fontWeight: 900, color: 'var(--primary, var(--primary))', letterSpacing: -0.5 },
   numLabel: { fontSize: 13, color: 'var(--text-light)', fontWeight: 600, marginTop: 4 },
   list: {
     background: 'var(--bg-card, #fff)', borderRadius: 22, padding: '20px 20px 20px 40px',
-    border: '1px solid var(--border-light, #EDEFEA)', margin: 0,
+    border: '1px solid var(--border-light, var(--border-light))', margin: 0,
   },
   li: { fontSize: 15, color: 'var(--text-secondary)', lineHeight: 1.9 },
 };

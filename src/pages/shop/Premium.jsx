@@ -76,7 +76,7 @@ export default function Premium() {
   return (
     <div style={styles.page} className="stagger">
       <div style={styles.banner} className="anim-scale-in">
-        <Crown size={48} color="#FFD700" className="anim-float" />
+        <Crown size={48} color="var(--medal-gold)" className="anim-float" />
         <h1 style={styles.bannerTitle} className="gradient-text">SenpaiJLPT Premium</h1>
         <p style={styles.bannerSub}>Yapon tilini cheksiz o'rganing</p>
         {currentTier !== 'Free' && (
@@ -144,10 +144,10 @@ export default function Premium() {
 
 const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 16 },
-  banner: { textAlign: 'center', padding: '32px 20px', background: 'linear-gradient(135deg, #2D1B69, #1a1040)', borderRadius: 16, color: 'white' },
+  banner: { textAlign: 'center', padding: '32px 20px', background: 'linear-gradient(135deg, var(--premium), var(--premium-dark))', borderRadius: 16, color: 'white' },
   bannerTitle: { fontSize: 26, fontWeight: 800, marginTop: 10, color: 'white' },
   bannerSub: { fontSize: 14, opacity: 0.8, marginTop: 4, color: '#ddd' },
-  tierBadge: { display: 'inline-block', marginTop: 10, padding: '4px 14px', borderRadius: 12, background: 'rgba(255,215,0,0.15)', color: '#FFD700', fontSize: 12, fontWeight: 700 },
+  tierBadge: { display: 'inline-block', marginTop: 10, padding: '4px 14px', borderRadius: 12, background: 'rgba(255,215,0,0.15)', color: 'var(--medal-gold)', fontSize: 12, fontWeight: 700 },
   featureGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 },
   featureCard: { display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', background: 'var(--bg-card)', borderRadius: 12, border: '1px solid var(--border-light)' },
   featureTitle: { fontSize: 13, fontWeight: 600, color: 'var(--text)' },

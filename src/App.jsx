@@ -42,6 +42,10 @@ const Pronunciation = lazy(() => import('./pages/exercises/Pronunciation'));
 const PronunciationPractice = lazy(() => import('./pages/exercises/PronunciationPractice'));
 const KanjiWriting = lazy(() => import('./pages/exercises/KanjiWriting'));
 const KanjiStrokeViewer = lazy(() => import('./pages/exercises/KanjiStrokeViewer'));
+const GamesHub = lazy(() => import('./pages/games/GamesHub'));
+const KanaNinja = lazy(() => import('./pages/games/KanaNinja'));
+const ReadingReview = lazy(() => import('./pages/games/ReadingReview'));
+const GrammarGame = lazy(() => import('./pages/games/GrammarGame'));
 const SrsReview = lazy(() => import('./pages/review/SrsReview'));
 const ReviewForecast = lazy(() => import('./pages/review/ReviewForecast'));
 const WeakWords = lazy(() => import('./pages/review/WeakWords'));
@@ -140,6 +144,10 @@ function AppRoutes() {
         <Route path="review/forecast" element={<ReviewForecast />} />
         <Route path="review/weak-words" element={<WeakWords />} />
         <Route path="review/flashcards" element={<FlashcardPractice />} />
+        <Route path="games" element={<GamesHub />} />
+        <Route path="games/kana-ninja" element={<KanaNinja />} />
+        <Route path="games/reading" element={<ReadingReview />} />
+        <Route path="games/grammar" element={<GrammarGame />} />
         <Route path="mock-test" element={<JlptMockTest />} />
         <Route path="pronunciation" element={<PronunciationPractice />} />
         <Route path="dictionary" element={<Dictionary />} />

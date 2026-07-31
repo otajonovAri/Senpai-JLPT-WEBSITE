@@ -85,7 +85,8 @@ export default function KanjiStrokeViewer() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const p = getPoint(e);
-    ctx.strokeStyle = 'var(--text, #2b2b3d)';
+    // Canvas can't resolve CSS custom properties — read the live token value.
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#2A2A3C';
     ctx.lineWidth = 6;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -252,7 +253,7 @@ const styles = {
   infoText: { display: 'flex', flexDirection: 'column', gap: 4 },
   meaning: { fontSize: 16, fontWeight: 700, color: 'var(--text)' },
   readingRow: { display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-light)' },
-  readLabel: { fontSize: 9, fontWeight: 800, letterSpacing: 0.8, color: '#2196F3' },
+  readLabel: { fontSize: 9, fontWeight: 800, letterSpacing: 0.8, color: 'var(--secondary)' },
 
   workArea: {
     display: 'flex',
@@ -301,7 +302,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 160,
-    color: 'var(--border-light, #e8e8e8)',
+    color: 'var(--border-light, var(--border-light))',
     pointerEvents: 'none',
     userSelect: 'none',
     lineHeight: 1,

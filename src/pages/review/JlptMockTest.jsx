@@ -3,7 +3,8 @@ import { getMockTests, startMockTest, submitMockTest } from '../../api/shop';
 import { jlptName, sectionLabel } from '../../api/enums';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { BookOpen, Clock, Play, Volume2, Loader, ArrowLeft } from 'lucide-react';
+import { BookOpen, Clock, Play, Volume2, Loader, ArrowLeft, ClipboardCheck } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function JlptMockTest() {
   const [level, setLevel] = useState('Barchasi');
@@ -203,8 +204,7 @@ export default function JlptMockTest() {
 
   return (
     <div style={styles.page} className="stagger">
-      <h1 style={styles.title}><BookOpen size={22} /> JLPT Mock Imtihon</h1>
-      <p style={styles.sub}>Haqiqiy imtihonga tayyorlaning</p>
+      <PageHeader icon={ClipboardCheck} title="JLPT Mock Imtihon" subtitle="Haqiqiy imtihonga tayyorlaning" accent="blue" />
 
       {error && <div style={styles.errorBox}>{error}</div>}
 
@@ -254,7 +254,7 @@ const styles = {
   cardLeft: {},
   testTitle: { fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 6 },
   testMeta: { display: 'flex', gap: 12, fontSize: 12, color: 'var(--text-light)', alignItems: 'center' },
-  levelBadge: { padding: '2px 8px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', color: '#1565C0', fontSize: 11, fontWeight: 600 },
+  levelBadge: { padding: '2px 8px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', color: 'var(--secondary-dark)', fontSize: 11, fontWeight: 600 },
   bestScore: { marginTop: 6, fontSize: 12, fontWeight: 600, color: 'var(--success)' },
   cardRight: {},
   playBtn: { width: 40, height: 40, borderRadius: '50%', background: 'var(--success)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' },
@@ -271,7 +271,7 @@ const styles = {
   qNavCurrent: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
   qNavDone: { background: 'rgba(76,175,80,0.12)', borderColor: 'var(--success)', color: 'var(--success)' },
   questionCard: { background: 'var(--bg-card)', borderRadius: 16, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' },
-  sectionBadge: { display: 'inline-block', padding: '3px 12px', borderRadius: 10, background: 'rgba(167,139,250,0.12)', color: '#7C3AED', fontSize: 11, fontWeight: 700, marginBottom: 12 },
+  sectionBadge: { display: 'inline-block', padding: '3px 12px', borderRadius: 10, background: 'rgba(167,139,250,0.12)', color: 'var(--purple-dark)', fontSize: 11, fontWeight: 700, marginBottom: 12 },
   prompt: { fontSize: 20, fontWeight: 600, color: 'var(--text)', lineHeight: 1.6 },
   promptUz: { fontSize: 13, color: 'var(--text-light)', marginTop: 8 },
   audioBtn: { display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 12, padding: '8px 16px', borderRadius: 10, background: 'rgba(88,204,2,0.06)', border: '1px solid var(--primary)', color: 'var(--primary)', fontSize: 13, fontWeight: 600, cursor: 'pointer' },
@@ -289,6 +289,6 @@ const styles = {
   resultTitle: { fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 8 },
   resultPct: { fontSize: 48, fontWeight: 800, color: 'var(--primary)' },
   resultDetail: { fontSize: 14, color: 'var(--text-light)', marginBottom: 12 },
-  xpBadge: { display: 'inline-block', padding: '6px 16px', borderRadius: 12, background: 'rgba(167,139,250,0.12)', color: '#7C3AED', fontSize: 14, fontWeight: 700, marginBottom: 20 },
+  xpBadge: { display: 'inline-block', padding: '6px 16px', borderRadius: 12, background: 'rgba(167,139,250,0.12)', color: 'var(--purple-dark)', fontSize: 14, fontWeight: 700, marginBottom: 20 },
   btn: { width: '100%', padding: 14, borderRadius: 12, background: 'var(--primary)', color: 'white', fontSize: 14, fontWeight: 600, border: 'none', cursor: 'pointer' },
 };
