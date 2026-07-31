@@ -57,7 +57,7 @@ const styles = {
   btns: { display: 'flex', gap: 8 },
   cancelBtn: {
     flex: 1, padding: 13, borderRadius: 12, background: 'var(--bg)',
-    border: '1px solid var(--border)', color: 'var(--text)',
+    border: '2px solid var(--border)', color: 'var(--text)',
     fontSize: 13, fontWeight: 600, cursor: 'pointer',
   },
   confirmBtn: {

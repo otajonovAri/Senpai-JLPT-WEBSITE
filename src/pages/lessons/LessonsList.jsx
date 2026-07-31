@@ -58,8 +58,7 @@ export default function LessonsList() {
       <div style={styles.filters}>
         {levels.map(lv => (
           <button key={lv} onClick={() => setActiveLevel(lv)}
-            className="press"
-            style={{ ...styles.filterBtn, ...(activeLevel === lv ? styles.filterActive : {}) }}>
+            className={`chip${activeLevel === lv ? ' chip--active' : ''}`}>
             {lv}
           </button>
         ))}

@@ -127,7 +127,7 @@ export default function InfoPage({ slug }) {
 const S = {
   body: {
     fontSize: 15, color: 'var(--text-secondary)', lineHeight: 1.8,
-    background: 'var(--bg-card, #fff)', borderRadius: 20, padding: '20px 22px',
-    border: '1px solid var(--border-light, var(--border-light))',
+    background: 'var(--bg-card)', borderRadius: 20, padding: '20px 22px',
+    border: '2px solid var(--border)',
   },
 };

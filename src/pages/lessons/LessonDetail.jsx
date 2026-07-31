@@ -228,7 +228,7 @@ const styles = {
   cardContainer: { width: '100%', cursor: 'pointer', perspective: 1000 },
   flashcard: {
     background: 'var(--bg-card)', borderRadius: 20, padding: '48px 32px',
-    boxShadow: 'var(--shadow-lg)', border: '1px solid var(--border-light)',
+    boxShadow: 'var(--shadow-lg)', border: '2px solid var(--border)',
     minHeight: 320, display: 'flex', alignItems: 'center', justifyContent: 'center',
     transition: 'transform 0.3s',
   },
@@ -279,7 +279,7 @@ const styles = {
   resultBtns: { display: 'flex', gap: 12, justifyContent: 'center' },
   retryBtn: {
     display: 'flex', alignItems: 'center', gap: 6, padding: '12px 24px',
-    borderRadius: 10, background: 'var(--bg)', border: '1px solid var(--border)',
+    borderRadius: 10, background: 'var(--bg)', border: '2px solid var(--border)',
     fontSize: 14, fontWeight: 500, color: 'var(--text)',
   },
   continueBtn: {

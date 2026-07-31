@@ -208,7 +208,7 @@ export default function AdminStudyGroups() {
 
 const filters = { display: 'flex', gap: 6, marginBottom: 16, flexWrap: 'wrap' };
 const filterBtn = {
-  padding: '6px 14px', borderRadius: 8, border: '1px solid var(--border)',
+  padding: '6px 14px', borderRadius: 8, border: '2px solid var(--border)',
   background: 'var(--bg-card, white)', color: 'var(--text-secondary)',
   fontSize: 13, fontWeight: 600, cursor: 'pointer',
 };

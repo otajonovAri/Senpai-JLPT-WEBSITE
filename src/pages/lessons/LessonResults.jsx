@@ -79,11 +79,11 @@ const styles = {
   title: { fontSize: 24, fontWeight: 800, color: 'var(--text)' },
   sub: { fontSize: 13, color: 'var(--text-light)', marginTop: 4 },
   statsGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 },
-  statCard: { background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: 16, padding: 14, display: 'flex', alignItems: 'center', gap: 10 },
+  statCard: { background: 'var(--bg-card)', border: '2px solid var(--border)', borderRadius: 16, padding: 14, display: 'flex', alignItems: 'center', gap: 10 },
   statIcon: { width: 38, height: 38, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
   statVal: { fontSize: 20, fontWeight: 800, color: 'var(--text)', lineHeight: 1 },
   statLabel: { fontSize: 10, color: 'var(--text-light)', fontWeight: 600, marginTop: 2 },
   btns: { display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 },
   mainBtn: { padding: 15, borderRadius: 14, background: 'var(--success)', color: 'white', fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer', boxShadow: '0 4px 16px rgba(76,175,80,0.3)' },
-  secBtn: { padding: 13, borderRadius: 14, background: 'var(--bg)', border: '1px solid var(--border-light)', color: 'var(--text-light)', fontSize: 12, fontWeight: 600, cursor: 'pointer' },
+  secBtn: { padding: 13, borderRadius: 14, background: 'var(--bg)', border: '2px solid var(--border)', color: 'var(--text-light)', fontSize: 12, fontWeight: 600, cursor: 'pointer' },
 };

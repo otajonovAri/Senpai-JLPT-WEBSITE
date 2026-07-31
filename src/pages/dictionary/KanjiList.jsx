@@ -94,8 +94,7 @@ export default function KanjiList() {
         <div style={styles.levels}>
           {LEVELS.map(lv => (
             <button key={lv} onClick={() => setLevel(lv)}
-              className="press"
-              style={{ ...styles.levelBtn, ...(level === lv ? styles.levelActive : {}) }}>
+              className={`chip${level === lv ? ' chip--active' : ''}`}>
               {lv}
             </button>
           ))}
@@ -154,7 +153,7 @@ const styles = {
   levels: { display: 'flex', gap: 6, flexWrap: 'wrap' },
   levelBtn: {
     padding: '6px 16px', borderRadius: 16, background: 'var(--bg)',
-    border: '1px solid var(--border)', fontSize: 13, fontWeight: 500,
+    border: '2px solid var(--border)', fontSize: 13, fontWeight: 500,
     color: 'var(--text-secondary)', cursor: 'pointer',
   },
   levelActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
@@ -165,7 +164,7 @@ const styles = {
   card: {
     position: 'relative',
     background: 'var(--bg-card)', borderRadius: 14, padding: '14px 8px',
-    textAlign: 'center', cursor: 'pointer', border: '1px solid var(--border-light)',
+    textAlign: 'center', cursor: 'pointer', border: '2px solid var(--border)',
     boxShadow: 'var(--shadow-sm)', transition: 'transform 0.2s, box-shadow 0.2s',
   },
   cardLearned: {

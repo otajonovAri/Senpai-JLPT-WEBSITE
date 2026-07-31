@@ -8,7 +8,9 @@ import { ArrowLeft, Loader, Zap } from 'lucide-react';
 
 // Grammatika viktorina — pattern ↔ ma'no (ko'p tanlovli). Yangi seed grammatikani mashq qildiradi.
 // Hisob/XP backendda: session oxirida /exercises/result (itemType Grammar).
-const EMPTY_GUID = '00000000-0000-0000-0000-000000000000';
+// O'yin darsga bog'liq emas. Server LessonId/ExerciseType'ni ishlatmaydi, validator faqat
+// LessonId NotEmpty va ExerciseType whitelist talab qiladi.
+const GAME_LESSON_ID = '11111111-1111-1111-1111-111111111111';
 const LEVELS = ['N5', 'N4', 'N3'];
 const ROUND = 10;
 
@@ -72,7 +74,7 @@ export default function GrammarGame() {
     if (idx + 1 >= questions.length) {
       const answersFinal = answers;
       const timeSpentSeconds = Math.max(1, questions.length * 5);
-      submitExerciseResult({ lessonId: EMPTY_GUID, exerciseType: 'GrammarQuiz', answers: answersFinal, timeSpentSeconds })
+      submitExerciseResult({ lessonId: GAME_LESSON_ID, exerciseType: 'MultipleChoice', answers: answersFinal, timeSpentSeconds })
         .then(res => setResult(res || null))
         .catch(() => setResult({ localOnly: true }));
       setPhase('over');

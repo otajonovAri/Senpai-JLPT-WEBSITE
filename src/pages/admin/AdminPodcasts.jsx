@@ -437,7 +437,7 @@ const actionBtnStyle = {
   padding: '4px 10px',
   borderRadius: 6,
   background: 'var(--bg)',
-  border: '1px solid var(--border)',
+  border: '2px solid var(--border)',
   color: 'var(--secondary)',
   fontSize: 11,
   fontWeight: 600,
@@ -447,8 +447,8 @@ const actionBtnStyle = {
 
 const dangerBtnStyle = {
   ...actionBtnStyle,
-  color: 'var(--danger, var(--danger))',
-  borderColor: 'var(--danger, var(--danger))',
+  color: 'var(--danger)',
+  borderColor: 'var(--danger)',
 };
 
 const epListStyles = {
@@ -518,7 +518,7 @@ const epListStyles = {
     gap: 10,
     padding: '8px 10px',
     borderRadius: 8,
-    border: '1px solid var(--border-light)',
+    border: '2px solid var(--border)',
   },
   epTitle: {
     fontSize: 13,

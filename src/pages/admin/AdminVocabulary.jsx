@@ -204,7 +204,7 @@ const styles = {
   filterBtn: {
     padding: '6px 14px',
     borderRadius: 8,
-    border: '1px solid var(--border)',
+    border: '2px solid var(--border)',
     background: 'var(--bg-card, white)',
     color: 'var(--text-secondary)',
     fontSize: 13,

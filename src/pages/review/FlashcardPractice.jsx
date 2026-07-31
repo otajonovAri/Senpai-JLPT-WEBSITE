@@ -5,7 +5,8 @@ import { getVocabularyById, getKanjiById } from '../../api/dictionary';
 import { kanaToRomaji } from '../../utils/kana';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { ArrowLeft, Loader, RotateCcw, Layers, BookOpen, BookMarked } from 'lucide-react';
+import { Loader, RotateCcw, Layers, BookOpen, BookMarked } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const TYPES = [
   { value: null, label: 'Barchasi', icon: Layers },
@@ -131,25 +132,23 @@ export default function FlashcardPractice() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.header}>
-        <button style={styles.backBtn} className="press" onClick={() => navigate(-1)}>
-          <ArrowLeft size={20} />
-        </button>
-        <span style={styles.headerTitle}>Flashcard Mashq</span>
-        {cards.length > 0 && !finished && (
-          <span style={styles.counter}>{current + 1}/{cards.length}</span>
-        )}
-      </div>
+      <PageHeader
+        icon={Layers}
+        title="Flashcard Mashq"
+        subtitle={cards.length > 0 && !finished ? `${current + 1}/${cards.length} karta` : undefined}
+        accent="pink"
+        size="sm"
+        back
+      />
 
-      <div style={styles.tabs}>
+      <div className="chip-row" style={{ width: '100%' }}>
         {TYPES.map(t => {
           const Icon = t.icon;
           const active = type === t.value;
           return (
             <button
               key={String(t.value)}
-              style={{ ...styles.tab, ...(active ? styles.tabActive : {}) }}
-              className="press"
+              className={`chip${active ? ' chip--active' : ''}`}
               onClick={() => setType(t.value)}
             >
               <Icon size={14} />
@@ -164,8 +163,7 @@ export default function FlashcardPractice() {
         {MODES.map(m => (
           <button
             key={m.id}
-            style={{ ...styles.modeChip, ...(mode.id === m.id ? styles.modeChipActive : {}) }}
-            className="press jp"
+            className={`chip jp${mode.id === m.id ? ' chip--active' : ''}`}
             onClick={() => { setMode(m); setFlipped(false); }}
           >
             {m.label}
@@ -174,12 +172,11 @@ export default function FlashcardPractice() {
       </div>
 
       <div style={styles.filterRow}>
-        <div style={styles.levelChips}>
+        <div className="chip-row">
           {[null, 'N5', 'N4', 'N3', 'N2', 'N1'].map(lv => (
             <button
               key={lv || 'all'}
-              style={{ ...styles.levelChip, ...(level === lv ? styles.levelChipActive : {}) }}
-              className="press"
+              className={`chip${level === lv ? ' chip--active' : ''}`}
               onClick={() => setLevel(lv)}
             >
               {lv || 'Barcha daraja'}
@@ -187,8 +184,7 @@ export default function FlashcardPractice() {
           ))}
         </div>
         <button
-          style={{ ...styles.learnedToggle, ...(learnedOnly ? styles.learnedToggleActive : {}) }}
-          className="press"
+          className={`chip${learnedOnly ? ' chip--active' : ''}`}
           onClick={() => setLearnedOnly(v => !v)}
         >
           {learnedOnly ? '✓ ' : ''}Faqat o'rganilgan
@@ -298,15 +294,10 @@ export default function FlashcardPractice() {
 const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 500, margin: '0 auto', alignItems: 'center' },
   center: { display: 'flex', justifyContent: 'center', padding: 60 },
-  header: { display: 'flex', alignItems: 'center', gap: 12, width: '100%' },
-  backBtn: { background: 'none', color: 'var(--text-secondary)' },
-  headerTitle: { flex: 1, fontSize: 16, fontWeight: 700, color: 'var(--text)' },
-  counter: { fontSize: 13, fontWeight: 600, color: 'var(--text-light)' },
-  tabs: { display: 'flex', gap: 8, width: '100%' },
   tab: {
     display: 'flex', alignItems: 'center', gap: 6,
     padding: '8px 14px', borderRadius: 10,
-    border: '1px solid var(--border)',
+    border: '2px solid var(--border)',
     background: 'var(--bg)', color: 'var(--text-secondary)',
     fontSize: 13, fontWeight: 500, cursor: 'pointer',
   },
@@ -318,34 +309,9 @@ const styles = {
     display: 'flex', gap: 6, width: '100%', overflowX: 'auto',
     paddingBottom: 4, scrollbarWidth: 'thin',
   },
-  modeChip: {
-    flexShrink: 0, padding: '6px 12px', borderRadius: 'var(--radius-full)',
-    border: '2px solid var(--border)', background: 'var(--bg-alt)',
-    color: 'var(--text-light)', fontSize: 12.5, fontWeight: 800, cursor: 'pointer', whiteSpace: 'nowrap',
-  },
-  modeChipActive: {
-    background: 'var(--secondary-soft)', color: 'var(--secondary-dark, var(--secondary))', borderColor: 'var(--secondary)',
-  },
   filterRow: {
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     gap: 10, width: '100%', flexWrap: 'wrap',
-  },
-  levelChips: { display: 'flex', gap: 6, flexWrap: 'wrap' },
-  levelChip: {
-    padding: '6px 12px', borderRadius: 'var(--radius-full)',
-    border: '2px solid var(--border)', background: 'var(--bg-alt)',
-    color: 'var(--text-light)', fontSize: 12.5, fontWeight: 800, cursor: 'pointer',
-  },
-  levelChipActive: {
-    background: 'var(--primary-soft)', color: 'var(--primary-dark)', borderColor: 'var(--primary)',
-  },
-  learnedToggle: {
-    padding: '6px 14px', borderRadius: 'var(--radius-full)',
-    border: '2px solid var(--border)', background: 'var(--bg-alt)',
-    color: 'var(--text-light)', fontSize: 12.5, fontWeight: 800, cursor: 'pointer', whiteSpace: 'nowrap',
-  },
-  learnedToggleActive: {
-    background: 'var(--success-soft)', color: 'var(--success-dark)', borderColor: 'var(--success)',
   },
   progressBg: { height: 4, background: 'var(--border-light)', borderRadius: 2, overflow: 'hidden', width: '100%' },
   progressFill: { height: '100%', background: 'var(--primary)', borderRadius: 2, transition: 'width 0.3s' },
@@ -353,7 +319,7 @@ const styles = {
   flipInner: { width: '100%', minHeight: 280, position: 'relative' },
   cardFace: {
     background: 'var(--bg-card, white)', borderRadius: 20, padding: '40px 24px',
-    boxShadow: 'var(--shadow-lg)', border: '1px solid var(--border-light)',
+    boxShadow: 'var(--shadow-lg)', border: '2px solid var(--border)',
     textAlign: 'center', width: '100%', minHeight: 280,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
@@ -363,7 +329,7 @@ const styles = {
   cardWordLatin: { fontSize: 30 },
   modeHint: {
     display: 'inline-block', padding: '3px 10px', borderRadius: 8, marginBottom: 14,
-    background: 'var(--secondary-soft)', color: 'var(--secondary-dark, var(--secondary))',
+    background: 'var(--secondary-soft)', color: 'var(--secondary-dark)',
     fontSize: 11, fontWeight: 800,
   },
   answerLabel: { fontSize: 11, fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 },
@@ -413,7 +379,7 @@ const styles = {
   btnOutline: {
     flex: 1, padding: 14, borderRadius: 12,
     background: 'var(--bg)', color: 'var(--text)',
-    fontSize: 14, fontWeight: 600, border: '1px solid var(--border)',
+    fontSize: 14, fontWeight: 600, border: '2px solid var(--border)',
     cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
   },
 };

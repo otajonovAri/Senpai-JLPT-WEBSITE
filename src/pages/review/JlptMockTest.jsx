@@ -211,7 +211,7 @@ export default function JlptMockTest() {
       <div style={styles.filters}>
         {levels.map(l => (
           <button key={l} onClick={() => setLevel(l)}
-            style={{ ...styles.filterBtn, ...(level === l ? styles.filterActive : {}) }}>{l}</button>
+            className={`chip${level === l ? ' chip--active' : ''}`}>{l}</button>
         ))}
       </div>
 
@@ -247,10 +247,10 @@ const styles = {
   title: { fontSize: 24, fontWeight: 700, color: 'var(--text)', display: 'flex', alignItems: 'center', gap: 8 },
   sub: { fontSize: 14, color: 'var(--text-light)', marginTop: -8 },
   filters: { display: 'flex', gap: 6, flexWrap: 'wrap' },
-  filterBtn: { padding: '6px 14px', borderRadius: 16, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' },
+  filterBtn: { padding: '6px 14px', borderRadius: 16, background: 'var(--bg)', border: '2px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' },
   filterActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
   list: { display: 'flex', flexDirection: 'column', gap: 10 },
-  card: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 18px', background: 'var(--bg-card)', borderRadius: 14, border: '1px solid var(--border-light)' },
+  card: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 18px', background: 'var(--bg-card)', borderRadius: 14, border: '2px solid var(--border)' },
   cardLeft: {},
   testTitle: { fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 6 },
   testMeta: { display: 'flex', gap: 12, fontSize: 12, color: 'var(--text-light)', alignItems: 'center' },
@@ -267,10 +267,10 @@ const styles = {
   sessionTitle: { flex: 1, fontSize: 15, fontWeight: 700, color: 'var(--text)' },
   timer: { display: 'flex', alignItems: 'center', gap: 4, fontSize: 14, fontWeight: 700 },
   qNav: { display: 'flex', gap: 6, flexWrap: 'wrap' },
-  qNavBtn: { width: 32, height: 32, borderRadius: 8, background: 'var(--bg)', border: '1px solid var(--border-light)', fontSize: 12, fontWeight: 600, color: 'var(--text-light)', cursor: 'pointer' },
+  qNavBtn: { width: 32, height: 32, borderRadius: 8, background: 'var(--bg)', border: '2px solid var(--border)', fontSize: 12, fontWeight: 600, color: 'var(--text-light)', cursor: 'pointer' },
   qNavCurrent: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
   qNavDone: { background: 'rgba(76,175,80,0.12)', borderColor: 'var(--success)', color: 'var(--success)' },
-  questionCard: { background: 'var(--bg-card)', borderRadius: 16, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' },
+  questionCard: { background: 'var(--bg-card)', borderRadius: 16, padding: 24, border: '2px solid var(--border)', textAlign: 'center' },
   sectionBadge: { display: 'inline-block', padding: '3px 12px', borderRadius: 10, background: 'rgba(167,139,250,0.12)', color: 'var(--purple-dark)', fontSize: 11, fontWeight: 700, marginBottom: 12 },
   prompt: { fontSize: 20, fontWeight: 600, color: 'var(--text)', lineHeight: 1.6 },
   promptUz: { fontSize: 13, color: 'var(--text-light)', marginTop: 8 },

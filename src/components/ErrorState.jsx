@@ -13,7 +13,7 @@ export default function ErrorState({ message, onRetry }) {
       <h3 style={styles.title}>{t('errorState.title')}</h3>
       <p style={styles.desc}>{message || t('errorState.message')}</p>
       {onRetry && (
-        <button style={styles.retryBtn} onClick={onRetry}>
+        <button className="btn btn--primary btn--sm" onClick={onRetry}>
           <RefreshCw size={15} /> {t('common.retry')}
         </button>
       )}
@@ -24,17 +24,12 @@ export default function ErrorState({ message, onRetry }) {
 const styles = {
   wrap: {
     textAlign: 'center', padding: '48px 24px', background: 'var(--bg-card)',
-    borderRadius: 16, border: '1px solid var(--border-light)', maxWidth: 420, margin: '24px auto',
+    borderRadius: 'var(--radius-lg)', border: '2px solid var(--border)', maxWidth: 420, margin: '24px auto',
   },
   iconWrap: {
-    width: 60, height: 60, borderRadius: '50%', background: 'rgba(239,68,68,0.08)',
+    width: 60, height: 60, borderRadius: '50%', background: 'var(--danger-soft)',
     display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px',
   },
-  title: { fontSize: 17, fontWeight: 700, color: 'var(--text)', marginBottom: 6 },
-  desc: { fontSize: 13, color: 'var(--text-light)', lineHeight: 1.5, marginBottom: 18 },
-  retryBtn: {
-    display: 'inline-flex', alignItems: 'center', gap: 6, padding: '10px 22px',
-    borderRadius: 10, background: 'var(--primary)', color: 'white',
-    fontSize: 13, fontWeight: 600, border: 'none', cursor: 'pointer',
-  },
+  title: { fontSize: 18, fontWeight: 800, color: 'var(--text)', marginBottom: 6 },
+  desc: { fontSize: 13, fontWeight: 600, color: 'var(--text-light)', lineHeight: 1.5, marginBottom: 18 },
 };

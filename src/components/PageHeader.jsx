@@ -1,3 +1,4 @@
+import { isValidElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 
@@ -55,10 +56,16 @@ export default function PageHeader({
 }
 
 function renderIcon(icon, size) {
-  // A lucide icon is passed as the component itself, not an element.
-  if (typeof icon === 'function') {
+  // Emoji / string / number, or an already-built element (e.g. <img />).
+  if (typeof icon === 'string' || typeof icon === 'number') return icon;
+  if (isValidElement(icon)) return icon;
+
+  // Otherwise it's the component itself. Plain components are functions, but
+  // lucide icons are forwardRef *objects* — rendering one as a child throws
+  // "Objects are not valid as a React child", so check for both.
+  if (typeof icon === 'function' || (typeof icon === 'object' && icon !== null && icon.$$typeof)) {
     const Icon = icon;
     return <Icon size={size === 'sm' ? 20 : 26} color="#fff" />;
   }
-  return icon;
+  return null;
 }

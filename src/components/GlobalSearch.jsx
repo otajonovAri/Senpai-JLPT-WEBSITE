@@ -140,5 +140,5 @@ const styles = {
   itemJp: { fontSize: 18, fontWeight: 600, color: 'var(--text)', minWidth: 48 },
   itemMeaning: { fontSize: 13, color: 'var(--text-secondary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
   footer: { padding: '10px 18px', borderTop: '1px solid var(--border-light)', fontSize: 12, color: 'var(--text-light)', display: 'flex', alignItems: 'center', gap: 6 },
-  kbd: { padding: '2px 6px', borderRadius: 4, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 11, fontFamily: 'monospace' },
+  kbd: { padding: '2px 6px', borderRadius: 4, background: 'var(--bg)', border: '2px solid var(--border)', fontSize: 11, fontFamily: 'monospace' },
 };

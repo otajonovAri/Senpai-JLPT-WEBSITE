@@ -268,7 +268,7 @@ export default function SettingsPage() {
                 placeholder={t('settings.verifyCodePlaceholder')}
                 value={verifyToken}
                 onChange={e => setVerifyToken(e.target.value)}
-                style={{ flex: 1, padding: '10px 12px', borderRadius: 8, border: '1px solid var(--border)', fontSize: 13 }}
+                style={{ flex: 1, padding: '10px 12px', borderRadius: 8, border: '2px solid var(--border)', fontSize: 13 }}
               />
               <button
                 style={{ padding: '10px 16px', borderRadius: 8, background: 'var(--success)', color: 'white', border: 'none', fontSize: 13, fontWeight: 600, cursor: 'pointer', opacity: verifyToken ? 1 : 0.5 }}
@@ -301,7 +301,7 @@ export default function SettingsPage() {
             placeholder={t('settings.yourPassword')}
             value={deletePassword}
             onChange={e => { setDeletePassword(e.target.value); setDeleteError(''); }}
-            style={{ flex: 1, padding: '10px 12px', borderRadius: 8, border: '1px solid var(--border)', fontSize: 13 }}
+            style={{ flex: 1, padding: '10px 12px', borderRadius: 8, border: '2px solid var(--border)', fontSize: 13 }}
           />
           <button
             style={{ padding: '10px 16px', borderRadius: 8, background: 'none', border: '1px solid var(--danger)', color: 'var(--danger)', fontSize: 13, fontWeight: 600, cursor: 'pointer', opacity: deletePassword ? 1 : 0.5 }}
@@ -342,7 +342,7 @@ const styles = {
   title: { fontSize: 28, fontWeight: 700, color: 'var(--text)' },
   section: {
     background: 'var(--bg-card)', borderRadius: 14, padding: 20,
-    border: '1px solid var(--border-light)',
+    border: '2px solid var(--border)',
   },
   sectionTitle: {
     fontSize: 15, fontWeight: 600, color: 'var(--text)',
@@ -350,7 +350,7 @@ const styles = {
   },
   select: {
     width: '100%', padding: '10px 12px', borderRadius: 8,
-    border: '1px solid var(--border)', fontSize: 14, background: 'var(--bg)',
+    border: '2px solid var(--border)', fontSize: 14, background: 'var(--bg)',
   },
   goalGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 },
   goalItem: {

@@ -4,7 +4,8 @@ import { getKanjiById, searchKanji } from '../../api/dictionary';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import KanjiStrokeAnimation from '../../components/KanjiStrokeAnimation';
 import ErrorState from '../../components/ErrorState';
-import { ChevronLeft, ChevronRight, RotateCcw, Loader, Eye, EyeOff } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
+import { ChevronLeft, ChevronRight, RotateCcw, Loader, Eye, EyeOff, PenLine } from 'lucide-react';
 
 export default function KanjiStrokeViewer() {
   const { id } = useParams();
@@ -131,14 +132,14 @@ export default function KanjiStrokeViewer() {
       style={{ ...styles.page, maxWidth: sideBySide ? 720 : 500 }}
       className="stagger"
     >
-      {/* Header */}
-      <div style={styles.header} className="anim-fade-up">
-        <button style={styles.navBtn} onClick={() => navigate(-1)}>
-          <ChevronLeft size={20} />
-        </button>
-        <span style={styles.title}>Chiziq animatsiyasi</span>
-        <span style={styles.levelBadge}>{kanji.jlptLevel}</span>
-      </div>
+      <PageHeader
+        icon={PenLine}
+        title="Chiziq animatsiyasi"
+        subtitle={`${kanji.jlptLevel} · ${kanji.strokeCount} chiziq`}
+        accent="blue"
+        size="sm"
+        back
+      />
 
       {/* Kanji Info */}
       <div style={styles.infoCard} className="card-interactive anim-fade-up">
@@ -160,7 +161,7 @@ export default function KanjiStrokeViewer() {
 
       {/* Practice Mode Toggle */}
       <button
-        style={{ ...styles.practiceToggle, background: practiceMode ? 'var(--primary)' : 'var(--bg-card, #fff)' }}
+        style={{ ...styles.practiceToggle, background: practiceMode ? 'var(--primary)' : 'var(--bg-card)' }}
         onClick={() => setPracticeMode(!practiceMode)}
       >
         <span style={{ color: practiceMode ? '#fff' : 'var(--text)' }}>
@@ -247,7 +248,7 @@ const styles = {
   title: { flex: 1, textAlign: 'center', fontSize: 15, fontWeight: 700, color: 'var(--text)' },
   levelBadge: { padding: '4px 10px', borderRadius: 12, background: 'rgba(76,175,80,0.1)', color: 'var(--success)', fontSize: 11, fontWeight: 800, letterSpacing: 0.5 },
 
-  infoCard: { background: 'var(--bg-card, #fff)', border: '1px solid var(--border, #eee)', borderRadius: 16, padding: 16 },
+  infoCard: { background: 'var(--bg-card)', border: '2px solid var(--border)', borderRadius: 16, padding: 16 },
   infoRow: { display: 'flex', alignItems: 'center', gap: 16 },
   bigChar: { fontSize: 56, fontWeight: 900, color: 'var(--text)', lineHeight: 1 },
   infoText: { display: 'flex', flexDirection: 'column', gap: 4 },
@@ -288,8 +289,8 @@ const styles = {
     width: 240,
     height: 240,
     borderRadius: 16,
-    border: '2px solid var(--border, #eee)',
-    background: 'var(--bg-card, #fff)',
+    border: '2px solid var(--border)',
+    background: 'var(--bg-card)',
     overflow: 'hidden',
   },
   ghostOverlay: {
@@ -302,7 +303,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 160,
-    color: 'var(--border-light, var(--border-light))',
+    color: 'var(--border-light)',
     pointerEvents: 'none',
     userSelect: 'none',
     lineHeight: 1,
@@ -331,8 +332,8 @@ const styles = {
     gap: 4,
     padding: '6px 12px',
     borderRadius: 8,
-    border: '1px solid var(--border, #eee)',
-    background: 'var(--bg-card, #fff)',
+    border: '2px solid var(--border)',
+    background: 'var(--bg-card)',
     color: 'var(--text)',
     fontSize: 11,
     fontWeight: 600,
@@ -346,8 +347,8 @@ const styles = {
     gap: 4,
     padding: '10px 18px',
     borderRadius: 12,
-    border: '1px solid var(--border, #eee)',
-    background: 'var(--bg-card, #fff)',
+    border: '2px solid var(--border)',
+    background: 'var(--bg-card)',
     color: 'var(--text)',
     fontSize: 13,
     fontWeight: 600,

@@ -49,7 +49,7 @@ export const inputStyle = {
   width: '100%',
   padding: '9px 12px',
   borderRadius: 8,
-  border: '1px solid var(--border)',
+  border: '2px solid var(--border)',
   background: 'var(--bg)',
   fontSize: 14,
   color: 'var(--text)',
@@ -128,7 +128,7 @@ const styles = {
   cancelBtn: {
     padding: '9px 18px',
     borderRadius: 8,
-    border: '1px solid var(--border)',
+    border: '2px solid var(--border)',
     background: 'var(--bg)',
     color: 'var(--text-secondary)',
     fontSize: 13,

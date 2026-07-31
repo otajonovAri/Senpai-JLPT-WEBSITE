@@ -8,7 +8,9 @@ import { ArrowLeft, Loader, Eye, EyeOff, RefreshCw, Zap } from 'lucide-react';
 // So'z terish mashqi (washi uslubi) — yaponcha so'z ko'rsatiladi, romaji'sini yozasiz.
 // Oltin kalit keyingi harfni ko'rsatadi. Furigana/Romaji/Ma'no'ni yashirib "haqiqiy" o'qishga o'ting.
 // Hisob/XP backendda: session oxirida /exercises/result (itemType Vocabulary).
-const EMPTY_GUID = '00000000-0000-0000-0000-000000000000';
+// O'yin darsga bog'liq emas. Server LessonId va ExerciseType'ni ishlatmaydi, lekin validator
+// LessonId NotEmpty va ExerciseType whitelist (MultipleChoice/FillInBlank/Matching/Listening/Reading) talab qiladi.
+const GAME_LESSON_ID = '11111111-1111-1111-1111-111111111111';
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const ROUND = 10;
 const WORD_SECONDS = 15;
@@ -76,7 +78,7 @@ export default function KanaNinja() {
       if (idx + 1 >= words.length) {
         setCorrectCount(correctRef.current);
         const timeSpentSeconds = Math.max(1, Math.round((Date.now() - startRef.current) / 1000));
-        submitExerciseResult({ lessonId: EMPTY_GUID, exerciseType: 'TypingDrill', answers: answersRef.current, timeSpentSeconds })
+        submitExerciseResult({ lessonId: GAME_LESSON_ID, exerciseType: 'FillInBlank', answers: answersRef.current, timeSpentSeconds })
           .then(res => setResult(res || null))
           .catch(() => setResult({ localOnly: true }));
         setPhase('over');

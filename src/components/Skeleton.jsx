@@ -42,7 +42,7 @@ const styles = {
   card: {
     background: 'var(--bg-card)',
     borderRadius: 14,
-    border: '1px solid var(--border-light)',
+    border: '2px solid var(--border)',
     padding: 16,
   },
 };

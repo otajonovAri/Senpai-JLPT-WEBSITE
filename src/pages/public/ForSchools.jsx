@@ -54,8 +54,8 @@ export default function ForSchools() {
 const S = {
   steps: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 },
   step: {
-    background: 'var(--bg-card, #fff)', borderRadius: 22, padding: '24px 20px',
-    border: '1px solid var(--border-light, var(--border-light))',
+    background: 'var(--bg-card)', borderRadius: 22, padding: '24px 20px',
+    border: '2px solid var(--border)',
   },
   stepNum: {
     width: 40, height: 40, borderRadius: '50%', background: 'var(--primary)', color: '#fff',

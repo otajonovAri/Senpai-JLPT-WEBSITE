@@ -75,7 +75,7 @@ export function CtaBlock({ title, body, buttonText, to, href }) {
 }
 
 const S = {
-  page: { minHeight: '100vh', background: 'var(--bg-alt, var(--bg-alt))', display: 'flex', flexDirection: 'column' },
+  page: { minHeight: '100vh', background: 'var(--bg-alt)', display: 'flex', flexDirection: 'column' },
   nav: {
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     padding: '16px 24px', maxWidth: 1140, margin: '0 auto', width: '100%',
@@ -94,7 +94,7 @@ const S = {
   heroIcon: { width: 130, height: 130, objectFit: 'contain', marginBottom: 12, filter: 'drop-shadow(0 12px 22px rgba(46,125,50,0.18))' },
   badge: {
     display: 'inline-block', padding: '5px 16px', borderRadius: 999, marginBottom: 12,
-    background: 'var(--primary-soft, rgba(88,204,2,0.14))', color: 'var(--primary-dark, var(--primary-dark))',
+    background: 'var(--primary-soft, rgba(88,204,2,0.14))', color: 'var(--primary-dark)',
     fontSize: 12, fontWeight: 800, letterSpacing: 0.4, textTransform: 'uppercase',
   },
   heroTitle: { fontSize: 38, fontWeight: 900, color: 'var(--text)', letterSpacing: -1, lineHeight: 1.15, marginBottom: 12 },
@@ -105,8 +105,8 @@ const S = {
 
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 16 },
   card: {
-    background: 'var(--bg-card, #fff)', borderRadius: 22, padding: '24px 20px',
-    border: '1px solid var(--border-light, var(--border-light))',
+    background: 'var(--bg-card)', borderRadius: 22, padding: '24px 20px',
+    border: '2px solid var(--border)',
   },
   cardIcon: { fontSize: 34, marginBottom: 10 },
   cardTitle: { fontSize: 17, fontWeight: 800, color: 'var(--text)', marginBottom: 6 },

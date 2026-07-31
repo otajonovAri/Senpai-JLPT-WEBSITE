@@ -48,10 +48,10 @@ export default function HiraganaTable() {
       />
 
       <div style={styles.tabs}>
-        <button onClick={() => setTab('hiragana')} style={{ ...styles.tab, ...(tab === 'hiragana' ? styles.tabActive : {}) }}>
+        <button onClick={() => setTab('hiragana')} className={`chip${tab === 'hiragana' ? ' chip--active' : ''}`}>
           <span className="jp">あ</span> Hiragana
         </button>
-        <button onClick={() => setTab('katakana')} style={{ ...styles.tab, ...(tab === 'katakana' ? styles.tabActive : {}) }}>
+        <button onClick={() => setTab('katakana')} className={`chip${tab === 'katakana' ? ' chip--active' : ''}`}>
           <span className="jp">ア</span> Katakana
         </button>
       </div>
@@ -121,7 +121,7 @@ const styles = {
   rowBlock: {},
   rowLabel: { fontSize: 11, fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6 },
   rowGrid: { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 6 },
-  cell: { background: 'var(--bg-card)', borderRadius: 10, padding: '12px 4px', textAlign: 'center', cursor: 'pointer', border: '1px solid var(--border-light)', transition: 'transform 0.2s, box-shadow 0.2s' },
+  cell: { background: 'var(--bg-card)', borderRadius: 10, padding: '12px 4px', textAlign: 'center', cursor: 'pointer', border: '2px solid var(--border)', transition: 'transform 0.2s, box-shadow 0.2s' },
   cellChar: { fontSize: 28, fontWeight: 600, color: 'var(--text)', lineHeight: 1.2 },
   cellRomaji: { fontSize: 10, color: 'var(--text-light)', marginTop: 2 },
   overlay: { position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000, padding: 20 },
@@ -132,5 +132,5 @@ const styles = {
   strokeImg: { width: 120, height: 120, objectFit: 'contain', margin: '0 auto 12px', display: 'block' },
   modalBtns: { display: 'flex', gap: 8, justifyContent: 'center' },
   audioBtn: { display: 'flex', alignItems: 'center', gap: 6, padding: '10px 18px', borderRadius: 10, background: 'rgba(88,204,2,0.06)', border: '1px solid var(--primary)', color: 'var(--primary)', fontSize: 13, fontWeight: 600, cursor: 'pointer' },
-  closeBtn: { padding: '10px 24px', borderRadius: 10, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 14, fontWeight: 500, cursor: 'pointer' },
+  closeBtn: { padding: '10px 24px', borderRadius: 10, background: 'var(--bg)', border: '2px solid var(--border)', fontSize: 14, fontWeight: 500, cursor: 'pointer' },
 };

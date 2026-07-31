@@ -355,6 +355,9 @@ h1, h2, h3, h4 { font-weight: 800; color: var(--text); letter-spacing: -0.01em; 
   display: flex;
   align-items: center;
   gap: 16px;
+  /* Explicit, so the header still spans the column inside centred/narrow
+     drill pages (`align-items: center` would otherwise shrink it to content). */
+  width: 100%;
   padding: 18px 22px;
   border-radius: var(--radius-xl);
   background: linear-gradient(135deg, var(--ph-lip), var(--ph-bg) 58%, var(--ph-bg2));

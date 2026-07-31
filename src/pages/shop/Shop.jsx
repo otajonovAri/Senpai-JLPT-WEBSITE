@@ -83,8 +83,7 @@ export default function Shop() {
       <div style={styles.tabs}>
         {[['all', 'Barchasi'], ['boost', 'Boost'], ['cosmetic', 'Kosmetik']].map(([key, label]) => (
           <button key={key} onClick={() => setTab(key)}
-            className="press"
-            style={{ ...styles.tabBtn, ...(tab === key ? styles.tabActive : {}) }}>{label}</button>
+            className={`chip${tab === key ? ' chip--active' : ''}`}>{label}</button>
         ))}
       </div>
 
@@ -115,10 +114,10 @@ const styles = {
   heroMascot: { width: 72, height: 72, objectFit: 'contain', flexShrink: 0 },
   coinsBadge: { display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', borderRadius: 'var(--radius-full)', background: 'rgba(255,255,255,0.25)', border: '2px solid rgba(255,255,255,0.3)', color: 'white', fontSize: 16, fontWeight: 800 },
   tabs: { display: 'flex', gap: 6 },
-  tabBtn: { padding: '6px 16px', borderRadius: 16, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' },
+  tabBtn: { padding: '6px 16px', borderRadius: 16, background: 'var(--bg)', border: '2px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' },
   tabActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 10 },
-  card: { background: 'var(--bg-card)', borderRadius: 14, padding: 16, textAlign: 'center', border: '1px solid var(--border-light)' },
+  card: { background: 'var(--bg-card)', borderRadius: 14, padding: 16, textAlign: 'center', border: '2px solid var(--border)' },
   cardIcon: { fontSize: 36, marginBottom: 6 },
   cardName: { fontSize: 13, fontWeight: 700, color: 'var(--text)' },
   cardDesc: { fontSize: 11, color: 'var(--text-light)', marginTop: 2, marginBottom: 10 },

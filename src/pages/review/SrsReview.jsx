@@ -3,7 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { getDueReviews, submitReview } from '../../api/review';
 import { getVocabularyById, getKanjiById } from '../../api/dictionary';
 import ErrorState from '../../components/ErrorState';
-import { ArrowLeft, Loader, AlertTriangle, Calendar, Layers } from 'lucide-react';
+import { Loader, AlertTriangle, Calendar, Layers, Star } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function SrsReview() {
   const navigate = useNavigate();
@@ -68,10 +69,10 @@ export default function SrsReview() {
           </div>
           <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }} className="anim-fade-up">Takrorlash kerak emas!</h2>
           <p style={{ fontSize: 14, color: 'var(--text-light)' }}>Barcha so'zlar takrorlangan</p>
-          <div style={{ ...styles.reviewLinks, justifyContent: 'center', marginTop: 16 }}>
-            <Link to="/review/weak-words" style={styles.reviewLink}><AlertTriangle size={14} /> Zaif so'zlar</Link>
-            <Link to="/review/forecast" style={styles.reviewLink}><Calendar size={14} /> Prognoz</Link>
-            <Link to="/review/flashcards" style={styles.reviewLink}><Layers size={14} /> Flashcard</Link>
+          <div className="chip-row" style={{ justifyContent: 'center', marginTop: 16 }}>
+            <Link to="/review/weak-words" className="chip"><AlertTriangle size={14} /> Zaif so'zlar</Link>
+            <Link to="/review/forecast" className="chip"><Calendar size={14} /> Prognoz</Link>
+            <Link to="/review/flashcards" className="chip"><Layers size={14} /> Flashcard</Link>
           </div>
           <button style={styles.btn} className="press tappable" onClick={() => navigate('/dashboard')}>Bosh sahifaga</button>
         </div>
@@ -90,10 +91,10 @@ export default function SrsReview() {
             <span style={{ color: 'var(--success)' }} className="anim-pop">✓ {good} bilaman</span>
             <span style={{ color: 'var(--danger)' }} className="anim-pop">✗ {results.length - good} takrorlash kerak</span>
           </div>
-          <div style={{ ...styles.reviewLinks, justifyContent: 'center', marginTop: 16 }}>
-            <Link to="/review/weak-words" style={styles.reviewLink}><AlertTriangle size={14} /> Zaif so'zlar</Link>
-            <Link to="/review/forecast" style={styles.reviewLink}><Calendar size={14} /> Prognoz</Link>
-            <Link to="/review/flashcards" style={styles.reviewLink}><Layers size={14} /> Flashcard</Link>
+          <div className="chip-row" style={{ justifyContent: 'center', marginTop: 16 }}>
+            <Link to="/review/weak-words" className="chip"><AlertTriangle size={14} /> Zaif so'zlar</Link>
+            <Link to="/review/forecast" className="chip"><Calendar size={14} /> Prognoz</Link>
+            <Link to="/review/flashcards" className="chip"><Layers size={14} /> Flashcard</Link>
           </div>
           <button style={styles.btn} className="press tappable" onClick={() => navigate('/dashboard')}>Bosh sahifaga</button>
         </div>
@@ -105,17 +106,22 @@ export default function SrsReview() {
 
   return (
     <div style={styles.page} className="stagger">
-      <div style={styles.header}>
-        <button style={styles.backBtn} onClick={() => navigate(-1)}><ArrowLeft size={20} /></button>
-        <span style={styles.headerTitle}>SRS Takrorlash</span>
-        <span style={styles.counter}>{current + 1}/{cards.length}</span>
+      <PageHeader
+        icon={Star}
+        title="SRS Takrorlash"
+        subtitle={`${current + 1}/${cards.length} karta`}
+        accent="pink"
+        size="sm"
+        back
+      />
+      <div className="chip-row" style={{ width: '100%' }}>
+        <Link to="/review/weak-words" className="chip"><AlertTriangle size={14} /> Zaif so'zlar</Link>
+        <Link to="/review/forecast" className="chip"><Calendar size={14} /> Prognoz</Link>
+        <Link to="/review/flashcards" className="chip"><Layers size={14} /> Flashcard</Link>
       </div>
-      <div style={styles.reviewLinks}>
-        <Link to="/review/weak-words" style={styles.reviewLink}><AlertTriangle size={14} /> Zaif so'zlar</Link>
-        <Link to="/review/forecast" style={styles.reviewLink}><Calendar size={14} /> Prognoz</Link>
-        <Link to="/review/flashcards" style={styles.reviewLink}><Layers size={14} /> Flashcard</Link>
+      <div className="progress progress--sm" style={{ width: '100%' }}>
+        <i style={{ width: `${((current + 1) / cards.length) * 100}%` }} />
       </div>
-      <div style={styles.progressBg}><div style={{ ...styles.progressFill, width: `${((current + 1) / cards.length) * 100}%` }} /></div>
 
       <div style={styles.flashcard} className="flip-container" onClick={() => setFlipped(!flipped)}>
         <div style={styles.flipInner} className={`flip-card${flipped ? ' flipped' : ''}`}>
@@ -150,15 +156,11 @@ export default function SrsReview() {
 
 const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 500, margin: '0 auto', alignItems: 'center' },
-  header: { display: 'flex', alignItems: 'center', gap: 12, width: '100%' },
-  backBtn: { background: 'none', color: 'var(--text-secondary)' },
-  headerTitle: { flex: 1, fontSize: 16, fontWeight: 700, color: 'var(--text)' },
-  counter: { fontSize: 13, fontWeight: 600, color: 'var(--text-light)' },
   progressBg: { height: 4, background: 'var(--border-light)', borderRadius: 2, overflow: 'hidden', width: '100%' },
   progressFill: { height: '100%', background: 'var(--primary)', borderRadius: 2, transition: 'width 0.3s' },
   flashcard: { width: '100%', minHeight: 280, cursor: 'pointer' },
   flipInner: { width: '100%', minHeight: 280, position: 'relative' },
-  cardFace: { background: 'var(--bg-card)', borderRadius: 20, padding: '48px 24px', boxShadow: 'var(--shadow-lg)', border: '1px solid var(--border-light)', textAlign: 'center', width: '100%', minHeight: 280 },
+  cardFace: { background: 'var(--bg-card)', borderRadius: 20, padding: '48px 24px', boxShadow: 'var(--shadow-lg)', border: '2px solid var(--border)', textAlign: 'center', width: '100%', minHeight: 280 },
   cardFront: { textAlign: 'center' },
   cardBack: { textAlign: 'center' },
   cardWord: { fontSize: 48, fontWeight: 700, color: 'var(--text)', marginBottom: 8 },
@@ -171,13 +173,5 @@ const styles = {
   resultTitle: { fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 16 },
   resultStats: { display: 'flex', justifyContent: 'center', gap: 24, fontSize: 15, fontWeight: 500, marginBottom: 24 },
   btn: { width: '100%', padding: 14, borderRadius: 12, background: 'var(--primary)', color: 'white', fontSize: 14, fontWeight: 600, border: 'none', marginTop: 16 },
-  reviewLinks: { display: 'flex', gap: 8, width: '100%' },
-  reviewLink: {
-    display: 'flex', alignItems: 'center', gap: 6,
-    padding: '6px 12px', borderRadius: 8,
-    background: 'var(--bg)', border: '1px solid var(--border)',
-    color: 'var(--text-secondary)', fontSize: 12, fontWeight: 500,
-    textDecoration: 'none',
-  },
   bannerImage: { width: 80, height: 80, objectFit: 'contain', marginBottom: 12 },
 };

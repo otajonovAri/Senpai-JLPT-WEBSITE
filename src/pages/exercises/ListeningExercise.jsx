@@ -178,7 +178,7 @@ const styles = {
   counter: { fontSize: 13, fontWeight: 600, color: 'var(--text-light)' },
   progressBg: { height: 4, background: 'var(--border-light)', borderRadius: 2, overflow: 'hidden' },
   progressFill: { height: '100%', background: 'var(--primary)', borderRadius: 2, transition: 'width 0.3s' },
-  audioCard: { textAlign: 'center', padding: '32px 20px', background: 'var(--bg-card)', borderRadius: 16, border: '1px solid var(--border-light)' },
+  audioCard: { textAlign: 'center', padding: '32px 20px', background: 'var(--bg-card)', borderRadius: 16, border: '2px solid var(--border)' },
   playBtn: { width: 72, height: 72, borderRadius: '50%', background: 'rgba(88,204,2,0.08)', border: '2px solid var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px', cursor: 'pointer', transition: 'all 0.2s' },
   playLabel: { fontSize: 13, color: 'var(--text-light)' },
   question: { fontSize: 16, fontWeight: 600, color: 'var(--text)', textAlign: 'center' },

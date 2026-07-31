@@ -87,7 +87,7 @@ const styles = {
   title: { fontSize: 24, fontWeight: 700, color: 'var(--text)', display: 'flex', alignItems: 'center', gap: 8 },
   sub: { fontSize: 14, color: 'var(--text-light)', marginTop: -8 },
   list: { display: 'flex', flexDirection: 'column', gap: 8 },
-  card: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', background: 'var(--bg-card)', borderRadius: 12, border: '1px solid var(--border-light)', borderLeft: '3px solid var(--accent)' },
+  card: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 18px', background: 'var(--bg-card)', borderRadius: 12, border: '2px solid var(--border)', borderLeft: '3px solid var(--accent)' },
   cardLeft: {},
   wordJp: { fontSize: 22, fontWeight: 600, color: 'var(--text)', marginBottom: 2 },
   wordReading: { fontSize: 12, color: 'var(--text-light)' },

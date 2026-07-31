@@ -64,7 +64,7 @@ export default function AdminDashboard() {
       />
 
       <div style={styles.statsGrid}>
-        {sections.map((sec, i) => {
+        {sections.map(sec => {
           const Icon = sec.icon;
           const count = stats?.[sec.key] ?? 0;
           const pending = sec.badgeKey ? (stats?.[sec.badgeKey] ?? 0) : 0;
@@ -136,7 +136,7 @@ const styles = {
     padding: 16,
     borderRadius: 14,
     background: 'var(--bg-card, white)',
-    border: '1px solid var(--border-light)',
+    border: '2px solid var(--border)',
     textDecoration: 'none',
     transition: 'all 0.2s',
   },

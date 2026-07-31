@@ -71,7 +71,7 @@ const styles = {
   title: { fontSize: 22, fontWeight: 800, color: 'var(--text)', marginBottom: 8 },
   sub: { fontSize: 12, color: 'var(--text-light)', lineHeight: 1.6, marginBottom: 20 },
   list: { width: '100%', display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 },
-  benefitCard: { display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: 14, padding: '12px 14px', textAlign: 'left' },
+  benefitCard: { display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg-card)', border: '2px solid var(--border)', borderRadius: 14, padding: '12px 14px', textAlign: 'left' },
   benefitIcon: { width: 36, height: 36, borderRadius: 10, background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
   benefitInfo: { flex: 1 },
   benefitTitle: { fontSize: 13, fontWeight: 700, color: 'var(--text)' },

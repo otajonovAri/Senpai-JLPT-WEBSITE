@@ -10,7 +10,9 @@ import { ArrowLeft, Loader, Check, X, Zap } from 'lucide-react';
 // WaniKani uslubidagi review — kanji ko'rsatiladi, foydalanuvchi o'qilishini (yoki ma'nosini) yozadi.
 // O'qish rejimida bir nechta o'qish (kun'yomi + on'yomi) qabul qilinadi, romaji orqali solishtiriladi.
 // Hisob/XP backendda: session oxirida /exercises/result.
-const EMPTY_GUID = '00000000-0000-0000-0000-000000000000';
+// O'yin darsga bog'liq emas. Server LessonId/ExerciseType'ni ishlatmaydi, validator faqat
+// LessonId NotEmpty va ExerciseType whitelist talab qiladi.
+const GAME_LESSON_ID = '11111111-1111-1111-1111-111111111111';
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const ROUND = 12;
 
@@ -82,7 +84,7 @@ export default function ReadingReview() {
     if (idx + 1 >= items.length) {
       // session tugadi — backendga yuboramiz
       const timeSpentSeconds = Math.max(1, items.length * 4);
-      submitExerciseResult({ lessonId: EMPTY_GUID, exerciseType: 'ReadingReview', answers, timeSpentSeconds })
+      submitExerciseResult({ lessonId: GAME_LESSON_ID, exerciseType: 'Reading', answers, timeSpentSeconds })
         .then(res => setResult(res || null))
         .catch(() => setResult({ localOnly: true }));
       setPhase('over');
@@ -215,7 +217,7 @@ const styles = {
   segActive: { background: 'var(--primary)', color: '#fff' },
   levelRow: { display: 'flex', gap: 6, justifyContent: 'center', marginBottom: 20, flexWrap: 'wrap' },
   lvl: { padding: '7px 14px', borderRadius: 'var(--radius-full)', border: '2px solid var(--border)', background: 'var(--bg-alt)', color: 'var(--text-light)', fontSize: 13, fontWeight: 800, cursor: 'pointer' },
-  lvlActive: { background: 'var(--secondary-soft)', color: 'var(--secondary-dark, var(--secondary))', borderColor: 'var(--secondary)' },
+  lvlActive: { background: 'var(--secondary-soft)', color: 'var(--secondary-dark)', borderColor: 'var(--secondary)' },
   playBtn: { width: '100%', padding: '14px 24px', borderRadius: 16, background: 'var(--primary)', color: '#fff', fontSize: 15, fontWeight: 800, border: 'none', boxShadow: '0 4px 0 var(--primary-dark)', cursor: 'pointer' },
   secBtn: { flex: 1, padding: '14px 24px', borderRadius: 16, background: 'var(--bg-alt)', color: 'var(--text)', fontSize: 15, fontWeight: 700, border: '2px solid var(--border)', cursor: 'pointer' },
   err: { marginTop: 14, fontSize: 13, color: 'var(--danger)', fontWeight: 600 },

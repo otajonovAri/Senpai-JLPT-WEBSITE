@@ -54,5 +54,5 @@ const styles = {
   freezeCount: { fontSize: 16, fontWeight: 900, color: 'var(--secondary-dark)', background: 'rgba(33,150,243,0.12)', border: '1px solid rgba(33,150,243,0.25)', borderRadius: 10, padding: '6px 12px' },
   btns: { display: 'flex', flexDirection: 'column', gap: 8, width: '100%' },
   mainBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: 14, borderRadius: 14, background: 'linear-gradient(135deg, var(--secondary), var(--secondary-dark))', color: 'white', fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer', boxShadow: '0 4px 16px rgba(33,150,243,0.3)' },
-  secBtn: { padding: 13, borderRadius: 14, background: 'none', border: '1px solid var(--border-light)', color: 'var(--text-light)', fontSize: 12, fontWeight: 600, cursor: 'pointer' },
+  secBtn: { padding: 13, borderRadius: 14, background: 'none', border: '2px solid var(--border)', color: 'var(--text-light)', fontSize: 12, fontWeight: 600, cursor: 'pointer' },
 };

@@ -186,7 +186,7 @@ const styles = {
   counter: { fontSize: 13, fontWeight: 600, color: 'var(--text-light)' },
   progressBg: { height: 4, background: 'var(--border-light)', borderRadius: 2, overflow: 'hidden' },
   progressFill: { height: '100%', background: 'var(--primary)', borderRadius: 2, transition: 'width 0.3s' },
-  sentenceCard: { textAlign: 'center', padding: '32px 20px', background: 'var(--bg-card)', borderRadius: 16, border: '1px solid var(--border-light)' },
+  sentenceCard: { textAlign: 'center', padding: '32px 20px', background: 'var(--bg-card)', borderRadius: 16, border: '2px solid var(--border)' },
   sentence: { fontSize: 26, fontWeight: 600, color: 'var(--text)', marginBottom: 8, letterSpacing: 1.5, lineHeight: 1.5 },
   hint: { fontSize: 13, color: 'var(--text-light)' },
   options: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 },

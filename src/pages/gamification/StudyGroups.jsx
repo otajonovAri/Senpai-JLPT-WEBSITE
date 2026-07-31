@@ -96,8 +96,8 @@ export default function StudyGroups() {
       />
 
       <div style={S.tabs} className="anim-fade-up">
-        <button style={{ ...S.tab, ...(tab === 'my' ? S.tabActive : {}) }} onClick={() => setTab('my')}>Mening guruhlarim</button>
-        <button style={{ ...S.tab, ...(tab === 'public' ? S.tabActive : {}) }} onClick={() => setTab('public')}>Ochiq guruhlar</button>
+        <button className={`chip${tab === 'my' ? ' chip--active' : ''}`} onClick={() => setTab('my')}>Mening guruhlarim</button>
+        <button className={`chip${tab === 'public' ? ' chip--active' : ''}`} onClick={() => setTab('public')}>Ochiq guruhlar</button>
       </div>
 
       {tab === 'public' && (
@@ -107,9 +107,9 @@ export default function StudyGroups() {
             <input placeholder="Guruh qidirish..." value={search} onChange={e => setSearch(e.target.value)} style={S.searchInput} />
           </div>
           <div style={S.levels}>
-            <button style={{ ...S.levelBtn, ...(filterLevel == null ? S.levelActive : {}) }} onClick={() => setFilterLevel(null)} className="press">Barchasi</button>
+            <button className={`chip${filterLevel == null ? ' chip--active' : ''}`} onClick={() => setFilterLevel(null)}>Barchasi</button>
             {LEVELS.map((lv, i) => (
-              <button key={lv} style={{ ...S.levelBtn, ...(filterLevel === i ? S.levelActive : {}) }} onClick={() => setFilterLevel(i)} className="press">{lv}</button>
+              <button key={lv} className={`chip${filterLevel === i ? ' chip--active' : ''}`} onClick={() => setFilterLevel(i)}>{lv}</button>
             ))}
           </div>
         </>
@@ -157,7 +157,7 @@ export default function StudyGroups() {
               <label style={S.label}>Tavsifi</label>
               <textarea style={{ ...S.input, minHeight: 60 }} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder="Qisqa tavsif" />
               <label style={S.label}>Daraja</label>
-              <div style={S.levels}>{LEVELS.map((lv, i) => (<button key={lv} style={{ ...S.levelBtn, ...(form.level === i ? S.levelActive : {}) }} onClick={() => setForm({ ...form, level: i })} className="press">{lv}</button>))}</div>
+              <div style={S.levels}>{LEVELS.map((lv, i) => (<button key={lv} className={`chip${form.level === i ? ' chip--active' : ''}`} onClick={() => setForm({ ...form, level: i })}>{lv}</button>))}</div>
               <label style={S.label}>Maksimum a'zolar: {form.maxMembers}</label>
               <input type="range" min={2} max={50} value={form.maxMembers} onChange={e => setForm({ ...form, maxMembers: +e.target.value })} style={{ width: '100%' }} />
               <label style={S.checkLabel}><input type="checkbox" checked={form.isPublic} onChange={e => setForm({ ...form, isPublic: e.target.checked })} />Ochiq guruh</label>
@@ -194,10 +194,10 @@ const S = {
   searchBar: { position: 'relative', display: 'flex', alignItems: 'center' },
   searchInput: { width: '100%', padding: '10px 14px 10px 38px', border: '1.5px solid var(--border)', borderRadius: 10, fontSize: 13, background: 'var(--bg-card)', outline: 'none', color: 'var(--text)' },
   levels: { display: 'flex', gap: 6, flexWrap: 'wrap' },
-  levelBtn: { padding: '6px 14px', borderRadius: 14, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 12, fontWeight: 500, color: 'var(--text-secondary)', cursor: 'pointer' },
+  levelBtn: { padding: '6px 14px', borderRadius: 14, background: 'var(--bg)', border: '2px solid var(--border)', fontSize: 12, fontWeight: 500, color: 'var(--text-secondary)', cursor: 'pointer' },
   levelActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12 },
-  card: { background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: 16, padding: 16, cursor: 'pointer' },
+  card: { background: 'var(--bg-card)', border: '2px solid var(--border)', borderRadius: 16, padding: 16, cursor: 'pointer' },
   cardHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
   cardIcon: { width: 40, height: 40, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' },
   levelBadge: { padding: '3px 10px', borderRadius: 8, background: 'rgba(33,150,243,0.1)', fontSize: 11, fontWeight: 700, color: 'var(--secondary-dark)' },

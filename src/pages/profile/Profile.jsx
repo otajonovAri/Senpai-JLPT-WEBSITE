@@ -251,14 +251,14 @@ const styles = {
   statsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 12 },
   statCard: {
     background: 'var(--bg-card)', borderRadius: 14, padding: 16, textAlign: 'center',
-    border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)',
+    border: '2px solid var(--border)', boxShadow: 'var(--shadow-sm)',
   },
   statValue: { fontSize: 24, fontWeight: 700, color: 'var(--text)', marginTop: 6 },
   statLabel: { fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' },
   statSub: { fontSize: 11, color: 'var(--text-light)' },
   card: {
     background: 'var(--bg-card)', borderRadius: 16, padding: 20,
-    border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)',
+    border: '2px solid var(--border)', boxShadow: 'var(--shadow-sm)',
   },
   sectionTitle: {
     fontSize: 16, fontWeight: 600, color: 'var(--text)',
@@ -298,7 +298,7 @@ const styles = {
   quickLink: {
     display: 'flex', alignItems: 'center', gap: 10,
     padding: '14px 16px', borderRadius: 12,
-    background: 'var(--bg-card)', border: '1px solid var(--border-light)',
+    background: 'var(--bg-card)', border: '2px solid var(--border)',
     boxShadow: 'var(--shadow-sm)', textDecoration: 'none', color: 'var(--text)',
   },
   quickLinkLabel: { flex: 1, fontSize: 14, fontWeight: 500 },

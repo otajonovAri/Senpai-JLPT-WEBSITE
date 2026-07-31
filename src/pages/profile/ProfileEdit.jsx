@@ -91,7 +91,7 @@ export default function ProfileEdit() {
       <div style={styles.tabs}>
         {[['profile', 'Profil'], ['password', 'Parol']].map(([key, label]) => (
           <button key={key} onClick={() => { setTab(key); setError(''); setSuccess(''); }}
-            style={{ ...styles.tabBtn, ...(tab === key ? styles.tabActive : {}) }}>{label}</button>
+            className={`chip${tab === key ? ' chip--active' : ''}`}>{label}</button>
         ))}
       </div>
 
@@ -154,13 +154,13 @@ const styles = {
   avatar: { width: 80, height: 80, borderRadius: '50%', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, fontWeight: 700 },
   cameraBtn: { position: 'absolute', bottom: 0, right: 0, width: 28, height: 28, borderRadius: '50%', background: 'var(--secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '2px solid white' },
   tabs: { display: 'flex', gap: 6 },
-  tabBtn: { flex: 1, padding: '8px 16px', borderRadius: 10, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', textAlign: 'center' },
+  tabBtn: { flex: 1, padding: '8px 16px', borderRadius: 10, background: 'var(--bg)', border: '2px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', textAlign: 'center' },
   tabActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
   form: { display: 'flex', flexDirection: 'column', gap: 12 },
   field: {},
   label: { display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--text-light)', marginBottom: 4 },
-  input: { width: '100%', padding: '10px 14px', borderRadius: 10, border: '1px solid var(--border)', fontSize: 14, outline: 'none', boxSizing: 'border-box' },
-  textarea: { width: '100%', padding: '10px 14px', borderRadius: 10, border: '1px solid var(--border)', fontSize: 14, outline: 'none', resize: 'vertical', boxSizing: 'border-box' },
+  input: { width: '100%', padding: '10px 14px', borderRadius: 10, border: '2px solid var(--border)', fontSize: 14, outline: 'none', boxSizing: 'border-box' },
+  textarea: { width: '100%', padding: '10px 14px', borderRadius: 10, border: '2px solid var(--border)', fontSize: 14, outline: 'none', resize: 'vertical', boxSizing: 'border-box' },
   saveBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: 14, borderRadius: 12, background: 'var(--primary)', color: 'white', fontSize: 14, fontWeight: 600, border: 'none', cursor: 'pointer' },
   success: { padding: '10px 14px', borderRadius: 8, background: 'rgba(76,175,80,0.08)', color: 'var(--success)', fontSize: 13, fontWeight: 500 },
   error: { padding: '10px 14px', borderRadius: 8, background: 'rgba(244,67,54,0.08)', color: 'var(--danger)', fontSize: 13, fontWeight: 500 },

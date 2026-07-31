@@ -202,22 +202,22 @@ const badgeStyle = { display: 'inline-block', padding: '2px 8px', borderRadius: 
 const actionBtn = {
   display: 'flex', alignItems: 'center', justifyContent: 'center',
   width: 28, height: 28, borderRadius: 6, background: 'var(--bg)',
-  border: '1px solid var(--border-light)', cursor: 'pointer',
+  border: '2px solid var(--border)', cursor: 'pointer',
 };
 
 const styles = {
   header: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 12 },
   headerLeft: { display: 'flex', alignItems: 'center', gap: 10 },
-  backBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: 34, height: 34, borderRadius: 8, background: 'var(--bg)', color: 'var(--text-secondary)', textDecoration: 'none', border: '1px solid var(--border-light)' },
+  backBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: 34, height: 34, borderRadius: 8, background: 'var(--bg)', color: 'var(--text-secondary)', textDecoration: 'none', border: '2px solid var(--border)' },
   title: { fontSize: 20, fontWeight: 700, color: 'var(--text)', margin: 0 },
   count: { fontSize: 12, fontWeight: 600, color: 'var(--text-light)', background: 'var(--bg)', padding: '3px 8px', borderRadius: 10 },
-  searchWrap: { display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 10, border: '1px solid var(--border)', background: 'var(--bg-card)', marginBottom: 16 },
+  searchWrap: { display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 10, border: '2px solid var(--border)', background: 'var(--bg-card)', marginBottom: 16 },
   searchInput: { flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 14, color: 'var(--text)' },
-  tableWrap: { overflowX: 'auto', borderRadius: 12, border: '1px solid var(--border-light)', background: 'var(--bg-card)' },
+  tableWrap: { overflowX: 'auto', borderRadius: 12, border: '2px solid var(--border)', background: 'var(--bg-card)' },
   table: { width: '100%', borderCollapse: 'collapse', fontSize: 13 },
   th: { textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)', background: 'var(--bg)', whiteSpace: 'nowrap' },
   tr: { borderBottom: '1px solid var(--border-light)' },
   td: { padding: '10px 12px', color: 'var(--text)', verticalAlign: 'middle' },
-  empty: { textAlign: 'center', padding: 48, background: 'var(--bg-card)', borderRadius: 12, border: '1px solid var(--border-light)' },
+  empty: { textAlign: 'center', padding: 48, background: 'var(--bg-card)', borderRadius: 12, border: '2px solid var(--border)' },
   emptyText: { fontSize: 14, color: 'var(--text-light)' },
 };

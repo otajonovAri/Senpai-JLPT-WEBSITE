@@ -96,11 +96,11 @@ export default function Login() {
 
           <div style={styles.tabs}>
             <button type="button" onClick={() => { setMode('email'); setError(''); }}
-              style={{ ...styles.tab, ...(mode === 'email' ? styles.tabActive : {}) }}>
+              className={`chip${mode === 'email' ? ' chip--active' : ''}`}>
               <Mail size={15} /> {t('auth.email')}
             </button>
             <button type="button" onClick={() => { setMode('phone'); setError(''); }}
-              style={{ ...styles.tab, ...(mode === 'phone' ? styles.tabActive : {}) }}>
+              className={`chip${mode === 'phone' ? ' chip--active' : ''}`}>
               <Phone size={15} /> {t('auth.phone')}
             </button>
           </div>

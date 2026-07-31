@@ -114,8 +114,7 @@ export default function Dictionary() {
         <div style={styles.levels}>
           {LEVELS.map(lv => (
             <button key={lv} onClick={() => setLevel(lv)}
-              className="press"
-              style={{ ...styles.levelBtn, ...(level === lv ? styles.levelActive : {}) }}>
+              className={`chip${level === lv ? ' chip--active' : ''}`}>
               {lv}
             </button>
           ))}
@@ -181,7 +180,7 @@ const styles = {
   levels: { display: 'flex', gap: 6, flexWrap: 'wrap' },
   levelBtn: {
     padding: '6px 16px', borderRadius: 16, background: 'var(--bg)',
-    border: '1px solid var(--border)', fontSize: 13, fontWeight: 500,
+    border: '2px solid var(--border)', fontSize: 13, fontWeight: 500,
     color: 'var(--text-secondary)', cursor: 'pointer',
   },
   levelActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
@@ -189,7 +188,7 @@ const styles = {
   wordCard: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
     padding: '14px 18px', background: 'var(--bg-card)', borderRadius: 12,
-    border: '1px solid var(--border-light)', cursor: 'pointer',
+    border: '2px solid var(--border)', cursor: 'pointer',
     borderLeft: '3px solid transparent',
   },
   wordCardLearned: {

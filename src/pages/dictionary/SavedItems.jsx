@@ -63,7 +63,7 @@ export default function SavedItems() {
       <div style={styles.tabs}>
         {[['all', 'Barchasi'], ['word', "So'zlar"], ['kanji', 'Kanji']].map(([key, label]) => (
           <button key={key} onClick={() => setTab(key)}
-            style={{ ...styles.tabBtn, ...(tab === key ? styles.tabActive : {}) }}>{label}</button>
+            className={`chip${tab === key ? ' chip--active' : ''}`}>{label}</button>
         ))}
       </div>
 
@@ -95,13 +95,13 @@ export default function SavedItems() {
 const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 14 },
   title: { fontSize: 24, fontWeight: 700, color: 'var(--text)', display: 'flex', alignItems: 'center', gap: 8 },
-  searchBox: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', background: 'var(--bg-card)', borderRadius: 10, border: '1px solid var(--border-light)' },
+  searchBox: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', background: 'var(--bg-card)', borderRadius: 10, border: '2px solid var(--border)' },
   searchInput: { flex: 1, border: 'none', outline: 'none', fontSize: 14, background: 'transparent', color: 'var(--text)' },
   tabs: { display: 'flex', gap: 6 },
-  tabBtn: { padding: '6px 16px', borderRadius: 16, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' },
+  tabBtn: { padding: '6px 16px', borderRadius: 16, background: 'var(--bg)', border: '2px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' },
   tabActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
   list: { display: 'flex', flexDirection: 'column', gap: 8 },
-  card: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: 'var(--bg-card)', borderRadius: 12, border: '1px solid var(--border-light)' },
+  card: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: 'var(--bg-card)', borderRadius: 12, border: '2px solid var(--border)' },
   cardLeft: {},
   wordJp: { fontSize: 20, fontWeight: 600, color: 'var(--text)' },
   wordReading: { fontSize: 12, color: 'var(--text-light)' },

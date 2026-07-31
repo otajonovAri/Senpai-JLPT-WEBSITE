@@ -84,10 +84,10 @@ const styles = {
   title: { fontSize: 24, fontWeight: 900, background: 'linear-gradient(135deg, var(--medal-gold), var(--primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: 6 },
   sub: { fontSize: 13, color: 'var(--text-light)' },
   statsRow: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 24, width: '100%', maxWidth: 300 },
-  stat: { background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: 14, padding: 12, textAlign: 'center' },
+  stat: { background: 'var(--bg-card)', border: '2px solid var(--border)', borderRadius: 14, padding: 12, textAlign: 'center' },
   statVal: { fontSize: 20, fontWeight: 800, color: 'var(--text)', marginTop: 2 },
   statLabel: { fontSize: 9, color: 'var(--text-light)', fontWeight: 600, marginTop: 2 },
   btns: { padding: '0 16px 20px', display: 'flex', flexDirection: 'column', gap: 8, position: 'relative', zIndex: 1 },
   mainBtn: { background: 'linear-gradient(135deg, var(--medal-gold), var(--primary))', borderRadius: 14, padding: 15, fontSize: 14, fontWeight: 800, color: 'white', border: 'none', cursor: 'pointer', boxShadow: '0 4px 16px rgba(255,215,0,0.3)' },
-  secBtn: { background: 'var(--bg)', border: '1px solid var(--border-light)', borderRadius: 14, padding: 13, fontSize: 12, fontWeight: 600, color: 'var(--text-light)', cursor: 'pointer' },
+  secBtn: { background: 'var(--bg)', border: '2px solid var(--border)', borderRadius: 14, padding: 13, fontSize: 12, fontWeight: 600, color: 'var(--text-light)', cursor: 'pointer' },
 };

@@ -154,7 +154,7 @@ const styles = {
     background: 'var(--bg)',
     color: 'var(--text-secondary)',
     textDecoration: 'none',
-    border: '1px solid var(--border-light)',
+    border: '2px solid var(--border)',
   },
   title: {
     fontSize: 20,
@@ -184,7 +184,7 @@ const styles = {
     gap: 8,
     padding: '8px 12px',
     borderRadius: 10,
-    border: '1px solid var(--border)',
+    border: '2px solid var(--border)',
     background: 'var(--bg-card, white)',
     marginBottom: 16,
   },
@@ -199,7 +199,7 @@ const styles = {
   tableWrap: {
     overflowX: 'auto',
     borderRadius: 12,
-    border: '1px solid var(--border-light)',
+    border: '2px solid var(--border)',
     background: 'var(--bg-card, white)',
   },
   table: {
@@ -268,7 +268,7 @@ const styles = {
     padding: 48,
     background: 'var(--bg-card, white)',
     borderRadius: 12,
-    border: '1px solid var(--border-light)',
+    border: '2px solid var(--border)',
   },
   emptyText: {
     fontSize: 14,

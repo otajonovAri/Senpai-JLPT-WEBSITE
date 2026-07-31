@@ -87,7 +87,7 @@ export default function MascotCustomize() {
       <div style={styles.tabs}>
         {COSMETIC_TABS.map(t => (
           <button key={t.key} onClick={() => setActiveTab(t.key)}
-            style={{ ...styles.tabBtn, ...(activeTab === t.key ? styles.tabActive : {}) }}>{t.label}</button>
+            className={`chip${activeTab === t.key ? ' chip--active' : ''}`}>{t.label}</button>
         ))}
       </div>
 
@@ -118,9 +118,9 @@ const styles = {
   mascotPreview: { textAlign: 'center', padding: '24px 20px', background: 'linear-gradient(135deg, rgba(45,27,105,0.08), rgba(88,204,2,0.08))', borderRadius: 16 },
   mascotCircle: { fontSize: 72, marginBottom: 10 },
   equippedRow: { display: 'flex', justifyContent: 'center', gap: 6, flexWrap: 'wrap' },
-  equippedTag: { padding: '4px 10px', borderRadius: 8, background: 'var(--bg-card)', fontSize: 11, fontWeight: 500, border: '1px solid var(--border-light)' },
+  equippedTag: { padding: '4px 10px', borderRadius: 8, background: 'var(--bg-card)', fontSize: 11, fontWeight: 500, border: '2px solid var(--border)' },
   tabs: { display: 'flex', gap: 6, flexWrap: 'wrap' },
-  tabBtn: { padding: '6px 16px', borderRadius: 16, background: 'var(--bg)', border: '1px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', cursor: 'pointer' },
+  tabBtn: { padding: '6px 16px', borderRadius: 16, background: 'var(--bg)', border: '2px solid var(--border)', fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)', cursor: 'pointer' },
   tabActive: { background: 'var(--primary)', color: 'white', borderColor: 'var(--primary)' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 10 },
   card: { background: 'var(--bg-card)', borderRadius: 14, padding: 16, textAlign: 'center', border: '1.5px solid var(--border-light)', cursor: 'pointer', transition: 'all 0.15s' },

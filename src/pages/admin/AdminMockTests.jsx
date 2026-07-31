@@ -362,7 +362,7 @@ const styles = {
   filterBtn: {
     padding: '6px 14px',
     borderRadius: 8,
-    border: '1px solid var(--border)',
+    border: '2px solid var(--border)',
     background: 'var(--bg-card, white)',
     color: 'var(--text-secondary)',
     fontSize: 13,
@@ -380,7 +380,7 @@ const styles = {
     cursor: 'pointer',
   },
   questionCard: {
-    border: '1px solid var(--border)',
+    border: '2px solid var(--border)',
     borderRadius: 10,
     padding: 12,
     display: 'flex',
@@ -401,9 +401,9 @@ const styles = {
   removeBtn: {
     padding: '3px 10px',
     borderRadius: 6,
-    border: '1px solid var(--danger, var(--danger))',
+    border: '1px solid var(--danger)',
     background: 'transparent',
-    color: 'var(--danger, var(--danger))',
+    color: 'var(--danger)',
     fontSize: 11,
     fontWeight: 600,
     cursor: 'pointer',
