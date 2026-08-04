@@ -154,20 +154,31 @@ export default function SrsReview() {
   );
 }
 
+// Kenglik/o'lcham desktopda "telefon ustuni" bo'lib qolmasligi uchun suyuq (fluid):
+// clamp()'ning quyi chegarasi — eski mobil qiymatlar, shuning uchun telefonda
+// ko'rinish o'zgarmaydi, katta ekranda esa karta haqiqiy joyni egallaydi.
+// 26vw: telefonda (375px) 98px → 280px quyi chegara, ya'ni mobil ko'rinish
+// piksel-bapiksel eski holicha; 1440px'da 374px, 1920px'da 420px bilan cheklanadi.
+const CARD_MIN_H = 'clamp(280px, 26vw, 420px)';
+
 const styles = {
-  page: { display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 500, margin: '0 auto', alignItems: 'center' },
+  page: { display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 'min(880px, 100%)', margin: '0 auto', alignItems: 'center' },
   progressBg: { height: 4, background: 'var(--border-light)', borderRadius: 2, overflow: 'hidden', width: '100%' },
   progressFill: { height: '100%', background: 'var(--primary)', borderRadius: 2, transition: 'width 0.3s' },
-  flashcard: { width: '100%', minHeight: 280, cursor: 'pointer' },
-  flipInner: { width: '100%', minHeight: 280, position: 'relative' },
-  cardFace: { background: 'var(--bg-card)', borderRadius: 20, padding: '48px 24px', boxShadow: 'var(--shadow-lg)', border: '2px solid var(--border)', textAlign: 'center', width: '100%', minHeight: 280 },
+  flashcard: { width: '100%', minHeight: CARD_MIN_H, cursor: 'pointer' },
+  flipInner: { width: '100%', minHeight: CARD_MIN_H, position: 'relative' },
+  cardFace: { background: 'var(--bg-card)', borderRadius: 20, padding: 'clamp(48px, 5vw, 64px) clamp(24px, 3vw, 40px)', boxShadow: 'var(--shadow-lg)', border: '2px solid var(--border)', textAlign: 'center', width: '100%', minHeight: CARD_MIN_H },
   cardFront: { textAlign: 'center' },
   cardBack: { textAlign: 'center' },
-  cardWord: { fontSize: 48, fontWeight: 700, color: 'var(--text)', marginBottom: 8 },
-  cardReading: { fontSize: 16, color: 'var(--text-light)' },
-  cardMeaning: { fontSize: 22, fontWeight: 600, color: 'var(--primary)', marginBottom: 8, background: 'rgba(88,204,2,0.08)', padding: '6px 16px', borderRadius: 10, display: 'inline-block' },
-  qualityBtns: { display: 'flex', gap: 8, width: '100%' },
-  qBtn: { flex: 1, padding: '12px 8px', borderRadius: 10, color: 'white', fontSize: 12, fontWeight: 600, border: 'none', cursor: 'pointer' },
+  cardWord: { fontSize: 'clamp(48px, 6vw, 82px)', fontWeight: 700, color: 'var(--text)', marginBottom: 8, lineHeight: 1.15 },
+  cardReading: { fontSize: 'clamp(16px, 1.6vw, 21px)', color: 'var(--text-light)' },
+  cardMeaning: { fontSize: 'clamp(22px, 2.3vw, 31px)', fontWeight: 600, color: 'var(--primary)', marginBottom: 8, background: 'rgba(88,204,2,0.08)', padding: '6px 16px', borderRadius: 10, display: 'inline-block' },
+  // 4 ta tugma — kartaning butun kengligiga cho'zilmasin (qarang: FlashcardPractice).
+  qualityBtns: {
+    display: 'flex', gap: 'clamp(8px, 1vw, 12px)',
+    width: '100%', maxWidth: 620, margin: '0 auto',
+  },
+  qBtn: { flex: 1, padding: 'clamp(12px, 1.4vw, 17px) 8px', borderRadius: 10, color: 'white', fontSize: 'clamp(12px, 1.2vw, 15px)', fontWeight: 600, border: 'none', cursor: 'pointer' },
   emptyCard: { textAlign: 'center', background: 'var(--bg-card)', borderRadius: 20, padding: 40, boxShadow: 'var(--shadow-lg)' },
   resultCard: { textAlign: 'center', background: 'var(--bg-card)', borderRadius: 20, padding: 40, boxShadow: 'var(--shadow-lg)' },
   resultTitle: { fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 16 },

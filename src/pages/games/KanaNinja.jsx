@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchVocabulary } from '../../api/dictionary';
 import { submitExerciseResult } from '../../api/lessons';
+import { GAME_LESSON_ID } from '../../utils/practice';
 import ErrorState from '../../components/ErrorState';
 import { ArrowLeft, Loader, Eye, EyeOff, RefreshCw, Zap } from 'lucide-react';
 
@@ -10,7 +11,6 @@ import { ArrowLeft, Loader, Eye, EyeOff, RefreshCw, Zap } from 'lucide-react';
 // Hisob/XP backendda: session oxirida /exercises/result (itemType Vocabulary).
 // O'yin darsga bog'liq emas. Server LessonId va ExerciseType'ni ishlatmaydi, lekin validator
 // LessonId NotEmpty va ExerciseType whitelist (MultipleChoice/FillInBlank/Matching/Listening/Reading) talab qiladi.
-const GAME_LESSON_ID = '11111111-1111-1111-1111-111111111111';
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const ROUND = 10;
 const WORD_SECONDS = 15;

@@ -3,6 +3,7 @@
 // (Japanese-Flash-Card-Game manbasidan portlangan va tozalangan.)
 
 const KANA_ROMAJI_MAP = (() => {
+  /** @type {Record<string, string>} */
   const base = {
     'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o',
     'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko',
@@ -22,6 +23,7 @@ const KANA_ROMAJI_MAP = (() => {
     'ー': '-',
     'ゃ': 'ya', 'ゅ': 'yu', 'ょ': 'yo', 'ぁ': 'a', 'ぃ': 'i', 'ぅ': 'u', 'ぇ': 'e', 'ぉ': 'o',
   };
+  /** @type {Record<string, string>} */
   const yoon = {
     'きゃ': 'kya', 'きゅ': 'kyu', 'きょ': 'kyo', 'ぎゃ': 'gya', 'ぎゅ': 'gyu', 'ぎょ': 'gyo',
     'しゃ': 'sha', 'しゅ': 'shu', 'しょ': 'sho', 'じゃ': 'ja', 'じゅ': 'ju', 'じょ': 'jo',
@@ -41,11 +43,20 @@ const KANA_ROMAJI_MAP = (() => {
   return { map, yoon };
 })();
 
+/**
+ * Katakana'ni hiragana'ga o'giradi (boshqa belgilar tegilmaydi).
+ * @param {string | null | undefined} s
+ * @returns {string}
+ */
 export function katakanaToHiragana(s) {
   return (s || '').replace(/[ァ-ヶ]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60));
 }
 
-// Kana matnini romaji'ga o'giradi. Tanilmagan belgilar (kanji, tinish) o'z holicha o'tadi.
+/**
+ * Kana matnini romaji'ga o'giradi. Tanilmagan belgilar (kanji, tinish) o'z holicha o'tadi.
+ * @param {string | null | undefined} kana
+ * @returns {string}
+ */
 export function kanaToRomaji(kana) {
   if (!kana) return '';
   const s = katakanaToHiragana(kana);

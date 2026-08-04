@@ -159,7 +159,7 @@ export default function FlashcardPractice() {
       </div>
 
       {/* Yo'nalish (rejim) tanlash — 7 xil savol-javob turi */}
-      <div style={styles.modeRow}>
+      <div className="chip-scroller">
         {MODES.map(m => (
           <button
             key={m.id}
@@ -291,8 +291,15 @@ export default function FlashcardPractice() {
   );
 }
 
+// Kenglik/o'lcham desktopda "telefon ustuni" bo'lib qolmasligi uchun suyuq (fluid):
+// clamp()'ning quyi chegarasi — eski mobil qiymatlar, shuning uchun telefonda
+// ko'rinish o'zgarmaydi, katta ekranda esa karta haqiqiy joyni egallaydi.
+// 26vw: telefonda (375px) 98px → 280px quyi chegara, ya'ni mobil ko'rinish
+// piksel-bapiksel eski holicha; 1440px'da 374px, 1920px'da 420px bilan cheklanadi.
+const CARD_MIN_H = 'clamp(280px, 26vw, 420px)';
+
 const styles = {
-  page: { display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 500, margin: '0 auto', alignItems: 'center' },
+  page: { display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 'min(880px, 100%)', margin: '0 auto', alignItems: 'center' },
   center: { display: 'flex', justifyContent: 'center', padding: 60 },
   tab: {
     display: 'flex', alignItems: 'center', gap: 6,
@@ -305,28 +312,26 @@ const styles = {
     background: 'var(--primary)', color: 'white',
     border: '1px solid var(--primary)',
   },
-  modeRow: {
-    display: 'flex', gap: 6, width: '100%', overflowX: 'auto',
-    paddingBottom: 4, scrollbarWidth: 'thin',
-  },
+  // modeRow → `.chip-scroller` (index.css): @media orqali telefonda scroll,
+  // desktopda o'raladi — JS media-query'ga qaraganda resize'da ishonchliroq.
   filterRow: {
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     gap: 10, width: '100%', flexWrap: 'wrap',
   },
   progressBg: { height: 4, background: 'var(--border-light)', borderRadius: 2, overflow: 'hidden', width: '100%' },
   progressFill: { height: '100%', background: 'var(--primary)', borderRadius: 2, transition: 'width 0.3s' },
-  flashcard: { width: '100%', minHeight: 280, cursor: 'pointer' },
-  flipInner: { width: '100%', minHeight: 280, position: 'relative' },
+  flashcard: { width: '100%', minHeight: CARD_MIN_H, cursor: 'pointer' },
+  flipInner: { width: '100%', minHeight: CARD_MIN_H, position: 'relative' },
   cardFace: {
-    background: 'var(--bg-card, white)', borderRadius: 20, padding: '40px 24px',
+    background: 'var(--bg-card, white)', borderRadius: 20, padding: 'clamp(40px, 4.5vw, 60px) clamp(24px, 3vw, 40px)',
     boxShadow: 'var(--shadow-lg)', border: '2px solid var(--border)',
-    textAlign: 'center', width: '100%', minHeight: 280,
+    textAlign: 'center', width: '100%', minHeight: CARD_MIN_H,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
   cardFront: { textAlign: 'center', width: '100%' },
   cardBack: { textAlign: 'center', width: '100%' },
-  cardWord: { fontSize: 48, fontWeight: 700, color: 'var(--text)', marginBottom: 8, wordBreak: 'break-word' },
-  cardWordLatin: { fontSize: 30 },
+  cardWord: { fontSize: 'clamp(48px, 6vw, 82px)', fontWeight: 700, color: 'var(--text)', marginBottom: 8, wordBreak: 'break-word', lineHeight: 1.15 },
+  cardWordLatin: { fontSize: 'clamp(30px, 4vw, 54px)' },
   modeHint: {
     display: 'inline-block', padding: '3px 10px', borderRadius: 8, marginBottom: 14,
     background: 'var(--secondary-soft)', color: 'var(--secondary-dark)',
@@ -334,18 +339,18 @@ const styles = {
   },
   answerLabel: { fontSize: 11, fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 },
   cardAnswer: {
-    fontSize: 34, fontWeight: 800, color: 'var(--primary)', marginBottom: 16,
+    fontSize: 'clamp(34px, 3.6vw, 50px)', fontWeight: 800, color: 'var(--primary)', marginBottom: 16,
     background: 'var(--primary-soft)', padding: '8px 18px', borderRadius: 12,
-    display: 'inline-block', wordBreak: 'break-word',
+    display: 'inline-block', wordBreak: 'break-word', lineHeight: 1.2,
   },
-  cardAnswerLatin: { fontSize: 26 },
+  cardAnswerLatin: { fontSize: 'clamp(26px, 2.8vw, 38px)' },
   supportBlock: {
     borderTop: '1px dashed var(--border)', paddingTop: 12, marginTop: 4,
     display: 'flex', flexDirection: 'column', gap: 2,
   },
-  supWord: { fontSize: 24, fontWeight: 700, color: 'var(--text)' },
-  supReading: { fontSize: 14, color: 'var(--text-secondary)', fontWeight: 600 },
-  supMeaning: { fontSize: 13, color: 'var(--text-light)', marginTop: 2 },
+  supWord: { fontSize: 'clamp(24px, 2.4vw, 32px)', fontWeight: 700, color: 'var(--text)' },
+  supReading: { fontSize: 'clamp(14px, 1.4vw, 18px)', color: 'var(--text-secondary)', fontWeight: 600 },
+  supMeaning: { fontSize: 'clamp(13px, 1.3vw, 16px)', color: 'var(--text-light)', marginTop: 2 },
   typeBadge: {
     display: 'inline-block', padding: '3px 10px', borderRadius: 6,
     background: 'var(--bg)', color: 'var(--text-light)',
@@ -358,10 +363,15 @@ const styles = {
     fontSize: 11, fontWeight: 600, marginTop: 12,
   },
   tapHint: { fontSize: 13, color: 'var(--text-light)', marginTop: 20 },
-  actionBtns: { display: 'flex', gap: 12, width: '100%' },
+  // Tugmalar kartaning butun kengligiga cho'zilmasin — desktopda 400px+ tugma
+  // banner'ga o'xshab qoladi. Kenglik cheklanadi va karta ostida markazlanadi.
+  actionBtns: {
+    display: 'flex', gap: 'clamp(12px, 1.2vw, 16px)',
+    width: '100%', maxWidth: 520, margin: '0 auto',
+  },
   actionBtn: {
-    flex: 1, padding: '14px 8px', borderRadius: 12,
-    color: 'white', fontSize: 14, fontWeight: 600,
+    flex: 1, padding: 'clamp(14px, 1.5vw, 18px) 8px', borderRadius: 12,
+    color: 'white', fontSize: 'clamp(14px, 1.3vw, 17px)', fontWeight: 600,
     border: 'none', cursor: 'pointer',
   },
   resultCard: {

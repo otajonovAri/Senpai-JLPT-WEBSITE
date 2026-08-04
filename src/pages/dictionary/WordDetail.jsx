@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getVocabularyById } from '../../api/dictionary';
 import { toggleSavedItem } from '../../api/profile';
-import { pickAudio, setVoice, getVoice } from '../../utils/voice';
+import { pickAudio } from '../../utils/voice';
 import { useToast } from '../../context/ToastContext';
 import ErrorState from '../../components/ErrorState';
 import { Button } from '../../components/ui';
@@ -26,7 +26,6 @@ export default function WordDetail() {
   const [error, setError] = useState(null);
   const [saved, setSaved] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [voice, setVoiceState] = useState(getVoice());
 
   const load = useCallback(() => {
     setLoading(true);
@@ -56,7 +55,7 @@ export default function WordDetail() {
         done();
       }
     };
-    const url = pickAudio(word, voice);
+    const url = pickAudio(word);
     if (url) {
       const a = new Audio(url);
       a.onended = () => setPlaying(false);
@@ -119,21 +118,6 @@ export default function WordDetail() {
         >
           <Volume2 size={24} />
         </button>
-
-        {(word.audioUrlBoy || word.audioUrlGirl) && (
-          <div style={styles.voiceToggle}>
-            <button
-              style={{ ...styles.voiceBtn, ...(voice === 'boy' ? styles.voiceBtnActive : {}) }}
-              className="press"
-              onClick={() => { setVoice('boy'); setVoiceState('boy'); }}
-            >♂ Yigit</button>
-            <button
-              style={{ ...styles.voiceBtn, ...(voice === 'girl' ? styles.voiceBtnActive : {}) }}
-              className="press"
-              onClick={() => { setVoice('girl'); setVoiceState('girl'); }}
-            >♀ Qiz</button>
-          </div>
-        )}
 
         {meanings.length > 0 && (
           <div style={styles.heroMeaning}>{meanings.slice(0, 2).join(' · ')}</div>
@@ -235,15 +219,6 @@ const styles = {
     boxShadow: '0 4px 0 var(--primary-dark)', display: 'inline-flex',
     alignItems: 'center', justifyContent: 'center', cursor: 'pointer', marginBottom: 18,
   },
-  voiceToggle: {
-    position: 'relative', display: 'inline-flex', gap: 4, padding: 4, marginBottom: 16,
-    background: 'var(--bg-alt)', border: '2px solid var(--border)', borderRadius: 999,
-  },
-  voiceBtn: {
-    padding: '5px 14px', borderRadius: 999, border: 'none', background: 'transparent',
-    color: 'var(--text-light)', fontSize: 12.5, fontWeight: 800, cursor: 'pointer',
-  },
-  voiceBtnActive: { background: 'var(--primary)', color: '#fff' },
   heroMeaning: {
     position: 'relative', display: 'inline-block',
     background: 'var(--bg-card)', border: '2px solid var(--border)', borderRadius: 999,

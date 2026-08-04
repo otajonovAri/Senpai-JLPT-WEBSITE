@@ -11,25 +11,39 @@ export const LeagueTier = { Bronze: 0, Silver: 1, Gold: 2, Platinum: 3, Diamond:
 export const TestSection = { Vocabulary: 0, Grammar: 1, Reading: 2, Listening: 3 };
 
 // TestSection int -> o'zbekcha yorliq (mock test bo'limlari)
+/** @type {Record<number, string>} */
 export const TestSectionLabels = { 0: "Lug'at", 1: 'Grammatika', 2: "O'qish", 3: 'Tinglash' };
 
+/**
+ * TestSection qiymatini (int yoki nom) o'zbekcha yorliqqa o'giradi.
+ * @param {number | string | null | undefined} value
+ * @returns {string}
+ */
 export function sectionLabel(value) {
   if (typeof value === 'number') return TestSectionLabels[value] || "Lug'at";
-  const int = TestSection[value];
+  if (value == null) return "Lug'at";
+  const int = TestSection[/** @type {keyof typeof TestSection} */ (value)];
   return TestSectionLabels[int] ?? value ?? "Lug'at";
 }
 
 // JlptLevel is REVERSED (§2.2): N5=5 … N1=1
 export const JlptLevelToInt = { N5: 5, N4: 4, N3: 3, N2: 2, N1: 1 };
+/** @type {Record<number, import('../types/models').JlptLevelName>} */
 export const JlptIntToName = { 5: 'N5', 4: 'N4', 3: 'N3', 2: 'N2', 1: 'N1' };
 
 // UI language code (uz/en/ru) <-> AppLanguage int
 export const LangCodeToInt = { uz: 0, en: 1, ru: 2 };
+/** @type {Record<number, import('../types/models').LangCode>} */
 export const LangIntToCode = { 0: 'uz', 1: 'en', 2: 'ru' };
 
 /**
  * Coerce an enum value to its int for a request body.
  * Accepts an int (passed through), or a case-insensitive name ("Vocabulary", "vocabulary").
+ *
+ * @param {Record<string, number>} map Enum xaritasi (masalan `LearningItemType`)
+ * @param {number | string | null | undefined} value
+ * @param {number} [fallback] Topilmasa qaytariladigan qiymat
+ * @returns {number | undefined}
  */
 export function toEnumInt(map, value, fallback = undefined) {
   if (value === null || value === undefined) return fallback;
@@ -38,8 +52,17 @@ export function toEnumInt(map, value, fallback = undefined) {
   return key !== undefined ? map[key] : fallback;
 }
 
-/** JlptLevel response value (int or name) -> display name ("N5"). */
+/**
+ * JlptLevel response value (int or name) -> display name ("N5").
+ * @param {number | string | null | undefined} value
+ * @returns {import('../types/models').JlptLevelName}
+ */
 export function jlptName(value) {
   if (value === null || value === undefined) return 'N5';
-  return typeof value === 'number' ? (JlptIntToName[value] || 'N5') : value;
+  if (typeof value === 'number') return JlptIntToName[value] || 'N5';
+  // Nomlar bo'yicha tekshiramiz — noma'lum qiymat UI'ga o'tib ketmasin
+  // (int tarmog'idagi 'N5' fallback bilan bir xil mantiq).
+  return value in JlptLevelToInt
+    ? /** @type {import('../types/models').JlptLevelName} */ (value)
+    : 'N5';
 }

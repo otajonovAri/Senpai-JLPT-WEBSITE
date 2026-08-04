@@ -1,17 +1,25 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { getHiragana, getKatakana, getKanaById } from '../../api/dictionary';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
-import { Volume2, Loader, Languages } from 'lucide-react';
+import KanaQuiz from '../../components/KanaQuiz';
+import { Volume2, Loader, Languages, GraduationCap } from 'lucide-react';
 import PageHeader from '../../components/PageHeader';
 
 export default function HiraganaTable() {
   const [tab, setTab] = useState('hiragana');
+  const [mode, setMode] = useState('table');   // table | quiz
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
   const audioRef = useRef(null);
+
+  // Testga uzatish uchun barcha qatorlardagi belgilarni tekislaymiz.
+  const allCharacters = useMemo(
+    () => rows.flatMap(row => row.characters || []),
+    [rows]
+  );
 
   const load = useCallback(() => {
     setLoading(true);
@@ -48,15 +56,27 @@ export default function HiraganaTable() {
       />
 
       <div style={styles.tabs}>
-        <button onClick={() => setTab('hiragana')} className={`chip${tab === 'hiragana' ? ' chip--active' : ''}`}>
+        <button onClick={() => { setTab('hiragana'); setMode('table'); }} className={`chip${tab === 'hiragana' ? ' chip--active' : ''}`}>
           <span className="jp">あ</span> Hiragana
         </button>
-        <button onClick={() => setTab('katakana')} className={`chip${tab === 'katakana' ? ' chip--active' : ''}`}>
+        <button onClick={() => { setTab('katakana'); setMode('table'); }} className={`chip${tab === 'katakana' ? ' chip--active' : ''}`}>
           <span className="jp">ア</span> Katakana
         </button>
+        {mode === 'table' && allCharacters.length >= 2 && (
+          <button onClick={() => setMode('quiz')} className="chip" style={styles.quizChip}>
+            <GraduationCap size={15} /> Test
+          </button>
+        )}
       </div>
 
-      {loading ? (
+      {mode === 'quiz' ? (
+        <KanaQuiz
+          key={tab}
+          characters={allCharacters}
+          type={tab}
+          onExit={() => setMode('table')}
+        />
+      ) : loading ? (
         <div style={{ display: 'flex', justifyContent: 'center', padding: 60 }}>
           <Loader size={24} style={{ animation: 'spin 1s linear infinite' }} />
         </div>
@@ -114,7 +134,8 @@ const styles = {
   page: { display: 'flex', flexDirection: 'column', gap: 16 },
   title: { fontSize: 28, fontWeight: 700, color: 'var(--text)' },
   sub: { fontSize: 14, color: 'var(--text-light)', marginTop: -8 },
-  tabs: { display: 'flex', gap: 8 },
+  tabs: { display: 'flex', gap: 8, flexWrap: 'wrap' },
+  quizChip: { marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6 },
   tab: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px', borderRadius: 12, background: 'var(--bg)', borderWidth: 1, borderStyle: 'solid', borderColor: 'var(--border)', fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)', cursor: 'pointer' },
   tabActive: { background: 'var(--secondary)', color: 'white', borderColor: 'var(--secondary)' },
   rowList: { display: 'flex', flexDirection: 'column', gap: 12 },

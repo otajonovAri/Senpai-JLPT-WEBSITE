@@ -1,5 +1,11 @@
 import { api, setTokens, clearTokens } from './client';
 
+/**
+ * Email + parol bilan kirish. Muvaffaqiyatda tokenlar saqlanadi.
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise<any>} AuthResponseDto
+ */
 export async function loginApi(email, password) {
   const data = await api('/auth/login', {
     method: 'POST',
@@ -10,6 +16,14 @@ export async function loginApi(email, password) {
   return data;
 }
 
+/**
+ * Ro'yxatdan o'tish — OTP emailga yuboriladi (tokenlar hali berilmaydi).
+ * @param {string} email
+ * @param {string} username
+ * @param {string} password
+ * @param {string} fullName
+ * @returns {Promise<any>}
+ */
 export async function registerApi(email, username, password, fullName) {
   return api('/auth/register', {
     method: 'POST',
@@ -18,6 +32,12 @@ export async function registerApi(email, username, password, fullName) {
   });
 }
 
+/**
+ * Ro'yxatdan o'tishni OTP bilan tasdiqlash. Muvaffaqiyatda tokenlar saqlanadi.
+ * @param {string} email
+ * @param {string} otpCode
+ * @returns {Promise<any>} AuthResponseDto
+ */
 export async function verifyRegisterApi(email, otpCode) {
   const data = await api('/auth/verify-register', {
     method: 'POST',
@@ -28,6 +48,11 @@ export async function verifyRegisterApi(email, otpCode) {
   return data;
 }
 
+/**
+ * Google ID token bilan kirish.
+ * @param {string} credential Google'dan kelgan ID token
+ * @returns {Promise<any>} AuthResponseDto
+ */
 export async function googleLoginApi(credential) {
   const data = await api('/auth/google', {
     method: 'POST',
@@ -38,6 +63,11 @@ export async function googleLoginApi(credential) {
   return data;
 }
 
+/**
+ * Parolni tiklash havolasini yuborish.
+ * @param {string} email
+ * @returns {Promise<any>}
+ */
 export async function forgotPasswordApi(email) {
   return api('/auth/forgot-password', {
     method: 'POST',
@@ -46,6 +76,13 @@ export async function forgotPasswordApi(email) {
   });
 }
 
+/**
+ * Yangi parol o'rnatish.
+ * @param {string} email
+ * @param {string} token Emaildagi tiklash tokeni
+ * @param {string} newPassword
+ * @returns {Promise<any>}
+ */
 export async function resetPasswordApi(email, token, newPassword) {
   return api('/auth/reset-password', {
     method: 'POST',
@@ -54,11 +91,20 @@ export async function resetPasswordApi(email, token, newPassword) {
   });
 }
 
+/**
+ * Joriy foydalanuvchi (UserStatsDto).
+ * @returns {Promise<any>}
+ */
 export async function getMe() {
   return api('/auth/me');
 }
 
-// §4.6 — telefon raqamiga OTP yuborish; purpose: "login" | "register" | "reset"
+/**
+ * §4.6 — telefon raqamiga OTP yuborish.
+ * @param {string} phoneNumber
+ * @param {'login' | 'register' | 'reset'} [purpose='login']
+ * @returns {Promise<any>}
+ */
 export async function sendPhoneOtpApi(phoneNumber, purpose = 'login') {
   return api('/auth/send-otp', {
     method: 'POST',
@@ -67,7 +113,12 @@ export async function sendPhoneOtpApi(phoneNumber, purpose = 'login') {
   });
 }
 
-// §4.4 — telefon + OTP bilan kirish → AuthResponseDto
+/**
+ * §4.4 — telefon + OTP bilan kirish. Muvaffaqiyatda tokenlar saqlanadi.
+ * @param {string} phoneNumber
+ * @param {string} otpCode
+ * @returns {Promise<any>} AuthResponseDto
+ */
 export async function loginWithPhoneApi(phoneNumber, otpCode) {
   const data = await api('/auth/login-phone', {
     method: 'POST',
@@ -78,12 +129,20 @@ export async function loginWithPhoneApi(phoneNumber, otpCode) {
   return data;
 }
 
-// §4.12 — email tasdiqlash kodini qayta yuborish (login qilingan holda)
+/**
+ * §4.12 — email tasdiqlash kodini qayta yuborish (login qilingan holda).
+ * @returns {Promise<any>}
+ */
 export async function sendEmailVerificationApi() {
   return api('/auth/send-email-verification', { method: 'POST' });
 }
 
-// §4.13 — email tasdiqlash (token bilan)
+/**
+ * §4.13 — email tasdiqlash (token bilan).
+ * @param {string} email
+ * @param {string} token
+ * @returns {Promise<any>}
+ */
 export async function verifyEmailApi(email, token) {
   return api('/auth/verify-email', {
     method: 'POST',
@@ -92,6 +151,10 @@ export async function verifyEmailApi(email, token) {
   });
 }
 
+/**
+ * Chiqish — server sessiyasini yopadi va tokenlarni har holatda tozalaydi.
+ * @returns {Promise<void>}
+ */
 export async function logoutApi() {
   try {
     await api('/auth/logout', { method: 'POST' });

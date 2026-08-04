@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getGrammarById } from '../../api/dictionary';
 import ErrorState from '../../components/ErrorState';
+import GrammarQuiz from '../../components/GrammarQuiz';
 import { BookOpen, Loader } from 'lucide-react';
 import PageHeader from '../../components/PageHeader';
 
@@ -74,6 +75,8 @@ export default function GrammarExplanation() {
           </div>
         </div>
       )}
+
+      <GrammarQuiz key={grammar.id} grammar={grammar} />
     </div>
   );
 }

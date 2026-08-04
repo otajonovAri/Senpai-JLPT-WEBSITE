@@ -108,15 +108,25 @@ export default function PronunciationSession({ words, badge, onExit, onRestart }
   const word = words[current];
 
   const playWord = () => {
+    // R2 audio bo'lsa — o'ynatamiz; yo'q yoki 404 bo'lsa — brauzer TTS zaxirasi (bir marta).
+    let handled = false;
+    const speak = () => {
+      if (handled) return;
+      handled = true;
+      if ('speechSynthesis' in window && word?.jp) {
+        const utter = new SpeechSynthesisUtterance(word.jp);
+        utter.lang = 'ja-JP';
+        speechSynthesis.speak(utter);
+      }
+    };
     if (word?.audioUrl) {
       audioRef.current?.pause();
       const audio = new Audio(word.audioUrl);
       audioRef.current = audio;
-      audio.play().catch(() => {});
-    } else if ('speechSynthesis' in window && word?.jp) {
-      const utter = new SpeechSynthesisUtterance(word.jp);
-      utter.lang = 'ja-JP';
-      speechSynthesis.speak(utter);
+      audio.onerror = speak;
+      audio.play().catch(speak);
+    } else {
+      speak();
     }
   };
 

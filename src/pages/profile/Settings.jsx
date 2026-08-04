@@ -9,8 +9,9 @@ import { useLanguage } from '../../context/LanguageContext';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import {
   Globe, Bell, Target, Shield, HelpCircle,
-  ChevronRight, ChevronDown, Save, Loader, Trash2, MailCheck, Moon, Sun, Monitor, Settings } from 'lucide-react';
+  ChevronRight, ChevronDown, Save, Loader, Trash2, MailCheck, Moon, Sun, Monitor, Settings, Volume2, Check } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
+import { getVoice, setVoice, pickAudio } from '../../utils/voice';
 import PageHeader from '../../components/PageHeader';
 
 export default function SettingsPage() {
@@ -39,6 +40,7 @@ export default function SettingsPage() {
   // Keep the raw UserSettingsDto so we can round-trip fields the UI doesn't expose
   // (darkMode, dailyReminderTime, notifChallenge) — PUT §6.2 requires the full object.
   const [raw, setRaw] = useState(null);
+  const [voice, setVoiceState] = useState(getVoice());
 
   useEffect(() => {
     Promise.all([
@@ -91,6 +93,20 @@ export default function SettingsPage() {
       setTimeout(() => setSaved(false), 2000);
     } catch { /* ignore */ }
     finally { setSaving(false); }
+  };
+
+  // Tanlangan ovozni namuna so'z (三) bilan eshittiradi — R2 bo'lmasa TTS.
+  const previewVoice = () => {
+    const speak = () => {
+      if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance('三');
+        u.lang = 'ja-JP';
+        speechSynthesis.speak(u);
+      }
+    };
+    const url = pickAudio({ word: '三' }, voice);
+    if (url) { const a = new Audio(url); a.onerror = speak; a.play().catch(speak); }
+    else speak();
   };
 
   if (loading) {
@@ -154,6 +170,34 @@ export default function SettingsPage() {
             {dark ? t('settings.systemHintDark') : t('settings.systemHintLight')}
           </p>
         )}
+      </div>
+
+      <div style={styles.section}>
+        <h2 style={styles.sectionTitle}><Volume2 size={18} /> Ovoz</h2>
+        <p style={styles.voiceHint}>So'z va talaffuz audiosi qaysi ovozda o'qilishini tanlang.</p>
+        <div style={styles.voiceRow}>
+          {[
+            { id: 'boy', label: 'Yigit', sub: 'Erkak ovozi', icon: '♂' },
+            { id: 'girl', label: 'Qiz', sub: 'Ayol ovozi', icon: '♀' },
+          ].map(o => (
+            <button
+              key={o.id}
+              className="press"
+              style={{ ...styles.voiceCard, ...(voice === o.id ? styles.voiceCardActive : {}) }}
+              onClick={() => { setVoice(o.id); setVoiceState(o.id); }}
+            >
+              <span style={{ ...styles.voiceIcon, ...(voice === o.id ? styles.voiceIconActive : {}) }}>{o.icon}</span>
+              <div style={{ flex: 1 }}>
+                <div style={styles.voiceLabel}>{o.label}</div>
+                <div style={styles.voiceSub}>{o.sub}</div>
+              </div>
+              {voice === o.id && <Check size={16} color="var(--primary)" />}
+            </button>
+          ))}
+        </div>
+        <button style={styles.previewBtn} className="press" onClick={previewVoice}>
+          <Volume2 size={15} /> Eshitib ko'rish
+        </button>
       </div>
 
       <div style={styles.section}>
@@ -436,5 +480,26 @@ const styles = {
   themeHint: {
     marginTop: 10, fontSize: 12.5, fontWeight: 600,
     color: 'var(--text-light)',
+  },
+  voiceHint: { fontSize: 12.5, color: 'var(--text-light)', fontWeight: 600, marginTop: -6, marginBottom: 14 },
+  voiceRow: { display: 'flex', gap: 10 },
+  voiceCard: {
+    flex: 1, display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderRadius: 12,
+    borderWidth: 2, borderStyle: 'solid', borderColor: 'var(--border)', background: 'var(--bg-alt)',
+    cursor: 'pointer', textAlign: 'left',
+  },
+  voiceCardActive: { background: 'var(--primary-soft)', borderColor: 'var(--primary)' },
+  voiceIcon: {
+    width: 38, height: 38, borderRadius: '50%', display: 'flex', alignItems: 'center',
+    justifyContent: 'center', background: 'var(--bg-card)', color: 'var(--text-light)',
+    fontSize: 20, fontWeight: 800, flexShrink: 0,
+  },
+  voiceIconActive: { background: 'var(--primary)', color: '#fff' },
+  voiceLabel: { fontSize: 14, fontWeight: 800, color: 'var(--text)' },
+  voiceSub: { fontSize: 11.5, color: 'var(--text-light)', fontWeight: 600 },
+  previewBtn: {
+    display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 12, padding: '8px 14px', borderRadius: 10,
+    borderWidth: 2, borderStyle: 'solid', borderColor: 'var(--border)', background: 'var(--bg-alt)',
+    color: 'var(--text-secondary)', fontSize: 13, fontWeight: 700, cursor: 'pointer',
   },
 };

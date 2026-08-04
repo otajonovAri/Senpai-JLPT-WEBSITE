@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getGrammarList } from '../../api/dictionary';
 import { submitExerciseResult } from '../../api/lessons';
+import { GAME_LESSON_ID } from '../../utils/practice';
 import ErrorState from '../../components/ErrorState';
 import EmptyState from '../../components/EmptyState';
 import { ArrowLeft, Loader, Zap } from 'lucide-react';
@@ -10,7 +11,6 @@ import { ArrowLeft, Loader, Zap } from 'lucide-react';
 // Hisob/XP backendda: session oxirida /exercises/result (itemType Grammar).
 // O'yin darsga bog'liq emas. Server LessonId/ExerciseType'ni ishlatmaydi, validator faqat
 // LessonId NotEmpty va ExerciseType whitelist talab qiladi.
-const GAME_LESSON_ID = '11111111-1111-1111-1111-111111111111';
 const LEVELS = ['N5', 'N4', 'N3'];
 const ROUND = 10;
 
